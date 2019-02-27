@@ -1,0 +1,1 @@
+Congratulations Commander! The Pilots Federation has just notified us of your combat rank promotion to {TXT:EDDI combat promotion rating}.

@@ -1,0 +1,2 @@
+Modified Embedded Firmware:
+Captured from settlement data point networks. Embedded systems typically require specific firmware for their operation. There is a black market for modifications to the base firmware, often for performance tuning or other reasons. 

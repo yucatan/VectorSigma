@@ -1,0 +1,3 @@
+Geosynchronous Orbit:
+
+A geosynchronous orbit (sometimes abbreviated GSO) is an orbit around Earth of a satellite with an orbital period that matches Earth's rotation on its axis, which takes one sidereal day (23 hours, 56 minutes, and 4 seconds).

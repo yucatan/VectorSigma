@@ -1,0 +1,1 @@
+Commander, we are in the {TXT:System name} system, which current state is {TXT:System state}. This is your first visit to this system.

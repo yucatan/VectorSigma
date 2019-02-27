@@ -1,0 +1,2 @@
+Unidentified Scan Archives:
+Collected during basic scan: frequently pulled from haulage vessels. Most scanners keep a log of their readings and that typically fits within the performance profile for the instrumentation and is tagged by identification heuristics. Sometimes scan data isn't tagged and so becomes of interest to those investigating various anomalies. 

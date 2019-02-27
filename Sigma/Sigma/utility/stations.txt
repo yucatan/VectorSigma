@@ -1,0 +1,1 @@
+This system has {INT:System orbital stations} orbital stations,  {INT:System starports} starports, {INT:System planetary outposts} planetary outposts, {INT:System planetary stations} planetary stations and {INT:System planetary settlements} planetary settlements.

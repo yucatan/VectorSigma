@@ -1,0 +1,1 @@
+Commander, we have been denied because {TXT:DENYREASON}.

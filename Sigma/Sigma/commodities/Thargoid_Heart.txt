@@ -1,0 +1,2 @@
+Thargoid Heart:
+ A processing node found in the debris of a Thargoid ship. The exact function of these items is unknown, but they are thought to be integral to the flight and operational systems in all Thargoid vessels. 

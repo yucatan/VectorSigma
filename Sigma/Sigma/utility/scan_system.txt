@@ -1,0 +1,4 @@
+Widening the sensors to scan the whole system Commander;
+Starting scan right now;
+You don't have to ask twice commander;
+Scanning the system as requested

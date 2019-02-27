@@ -1,0 +1,3 @@
+Velocity already at zero;
+Velocity already set to zero;
+Velocity is already zero

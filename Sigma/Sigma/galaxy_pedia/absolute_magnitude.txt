@@ -1,0 +1,5 @@
+Absolute Magnitude:
+
+It is a measure of the luminosity of a celestial object, on a logarithmic astronomical magnitude scale. An object's absolute magnitude is defined to be equal to the apparent magnitude that the object would have if were viewed from a distance of exactly 10 parsecs (32.6 light years), with no extinction (or dimming) of its light due to absorption by interstellar dust particles. By hypothetically placing all objects at a standard reference distance from the observer, their luminosities can be directly compared on a magnitude scale. As with all astronomical magnitudes, the absolute magnitude can be specified for different wavelength ranges corresponding to specified filter bands or passbands.
+
+The Sun has absolute magnitude of +4.83.

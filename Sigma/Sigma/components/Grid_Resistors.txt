@@ -1,0 +1,2 @@
+Grid Resistors:
+Component found in ships: frequently used by military and authority vessels. Known to be salvaged from signal sources. Grid resistors are a form of serial resistor (often in a 2 or 3 dimensional array) that are used for a variety of purposes including: radio interference reduction, parasitic oscillation prevention and grid current limitation. 

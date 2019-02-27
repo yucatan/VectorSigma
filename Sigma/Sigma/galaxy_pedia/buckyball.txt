@@ -1,0 +1,3 @@
+Buckyball:
+
+Buckminsterfullerene (or bucky-ball) is a spherical fullerene molecule with the formula C60. It has a cage-like fused-ring structure (truncated icosahedron) which resembles a soccer ball (football), made of twenty hexagons and twelve pentagons, with a carbon atom at each vertex of each polygon and a bond along each polygon edge.

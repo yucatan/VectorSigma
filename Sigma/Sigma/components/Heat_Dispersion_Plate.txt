@@ -1,0 +1,4 @@
+
+Heat Dispersion Plate:
+
+Component found in ships: frequently used by haulage vessels. Destroyed haulage vessels can be scavenged from the aftermath of combat in shipping lanes. Known to be salvaged from signal sources. Heat dispersion plates use their surface area to disperse heat into the environment. 

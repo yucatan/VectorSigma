@@ -1,0 +1,1 @@
+{TXT:Ship name} is ready commander. Ship controls are all yours.

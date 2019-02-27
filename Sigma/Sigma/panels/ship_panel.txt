@@ -1,0 +1,2 @@
+[Opening;showing] ship panel;
+Ship panel activated

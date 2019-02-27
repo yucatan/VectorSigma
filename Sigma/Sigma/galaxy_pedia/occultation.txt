@@ -1,0 +1,3 @@
+Occultation:
+
+Occultation is an event that occurs when one object is hidden by another object that passes between it and the observer. An eclipse is an example of occultation.

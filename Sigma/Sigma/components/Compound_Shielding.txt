@@ -1,0 +1,2 @@
+Compound Shielding:
+Component found in ships: frequently used by combat oriented vessels. Known to be salvaged from signal sources in high security systems. Compound shielding is a complex management of layered shields to provide a more effective barrier. 

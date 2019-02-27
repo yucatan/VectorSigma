@@ -1,0 +1,4 @@
+
+Guardian Module Blueprint Segment:
+
+This is a partial schematic detailing the inner workings of a Guardian module. 

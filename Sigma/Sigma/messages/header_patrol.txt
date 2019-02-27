@@ -1,0 +1,1 @@
+System Control, this is Commander {TXT:Name} on the warship {TXT:Ship name}.  

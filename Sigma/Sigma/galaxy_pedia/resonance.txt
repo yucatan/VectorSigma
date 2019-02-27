@@ -1,0 +1,3 @@
+resonance:
+
+Orbital resonance occurs when orbiting bodies exert a regular, periodic gravitational influence on each other, usually because their orbital periods are related by a ratio of small integers.

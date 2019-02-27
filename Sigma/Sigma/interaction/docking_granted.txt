@@ -1,0 +1,1 @@
+[Landing;] pad {INT:EDDI docking granted landingpad} [has been made;is] [available;free] [for landing; for docking;to use; to dock at]

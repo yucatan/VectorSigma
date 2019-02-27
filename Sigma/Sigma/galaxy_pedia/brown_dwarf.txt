@@ -1,0 +1,5 @@
+Brown dwarfs:
+
+They are substellar objects that occupy the mass range between the heaviest gas giant planets and the lightest stars, of approximately 13 to 75 Jupiter masses. Below this range are the sub-brown dwarfs, and above it are the lightest red dwarfs. Brown dwarfs may be fully convective, with no layers or chemical differentiation by depth.
+
+Unlike the stars in the main-sequence, brown dwarfs are not massive enough to sustain nuclear fusion of ordinary hydrogen to helium in their cores. They are, however, thought to fuse deuterium and to fuse lithium if their mass is above a debated threshold of 13 Mega Joules and 65 Mega Joules, respectively. It is also debated whether brown dwarfs would be better defined by their formation processes rather than by their supposed nuclear fusion reactions.

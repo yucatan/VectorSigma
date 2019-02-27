@@ -1,0 +1,2 @@
+Shielding Sensors:
+Component found in ships: frequently used by combat oriented vessels. Known to be salvaged from signal sources in high security systems. Shielding sensors are used to monitor an active shield. 

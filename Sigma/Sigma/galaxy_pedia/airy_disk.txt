@@ -1,0 +1,5 @@
+Airy Disk:
+
+In optics, the Airy disk and Airy pattern are descriptions of the best focused spot of light that a perfect lens with a circular aperture can make, limited by the diffraction of light. The Airy disk is of importance in physics, optics, and astronomy.
+
+Both Airy Disk and Airy Pattern are named after George Biddell Airy.

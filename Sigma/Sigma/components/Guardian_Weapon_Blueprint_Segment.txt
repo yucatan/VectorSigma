@@ -1,0 +1,4 @@
+
+Guardian Weapon Blueprint Segment:
+
+This is a partial schematic detailing the internal systems of a Guardian weapon. 

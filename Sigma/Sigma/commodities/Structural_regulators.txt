@@ -1,0 +1,1 @@
+Structural Regulators: These monitor structural stability of buildings under a broad range of gravities. They will generate alerts if dangerous stresses or damage is detected.

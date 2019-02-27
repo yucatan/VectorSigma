@@ -1,0 +1,2 @@
+Polymer Capacitors:
+Component found in ships: frequently used by military and authority vessels. Known to be salvaged from signal sources in anarchy systems. Polymer capacitors are stable and reliable forms of capacitor for small scale electronics. They are known for handling overload situations without cascade failure. 

@@ -1,0 +1,1 @@
+Robotics: They are used to perform simple automated tasks or to act as avatars for remotely located humans in hazardous environments. They are also used for repetitive and highly accurate production line tasks.

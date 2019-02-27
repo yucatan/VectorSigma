@@ -1,0 +1,5 @@
+Aurora:
+
+An aurora, sometimes referred to as a polar lights or northern lights, is a natural light display in the Earth's sky, predominantly seen in the high latitude (Arctic and Antarctic) regions.
+
+Auroras are produced when the magnetosphere is sufficiently disturbed by the solar wind that the trajectories of charged particles in both solar wind and magnetospheric plasma, mainly in the form of electrons and protons, precipitate them into the upper atmosphere (thermosphere/exosphere) due to Earth's magnetic field, where their energy is lost.

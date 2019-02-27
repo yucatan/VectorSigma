@@ -1,0 +1,8 @@
+FSD:
+
+The Frame Shift Drive (FSD) enables ships to travel at incredible speeds within star systems (via supercruise) as well as between star systems (via hyperspace).
+Rather than accelerate a ship through space, the frame shift drive moves space around a ship to allow it to travel faster than light without using extreme amounts of energy or experiencing time distortion.
+
+Frame shift drives use a modified Alcubierre Drive design to compress space in front of ships in supercruise.
+
+Frame shift drives enable ships to enter hyperspace, a region with more dimensions than normal space, in which extremely fast travel is possible. Hyperspace jumps rely on quantum mechanics, as the destination of any given jump must be known before the jump is made, and the amount of energy needed to complete the jump is discrete.

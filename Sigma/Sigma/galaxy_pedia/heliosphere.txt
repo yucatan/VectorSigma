@@ -1,0 +1,3 @@
+heliosphere:
+
+The heliosphere is the bubble-like region of space dominated by the Sun, which extends far beyond the orbit of Pluto. Plasma "blown" out from the Sun, known as the solar wind, creates and maintains this bubble against the outside pressure of the interstellar medium, the hydrogen and helium gas that permeates the Milky Way Galaxy.

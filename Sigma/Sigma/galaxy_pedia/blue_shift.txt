@@ -1,0 +1,2 @@
+Blue Shift:
+Doppler blueshift is caused by movement of a source towards the observer. The term applies to any decrease in wavelength and increase in frequency caused by relative motion, even outside the visible spectrum. Only objects moving at near-relativistic speeds toward the observer are noticeably bluer to the naked eye, but the wavelength of any reflected or emitted photon or other particle is shortened in the direction of travel.

@@ -1,0 +1,2 @@
+Activating center panel;
+Showing ship status

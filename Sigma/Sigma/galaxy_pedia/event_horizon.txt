@@ -1,0 +1,3 @@
+Event Horizon:
+
+In general relativity, an event horizon is a boundary in spacetime beyond which events cannot affect an outside observer. In layman's terms, it is defined as the shell of "points of no return", i.e., the points at which the gravitational pull becomes so great as to make escape impossible, even for light. An event horizon is most commonly associated with black holes. Light emitted from inside the event horizon can never reach the outside observer. 

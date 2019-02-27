@@ -1,0 +1,2 @@
+Thargoid Wake Data:
+Wake data of a Thargoid Interceptor. 

@@ -1,0 +1,2 @@
+Atypical Disrupted Wake Echoes:
+Captured from high energy wakes with a wake scanner. Data recorded from a disrupted frame shift wake usually follows a familiar pattern. Sometimes these show abnormalities which often makes the data more valuable. 

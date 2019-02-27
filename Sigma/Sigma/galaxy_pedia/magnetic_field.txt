@@ -1,0 +1,3 @@
+Magnetic Field:
+
+A magnetic field is the magnetic effect of electric currents and magnetic materials. The magnetic field at any given point is specified by both a direction and a magnitude (or strength), as such it is represented by a vector field.

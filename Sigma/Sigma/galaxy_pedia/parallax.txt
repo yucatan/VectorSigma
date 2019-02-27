@@ -1,0 +1,3 @@
+Parallax:
+
+Parallax is a displacement or difference in the apparent position of an object viewed along two different lines of sight, and is measured by the angle or semi-angle of inclination between those two lines.

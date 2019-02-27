@@ -1,0 +1,1 @@
+Micro controllers: They are small units to provide actuation and process control for lightweight devices.

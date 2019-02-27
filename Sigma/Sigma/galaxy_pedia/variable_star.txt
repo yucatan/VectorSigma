@@ -1,0 +1,3 @@
+variable star:
+
+A variable star is a star whose brightness as seen from Earth (its apparent magnitude) fluctuates. This variation may be caused by a change in emitted light or by something partly blocking the light.

@@ -1,0 +1,3 @@
+Penumbra:
+
+The penumbra is the region in which only a portion of the light source is obscured by the occluding body. An observer in the penumbra experiences a partial eclipse. 

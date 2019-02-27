@@ -1,0 +1,1 @@
+Power converter: used to modify and regulate the energy coming from multiple sources so that it is tuned to the optimal operational requirements of all attached devices.

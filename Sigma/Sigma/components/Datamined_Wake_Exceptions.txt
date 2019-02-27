@@ -1,0 +1,2 @@
+Datamined Wake Exceptions:
+Captured from high energy wakes with a wake scanner. Many automated wake scanner systems will generate an exceptions log when they encounter data that doesn't match the pre-programmed profiles. Most of these turn out to be junk, but there are rumours that something more insidious has been discovered. 

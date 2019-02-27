@@ -1,0 +1,4 @@
+Modular terminals: they are ubiquitous items that provide a hardware display of data in a visual and audio format.
+Used by factions as a reward for mission contracts.
+Consumed by: High Tech
+

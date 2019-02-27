@@ -1,0 +1,1 @@
+Are you sure Commander? This will reset my knowledge for the current state of {TXT:Ship name}.

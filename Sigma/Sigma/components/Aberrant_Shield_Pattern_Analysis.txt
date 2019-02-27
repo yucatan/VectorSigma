@@ -1,0 +1,2 @@
+Aberrant Shield Pattern Analysis:
+Collected during basic scan: frequently pulled from combat oriented vessels. Energy shields are formed from complex interlocking fields, the mathematical basis for which is well understood. However, analysis will sometimes indicate a behaviour that doesn't sit properly with this accepted module. This often proves to be spurious data, but underground researchers are looking into other possible causes. 

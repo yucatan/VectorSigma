@@ -1,0 +1,3 @@
+Ephemeris:
+
+In astronomy and celestial navigation, ephemeris gives the positions of naturally occurring astronomical objects as well as artificial satellites in the sky at a given time or times.

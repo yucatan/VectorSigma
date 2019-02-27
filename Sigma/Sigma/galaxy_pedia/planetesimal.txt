@@ -1,0 +1,3 @@
+Planetesimals:
+
+They are solid objects thought to exist in protoplanetary disks and in debris disks. A widely accepted theory of planet formation states that planets form out of cosmic dust grains that collide and stick to form larger and larger bodies. When the bodies reach sizes of approximately one kilometer, then they can attract each other directly through their mutual gravity, enormously aiding further growth into moon-sized protoplanets.

@@ -1,0 +1,1 @@
+Commander the [analysis;discovery] mode already [off;disabled]. Would you like me to turn it on?

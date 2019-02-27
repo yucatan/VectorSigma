@@ -1,0 +1,2 @@
+Anomalous Bulk Scan Data:
+Collected during basic scan. Frequently pulled from haulage vessels. Data files follow predictable formats, although in larger data sets individual components can be identified which vary from the expected pattern analysis and these can prove very useful to the right people. 

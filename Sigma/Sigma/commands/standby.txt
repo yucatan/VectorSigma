@@ -1,0 +1,1 @@
+Are you sure? After I activate this mode I will not accept commands unless you activate me again by saying DISABLE STAND BY

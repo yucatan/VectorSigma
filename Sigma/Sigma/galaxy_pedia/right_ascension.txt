@@ -1,0 +1,1 @@
+Right ascension, is the angular distance measured eastward along the celestial equator from the vernal equinox to the hour circle of the point in question. When combined with declination, these astronomical coordinates specify the direction of a point on the celestial sphere in the equatorial coordinate system.

@@ -1,0 +1,1 @@
+Occupied Cryopods: CryoPods use the standard cargo canister template and provide the necessary cryogenic environment to store a single human being in hibernation for many years.

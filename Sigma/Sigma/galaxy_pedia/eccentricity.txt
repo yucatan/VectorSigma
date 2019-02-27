@@ -1,0 +1,3 @@
+Eccentricity:
+
+Also called orbital eccentricity of an astronomical object, is a parameter that determines the amount by which its orbit around another body deviates from a perfect circle.

@@ -1,0 +1,1 @@
+Congratulations Commander! The Pilots Federation has just notified us of your exploration rank promotion to {TXT:EDDI exploration promotion rating}.

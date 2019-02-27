@@ -1,0 +1,2 @@
+Decoded Emission Data:
+Collected during basic scan: frequently pulled from combat oriented vessels. Known to be salvaged from signal sources. Emission data takes a variety of forms and is often merged into wider datasets to search for anomalies and other stand out data. This tends to be compressed in decoded packages to maintain a separate copy of anomalous results. 

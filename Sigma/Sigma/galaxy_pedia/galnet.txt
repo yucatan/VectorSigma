@@ -1,0 +1,7 @@
+GalNet:
+
+It is a galactic infrastructure which provides news, market pricing and a pilot communication system. It features important news of the galaxy and ranks Powers with the Galactic Power Standing.
+
+The Pilots Federation derives the bulk of its wealth from the GalNet data network. Originally a system of ship, bounty and star-chart data, it evolved into an interstellar aggregator of market information and galactic news. By 3300, the Pilots Federation was not only the dominant provider of this information, it was also the main manufacturer of the hardware and software serving this data. Today, Pilots Federation systems are fitted as standard on virtually all independent starships.
+
+Over the centuries this allowed the Pilots Federation to grow into one of the dominant financial superpowers of the galaxy through its GalNet data network.

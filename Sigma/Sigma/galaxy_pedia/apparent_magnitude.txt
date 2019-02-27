@@ -1,0 +1,3 @@
+Apparent Magnitude:
+
+The apparent magnitude of a celestial object is a number that is a measure of its brightness as seen by an observer on Earth. The brighter an object appears, the lower its magnitude value (i.e. inverse relation). The Sun, at apparent magnitude of −27, is the brightest object in the sky. 

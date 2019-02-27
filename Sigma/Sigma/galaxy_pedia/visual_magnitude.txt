@@ -1,0 +1,1 @@
+Visual Magnitude, a scale used by astronomers to measure the brightness of a star or other celestial objects. Visual magnitude measures only the visible light from the object. On this scale, bright objects have lower number them dimmer objects.

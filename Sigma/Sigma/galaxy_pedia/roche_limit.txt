@@ -1,0 +1,3 @@
+Roche Limit:
+
+The Roche limit is the minimum distance to which a large satellite can approach its primary body without being torn apart by tidal forces. If satellite and primary are of similar composition, the theoretical limit is about 2.5 times the radius of the larger body.

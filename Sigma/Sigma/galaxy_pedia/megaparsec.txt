@@ -1,0 +1,3 @@
+Megaparsec:
+
+A megaparsec is a million parsecs. One megaparsec is equivalent to 3.26 million light-years

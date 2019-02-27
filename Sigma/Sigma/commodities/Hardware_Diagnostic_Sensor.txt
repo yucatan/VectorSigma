@@ -1,0 +1,1 @@
+Hardware Diagnostic Sensor: Diagnostic sensors that provide hardware monitoring and telemetry for a variety of systems.

@@ -1,0 +1,2 @@
+Worn Shield Emitters:
+Component found in ships: frequently used by combat oriented vessels. Known to be salvaged from signal sources. These are used shield emitters, although the core components can be cannibalised. 

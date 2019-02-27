@@ -1,0 +1,1 @@
+Articulation motors are used to move components with devices.

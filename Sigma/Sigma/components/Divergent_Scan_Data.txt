@@ -1,0 +1,2 @@
+Divergent Scan Data:
+Captured from settlement data point networks. Scan data usually forms a large data set, with only a small quantity of pertinent information. For the most part these are easily analysed, but some sensor data has unusual properties and while this is often caused by a malfunction can yield some interesting results. 

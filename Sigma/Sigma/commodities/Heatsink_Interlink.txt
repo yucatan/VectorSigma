@@ -1,0 +1,3 @@
+Heatsink Interlink: These specially made heatsink interlinks provide the mechanism for the emissive cooling plates within a heatsink.
+
+These can be found at Gresley Enterprise in the LHS 3980 system.

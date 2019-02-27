@@ -1,0 +1,3 @@
+Trade Data: The trade manifest data for a ship that met its end nearby. The information contained within can be extremely useful to unscrupulous individuals and fetches a good price on the black market. However, illegal salvage is punishable by law.
+
+ALERT: Trade Data is illegal in most systems.

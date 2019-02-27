@@ -1,0 +1,3 @@
+Magnitude:
+
+In astronomy, magnitude is a logarithmic measure of the brightness of an object, measured in a specific wavelength or passband, usually in the visible or near-infrared spectrum.

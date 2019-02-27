@@ -1,0 +1,2 @@
+Security Firmware Patch:
+Captured from settlement data point networks. High grade firmware for secure hardware interfaces have to use their manufacturer's authorised updates. These can be expensive and sometimes custom built patches are used instead. These provide the components necessary to manipulate the firmware in unauthorised ways. 

@@ -1,0 +1,3 @@
+Lagrange point:
+
+In celestial mechanics, the Lagrangian points are positions in an orbital configuration of two large bodies where a small object affected only by gravity can maintain a stable position relative to the two large bodies. The Lagrange points mark positions where the combined gravitational pull of the two large masses provides precisely the centripetal force required to orbit with them. 

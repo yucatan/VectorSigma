@@ -1,0 +1,3 @@
+Baryon:
+
+A baryon is a composite subatomic particle made up of three quarks (a triquark, as distinct from mesons, which are composed of one quark and one antiquark). Baryons and mesons belong to the hadron family of particles, which are the quark-based particles. The name "baryon" comes from the Greek word for "heavy", because at the time of their naming, most known elementary particles had lower masses than the baryons.

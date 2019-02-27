@@ -1,0 +1,3 @@
+Albedo:
+
+Albedo is a measurement of the amount of light reflected from the surface of a celestial object, such as a planet, satellite, comet or asteroid. The albedo is the ratio of the reflected light to the incident light and has values between 0, a black object that absorbs all light and reflects none, such as a black hole, and 1, a white object that reflects all light and absorbs none.

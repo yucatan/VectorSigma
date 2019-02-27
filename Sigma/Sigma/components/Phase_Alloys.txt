@@ -1,0 +1,2 @@
+Phase Alloys:
+Component found in ships: frequently used by combat oriented vessels. Known to be salvaged from signal sources in low security systems. Phase alloys blend metals and minerals into a meta-material which exploits properties from different phase states of the individual elements. 

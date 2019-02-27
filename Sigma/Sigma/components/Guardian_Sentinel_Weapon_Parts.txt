@@ -1,0 +1,4 @@
+
+Guardian Sentinel Weapon Parts:
+
+These are weapon components from a Guardian Sentinel. In their current state they are inoperable, but may be useful for research and development. 

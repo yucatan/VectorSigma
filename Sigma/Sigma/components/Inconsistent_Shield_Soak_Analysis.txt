@@ -1,0 +1,4 @@
+
+Inconsistent Shield Soak Analysis:
+
+Collected during basic scan: frequently pulled from haulage vessels. Accumulated data of shield responses to impacts rarely reveals anything unusual in anything except experimental models. This isn't always the case and analysing irregularities often reveals useful data about the shields. 

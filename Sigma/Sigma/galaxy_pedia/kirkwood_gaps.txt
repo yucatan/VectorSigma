@@ -1,0 +1,3 @@
+Kirkwood Gaps:
+
+A Kirkwood gap is a gap or dip in the distribution of the semi-major axes (or equivalently of the orbital periods) of the orbits of main-belt asteroids. They correspond to the locations of orbital resonances with Jupiter.

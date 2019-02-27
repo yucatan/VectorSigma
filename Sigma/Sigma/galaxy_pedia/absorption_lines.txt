@@ -1,0 +1,5 @@
+Absorption Lines:
+
+An absorption line will appear in a spectrum if an absorbing material is placed between a source and the observer. This material could be the outer layers of a star, a cloud of interstellar gas or a cloud of dust.
+
+Absorption lines are usually seen as dark lines, or lines of reduced intensity, on a continuous spectrum. This is seen in the spectra of stars, where gas (mostly hydrogen) in the outer layers of the star absorbs some of the light from the underlying thermal blackbody spectrum.

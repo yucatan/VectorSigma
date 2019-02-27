@@ -1,0 +1,1 @@
+Kepler's third law: The square of the orbital period of a planet is proportional to the cube of the semi-major axis of its orbit.

@@ -1,0 +1,3 @@
+Luminosity:
+
+Luminosity is the total amount of energy emitted by a star, galaxy, or other astronomical object per unit time. It is related to the brightness, which is the luminosity of an object in a given spectral region.

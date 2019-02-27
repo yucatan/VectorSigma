@@ -1,0 +1,4 @@
+Newton's laws of motion:
+1, In an inertial frame of reference, an object either remains at rest or continues to move at a constant velocity, unless acted upon by a force.
+2, The rate of change of momentum of a body is directly proportional to the force applied, and this change in momentum takes place in the direction of the applied force.
+3, When one body exerts a force on a second body, the second body simultaneously exerts a force equal in magnitude and opposite in direction on the first body.

@@ -1,0 +1,2 @@
+Proto Heat Radiators:
+Specialist component developed during economic boom. Known to be salvaged from signal sources. Proto heat radiators use fluid transfer to move heat from a system. 

@@ -1,0 +1,3 @@
+Emergency power cells: used to provide power when the primary power source is unavailable. They can also be used to temporarily increase power output.
+
+These can be found at Chadwick Port in the Gladutjin system.

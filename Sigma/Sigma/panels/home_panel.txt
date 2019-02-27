@@ -1,0 +1,2 @@
+[Here is the;Opening] home panel;
+Home panel [activated;opened]

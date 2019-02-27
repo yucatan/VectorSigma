@@ -1,0 +1,5 @@
+Antimatter:
+
+In modern physics, antimatter is defined as a material composed of the antiparticle (or "partners") to the corresponding particles of ordinary matter.
+
+A particle and its anti-particle have - in theory - the same mass as one another, but opposite electric charge, and other differences in quantum numbers. For example, a proton has positive charge while an antiproton has negative charge. A collision between any particle and its anti-particle partner is known to lead to their mutual annihilation, giving rise to various proportions of intense photons (gamma rays), neutrinos, and sometimes less-massive particle–antiparticle pairs.

@@ -1,0 +1,3 @@
+Jansky:
+
+The jansky (symbol Jy) is a non-SI unit of spectral flux density, or spectral irradiance, used especially in radio astronomy. The unit is named after pioneering US radio astronomer Karl Guthe Jansky.

@@ -1,0 +1,2 @@
+Thargoid Structural Data:
+Data collected during a basic scan of Thargoid structures. 
