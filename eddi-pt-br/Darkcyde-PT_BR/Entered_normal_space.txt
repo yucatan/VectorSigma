@@ -13,14 +13,14 @@
 
 {if state.eddi_context_interdicted != "yes":
 
-    {Occasionally(2, "{ShipName()}")}
+    {OneOf("{ShipName()}","Você")}
     {OneOf("saiu da supervelocidade", "{OneOf('entrou no','retornou ao','saiu para o')} espaço normal")}
 
     {if event.bodytype && event.bodytype != "":
         {OneOf("perto de", "próximo de", "nas proximidades de")}
         {F("Body Name Tidy")}
 
-        {if event.bodytype = "Planet":
+        {if event.bodytype = "Planeta":
 
             {set time to SecondsSince(0) - state.eddi_context_approach_time}
             {_ If time since last settlement approach is more than 1 minute _}
@@ -42,9 +42,9 @@
                 {station_missions}
             }
 
-        |elif event.bodytype = "Star":
+        |elif event.bodytype = "Estrela":
             {body}.
-        |elif event.bodytype = "Station":
+        |elif event.bodytype = "Estação":
             {set model to StationDetails(event.body, event.system).model}
             {set type to token(model, " ", 1)}
             {if find(model, "Unknown") = -1:

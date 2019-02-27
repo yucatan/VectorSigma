@@ -1,0 +1,12 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'fine')}
+{SetState('eddi_context_last_action', 'incur')}
+{SetState('eddi_context_fine_name', event.victim)}
+{SetState('eddi_context_fine_faction', event.faction)}
+{SetState('eddi_context_fine_amount', event.fine)}
+
+{_ Update Fines & Bounties}
+{F("FinesBounties_Add")}
+
+Você {OneOf("foi multado em","deve à {P(event.faction)}")} {Humanise(event.fine)} créditos por {event.crime}.
+

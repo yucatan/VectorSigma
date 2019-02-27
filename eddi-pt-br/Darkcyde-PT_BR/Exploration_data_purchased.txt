@@ -1,0 +1,4 @@
+{OneOf("Comprados dados de {OneOf('sistema', 'exploração')} de {P(event.system)}",
+            "dados de {OneOf('sistema', 'exploração')} de {P(event.system)} agora disponíveis",
+            "{Occasionally(3, '{ShipName()}')} Recebeu dados de {OneOf('sistema', 'exploração')} de {P(event.system)} dos serviços da estação",
+            "Recebimento de dados de {OneOf('sistema', 'exploração')} de {P(event.system)} confirmado")}.

@@ -105,17 +105,16 @@
     |elif reportbody.stellarclass = "CS":
         uma estrêla de carbono {ringed}
     |elif find(["C", "CN", "CH", "CHd"], reportbody.stellarclass) > -1:
-                uma estrêla de carbono {ringed}
-        a {ringed} {Occasionally(2, "late-sequence")} carbon star
+        uma estrêla de carbono {ringed} {Occasionally(2, "mais fria")}
         {Occasionally(4, "com uma atmosféra dominada por carbono")}
     |elif reportbody.stellarclass = "CJ":
-        a {ringed} {Occasionally(2, "late-sequence")} carbon star
+        uma estrêla de carbono {ringed} {Occasionally(2, "mais fria")}
         {Occasionally(2, "com altos níveis de carbono 13 em sua atmosféra")}
     |elif reportbody.stellarclass = "MS":
-        a {ringed} late sequence star
+        uma estrêla {ringed} mais fria
         {Occasionally(4, "que uma vez foi uma estrêla classe M e está a caminho de se tornar uma estrêla de carbono")}
     |elif reportbody.stellarclass = "S":
-        a {ringed} late sequence star
+        uma estrêla {ringed} mais fria
         {Occasionally(4, "que uma vez foi uma estrêla classe M e está se tornando uma estrêla de carbono")}
     |elif reportbody.stellarclass = "D":
         uma anã branca {ringed}

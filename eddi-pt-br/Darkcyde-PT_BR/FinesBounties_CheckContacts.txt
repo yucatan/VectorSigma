@@ -1,0 +1,52 @@
+{_ FinesBounties_ContactsCheck}
+{_ Function to report Bonds/Bounties or Fines/Bounties to collect or pay}
+
+{if len(state.eddi_context_bounties_type) > 0 && state.eddi_context_bounties_type != null:
+   {set bounties_type_array to split(state.eddi_context_bounties_type, "+=")}
+   {set bounties_faction_array to split(state.eddi_context_bounties_faction, "+=")}
+   {set bounties_system_array to split(state.eddi_context_bounties_system, "+=")}
+
+   {set position to 0}
+   {for factions in bounties_faction_array:
+
+      {if factions = station.faction || factions = system.allegiance || system.name = bounties_system_array[position]:
+
+         {if bounties_type_array[position] = "Bond":
+            {set bond to 1}
+         |elif bounties_type_array[position] = "BountyAwd":
+            {set bountyawd to 1}
+         |elif bounties_type_array[position] = "BountyInc":
+            {set bountyinc to 1}
+         |elif bounties_type_array[position] = "Fine":
+            {set fine to 1}
+         }
+      }
+   {set position to position + 1}
+   }
+}
+
+{if bountyawd = 1 || bond = 1:
+   Lembretes: Você tem
+   {if bond = 1: pagamentos de combate}
+   {if bountyawd = 1:
+      {if bond = 1: and}
+      recompensas
+   }
+   a coletar.
+}
+
+{if fine = 1 || bountyinc = 1:
+   {if bountyawd = 1 || bond = 1:
+      Você também
+   |else:
+      Lembrete: Vocẽ
+   }
+   tem
+   {if fine = 1: multas}
+   {if bountyinc = 1:
+      {if fine = 1: e}
+      recompensas
+   }
+   a serem pagas.
+}
+

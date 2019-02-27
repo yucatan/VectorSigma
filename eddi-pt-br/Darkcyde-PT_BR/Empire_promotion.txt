@@ -8,7 +8,7 @@
 
 {F("Empire honorific")},
 
-{OneOf("a marinha Imperial {OneOf('concedeu-lhe uma promoção', 'promoveu-lhe', 'avançou-lhe')} ao pôsto de {rank}",
+{OneOf("a marinha Imperial {OneOf('concedeu-lhe uma promoção', 'promoveu-lhe', 'avançou-lhe')} ao rank de {rank}",
        "Você {OneOf(\"{OneOf('elevou sua posição','foi promovid{A}')} a\",
                         \"{OneOf('recebeu','foi agraciad{A} com')} um rank mais alto de\")} {rank} na Marinha Imperial")}
 
@@ -27,5 +27,5 @@
 |elif event.rank = "Duke":
    Você recebeu acesso à compra da Impírial Câtter.
 |elif event.rank = "King":
-   Você alcançou o pôsto mais alto possível meu soberano.
+   Você alcançou o mais alto rank possível meu soberano.
 }

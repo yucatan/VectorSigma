@@ -1,0 +1,10 @@
+Dados de exploração de {len(event.systems)} sistema{if len(event.systems) > 1:s} vendido{if len(event.systems) > 1:s} por {Humanise(event.reward)} créditos
+
+{if len(event.firsts) > 0:
+    , com um bônus de {Humanise(event.bonus)} créditos por
+    {set N to event.firsts}
+    {if len(event.firsts) = 1: {set N to:uma}}
+    {N} primeir{if len(event.firsts) = 1:a |else:as} descobert{if len(event.firsts) = 1:a |else:as}
+}
+.
+

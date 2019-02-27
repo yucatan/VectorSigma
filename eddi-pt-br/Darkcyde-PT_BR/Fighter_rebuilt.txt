@@ -1,0 +1,8 @@
+Caça
+
+{if state.eddi_state_fighter_docked != true:
+    reconstruído e pronto para 
+    {OneOf("ser lançado", "ser liberado")}
+|else:
+    pronto para relançamento
+}.

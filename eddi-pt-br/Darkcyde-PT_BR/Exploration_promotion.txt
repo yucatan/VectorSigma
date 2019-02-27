@@ -1,0 +1,4 @@
+Você foi reconhecido por sua contribuição à exploração da galácsiaa {F("Honorific")}.
+
+Você {OneOf("está agora no","alcançou o","conquistou o")} rank de {cmdr.explorationrating.name}.
+

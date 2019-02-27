@@ -1,0 +1,10 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'fsd')}
+{SetState('eddi_context_last_action', 'engage')}
+{SetState('eddi_context_supercruise', "yes")}
+
+{Pause(1000)}
+
+{OneOf("{ShipName()}", "Você")} {OneOf("entrou em", "saltou para")} supervelocidade.
+
+

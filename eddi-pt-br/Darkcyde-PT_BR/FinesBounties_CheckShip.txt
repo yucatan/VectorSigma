@@ -1,7 +1,7 @@
 {_ FinesBounties_CheckShip}
 {_ Checks current ship for any crimes}
 
-{if status.vehicle = "SRV" || status.vehicle = "Fighter":
+{if status.vehicle = "VRS" || status.vehicle = "Caça":
     {set v_type to "Sua nave atual"}
 |else:
     {set v_type to cat(OneOf("Esta", "Sua"), " nave")}
@@ -57,15 +57,23 @@
 
     {if ship_bounties_count > 0: Cuidado: {vehicle} está procurado!}
 
+    {if ship_fines_count = 1: {set N to:uma}
+    |else: {set N to ship_fines_count}
+    }
+
     {if ship_fines_count > 0:
         {if ship_bounties_count > 0: Ela |else: {v_type}}
-        tem {ship_fines_count} multa{if ship_fines_count > 1:s} a pagar,
+        tem {N} multa{if ship_fines_count > 1:s} a pagar,
         num total de {ship_fines_total} créditos.
+    }
+
+    {if ship_bounties_count = 1: {set N to:uma}
+    |else: {set N to ship_fines_count}
     }
 
     {if ship_bounties_count > 0:
         {if ship_fines_count > 0: Ela também |else: Ela}
-        tem {ship_bounties_count} recompensa{if ship_fines_count > 1:s |else:y} a pagar,
+        tem {N} recompensa{if ship_fines_count > 1:s |else:y} a pagar,
         num total de {ship_bounties_total} créditos.
     }
 

@@ -1,0 +1,7 @@
+{if event.role = 'Gunner':
+  Agora você é um artilheiro desta tripulação.
+|elif event.role = 'Fighter':
+  Agora você um piloto de caça desta tripulação.
+|elif event.role = 'Idle':
+  Você foi dispensado do serviço.
+}

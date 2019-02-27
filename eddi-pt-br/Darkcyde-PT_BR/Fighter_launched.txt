@@ -1,0 +1,7 @@
+Caça
+{OneOf("{OneOf('saindo', 'sendo lançado')} {Occasionally(2, 'da nave')}",
+       "lançado",
+       "liberado",
+       "saindo")}.
+
+{SetState('eddi_state_fighter_docked', false)}

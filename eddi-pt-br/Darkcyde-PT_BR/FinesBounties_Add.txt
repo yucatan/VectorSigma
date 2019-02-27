@@ -1,0 +1,228 @@
+{_ FinesBounties_Add }
+{_ Add Bonds, Bounties & Fines to memory store }
+
+{if state.eddi_context_bounties_initialised != "yes": {F("FinesBounties_Initialise")}}
+
+{set shipid to cast(state.eddi_context_currentshipid, "s")}
+{SetState('eddi_context_currentshipname', ShipName())}
+
+{_ Unfortunately the variables needed for Power bonuses to be accurate, are not yet available in EDDI. }
+{_ Need: Power Galactic Rank, and Power Personal Rank }
+{_ Placeholder variables and code are included if/when they are ever implemented in the future. }
+
+{_ Setup placeholder Power variables array. Not required if added to EDDI in future. _}
+{_ Alternatively, manually edit these to match your Poweer Pledge / own rank / Power rank. _}
+{set power to ["pledged":"None", "personalrank": 0, "galacticrank": 0]}
+
+
+{if state.eddi_context_last_subject = "bond":
+    {set type to "Bond"}
+    {set evtrewards to [event.awardingfaction: event.reward]}
+
+|elif state.eddi_context_last_subject = "bounty" && state.eddi_context_last_action = "award":
+    {set type to "BountyAwd"}
+    {set evtrewards to []}
+    {for reward in event.rewards:
+        {set evtrewards to union(evtrewards, [reward.faction: reward.amount])}
+    }
+
+|elif state.eddi_context_last_subject = "bounty" && state.eddi_context_last_action = "incur":
+    {set type to "BountyInc"}
+    {set evtrewards to [event.faction: event.bounty]}
+
+|elif state.eddi_context_last_subject = "powerbounty" && state.eddi_context_last_action = "award":
+    {_ Placeholder for Power Bounties _}
+
+|elif state.eddi_context_last_subject = "powerbounty" && state.eddi_context_last_action = "incur":
+    {_ Placeholder for Power Bounties _}
+
+|elif state.eddi_context_last_subject = "stellarbounty" && state.eddi_context_last_action = "award":
+    {_ Placeholder for Interstellar Bounties _}
+
+|elif state.eddi_context_last_subject = "stellarbounty" && state.eddi_context_last_action = "incur":
+    {_ Placeholder for Interstellar Bounties _}
+
+|elif state.eddi_context_last_subject = "fine":
+    {set type to "Fine"}
+    {set evtrewards to [event.faction: event.fine]}
+}
+
+{set bounties_shipid_array to split(state.eddi_context_bounties_shipid, "+=")}
+{set bounties_type_array to split(state.eddi_context_bounties_type, "+=")}
+{set bounties_faction_array to split(state.eddi_context_bounties_faction, "+=")}
+{set bounties_system_array to split(state.eddi_context_bounties_system, "+=")}
+{set bounties_amount_array to split(state.eddi_context_bounties_amount, "+=")}
+
+
+{for evtfaction, evtamount in evtrewards:
+
+    {set position to find(bounties_faction_array, evtfaction, 0)}
+    {set updatedata to 0}
+    {set pwrpct to 1}
+
+    {if type = "Bond" || type = "BountyAwd":
+
+        {if type = "BountyAwd":
+
+            {_ If in Power controlled space get extra bounty -> A. Lavigny-Duval, Z. Hudson, P. Antal, Y. Grom }
+            {if system.powerstate = "Control" || system.powerstate = "Exploited":
+
+                {if system.power = "Arissa Lavigny-Duval" || system.power = "Zachary Hudson":
+
+                    {_ ALD gets +20% base rate, even if not pledged! _}
+                    {if system.power = "Arissa Lavigny-Duval": {set pwrpct to 1.2} }
+
+                    {_ if joined power & personal rank is 2 or more, get bonus amount }
+                    {if power.personalrank > 1 && power.pledge = system.power:
+                        {set pwrpct to 1.2}
+
+                        {_ if power galactic rank 3, 2 or 1 = +10%, +20% or +30% }
+                        {if power.galacticrank = 3: {set pwrpct to 1.3}
+                        |elif power.galacticrank = 2: {set pwrpct to 1.4}
+                        |elif power.galacticrank = 1: {set pwrpct to 1.5}
+                        }
+                    }
+
+                    {_ if personal rank is 5 = flat +100% bonus }
+                    {if power.personalrank = 5 && power.pledge = system.power:
+                        {set pwrpct to 2}
+                    }
+
+                |elif system.power = "Yuri Grom":
+                    {_ Y.Grom +20% base, plus 2% at personal rank =>2 }
+                    {_ or 5/7/15% at galactic ranks 3/2/1 _}
+                    {set pwrpct to 1.2}
+
+                    {_ if joined power & personal rank is 2 or more, get +2% on amount }
+                    {if power.personalrank > 1 && power.pledge = system.power:
+                        {set pwrpct to pwrpct + 0.02}
+
+                        {_ if power galactic rank 3, 2 or 1 = +3%, +5% or +13% }
+                        {if power.galacticrank = 3: {set pwrpct to pwrpct + 0.03}
+                        |elif power.galacticrank = 2: {set pwrpct to pwrpct + 0.05}
+                        |elif power.galacticrank = 1: {set pwrpct to pwrpct + 0.13}
+                        }
+                    }
+
+                |elif system.power = "Pranav Antal":
+                    {_ if personal rank is 5 = flat +100% bonus in controlled or exploited systems }
+                    {if power.personalrank = 5 && power.pledge = system.power:
+                        {set pwrpct to 2}
+                    }
+                }
+            }
+        }
+
+        {set evtamount to floor(evtamount * pwrpct)}
+
+        {while position > -1:
+            {if bounties_type_array[position] = type:
+
+                {_ Add amount to stored amount }
+                {set amount to evtamount + bounties_amount_array[position]}
+
+                {_ Update array }
+                {set bounties_amount_array to union(bounties_amount_array, [position:amount])}
+
+                {set updatedata to 1}
+                {set position to -1}
+            |else:
+                {set position to find(bounties_faction_array, evtfaction, position + 1)}
+            }
+        }
+
+    |elif type = "Fine" || type = "BountyInc":
+
+        {_ If in Power controlled space incur extra fines & bounties }
+        {_ A. Lavigny-Duval, P.Antal, A. Delaine}
+
+        {_ ALD - F&B Double in control systems _}
+        {_ PA - F&B Double in control systems, or +50% in all super-powers _}
+        {_ A.Delaine - F&B -20%,  @ rank =>2, -30/40/50 at galactic rank 3/2/1 , rank 5 = -100% _}
+
+        {if (system.power = "Arissa Lavigny-Duval" || system.power = "Pranav Antal")
+           && system.powerstate = "Control":
+            {type} doubled in {system.power} controlled space.
+        |elif system.power = "Pranav Antal":
+            {type} increased by 50% in Pranav Antal exploited space.
+        |elif system.power = "Archon Delaine":
+
+            {_ if joined power & personal rank is 2 or more, get -20% on fines & bounties incurred }
+            {if power.personalrank > 1 && power.pledge = system.power:
+                {set pwrpct to pwrpct - 0.2}
+
+                {_ if power galactic rank 3, 2 or 1 = -10%, -20% or -30% }
+                {if power.galacticrank = 3: {set pwrpct to pwrpct - 0.1}
+                |elif power.galacticrank = 2: {set pwrpct to pwrpct - 0.2}
+                |elif power.galacticrank = 1: {set pwrpct to pwrpct - 0.3}
+                }
+            }
+
+            {_ if personal rank is 5 = flat -100% bonus }
+            {if power.personalrank = 5 && power.pledge = system.power:
+                {set pwrpct to 0}
+            }
+        }
+
+        {set evtamount to ceil(evtamount * pwrpct)}
+
+        {while position > -1:
+            {if shipid = bounties_shipid_array[position]:
+                {if (bounties_type_array[position] = type)
+                 || (bounties_type_array[position] = "Fine" && type = "BountyInc")
+                 || (bounties_type_array[position] = "BountyInc" && type = "Fine"):
+
+                    {_ Add amount to stored amount }
+                    {set amount to evtamount + bounties_amount_array[position]}
+                    {_ Maximum bounty is 1MCr.  Is it still after v3.0? }
+                    {if type = "BountyInc" || bounties_type_array[position] = "BountyInc":
+                        {if amount > 1000000: {set amount to 1000000}}
+                    }
+
+                    {_ Update arrays }
+                    {if bounties_type_array[position] = "Fine" && type = "BountyInc":
+                        {set bounties_type_array to union(bounties_type_array, [position:type])}
+                    }
+                    {set bounties_amount_array to union(bounties_amount_array, [position:amount])}
+
+                    {set updatedata to 1}
+                    {set position to -1}
+                |else:
+                    {set position to find(bounties_faction_array, evtfaction, position + 1)}
+                }
+            |else:
+                {set position to find(bounties_faction_array, evtfaction, position + 1)}
+            }
+        }
+    }
+
+    {_ Add new data to arrays}
+    {if updatedata = 0:
+        {if len(state.eddi_context_bounties_type) = 0:
+            {set bounties_shipid_array to [shipid]}
+            {set bounties_type_array to [type]}
+            {set bounties_faction_array to [evtfaction]}
+            {set bounties_system_array to [system.name]}
+            {set bounties_amount_array to [evtamount]}
+        |else:
+            {set bounties_shipid_array to cat(bounties_shipid_array, [shipid])}
+            {set bounties_type_array to cat(bounties_type_array, [type])}
+            {set bounties_faction_array to cat(bounties_faction_array, [evtfaction])}
+            {set bounties_system_array to cat(bounties_system_array, [system.name])}
+            {set bounties_amount_array to cat(bounties_amount_array, [evtamount])}
+        }
+    }
+}
+
+{_ Update State variable strings}
+{if len(state.eddi_context_bounties_type) = 0 && len(bounties_type_array) = 1:
+    {set sep to ""}
+|else:
+    {set sep to "+="}
+}
+{SetState('eddi_context_bounties_shipid', join(bounties_shipid_array, sep))}
+{SetState('eddi_context_bounties_type', join(bounties_type_array, sep))}
+{SetState('eddi_context_bounties_faction', join(bounties_faction_array, sep))}
+{SetState('eddi_context_bounties_system', join(bounties_system_array, sep))}
+{SetState('eddi_context_bounties_amount', join(bounties_amount_array, sep))}
+

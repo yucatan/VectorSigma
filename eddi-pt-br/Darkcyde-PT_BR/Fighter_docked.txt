@@ -1,0 +1,5 @@
+Caça
+{OneOf("pousado {Occasionally(2, 'na nave')}","de volta a bordo")}.
+
+{SetState('eddi_state_fighter_docked', true)}
+

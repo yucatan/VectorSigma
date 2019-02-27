@@ -1,0 +1,75 @@
+{set warninglevel to:
+   {set entered to OneOf("Entrando em", "Caindo em")}
+   {if event.threat < 2:
+      {entered}
+   |elif event.threat = 2:
+      Cuidado: {entered} ameaça média
+   |elif event.threat = 3:
+      Alerta: {entered} ameaça alta
+   |elif event.threat = 4:
+      Perigo: {entered} ameaça muito alta
+   |elif event.threat = 5:
+      Perigo extremo: {Occasionally(2, entered)} ameaça muito alta
+   |elif event.threat = 6:
+      Perigo extremo: {Occasionally(2, entered)} ameaça extremamente alta
+   |elif event.threat = 7:
+      Perigo extremo: {Occasionally(2, entered)} ameaça ultra alta
+   |else:
+      Perigo extremo: {Occasionally(2, entered)} ameaça de {event.threat} sem precedentes
+   }
+}
+
+{set source to token(event.source, "$USS_Type_", 1)}
+
+{if source = "Aftermath;":
+   {set source to OneOf("de rescaldo de combate", "de dissipação de combate")}
+|elif ((source = "Anomaly;" || source = "Salvage;") && event.threat = 2):
+   {set warninglevel to entered}
+   {set source to OneOf("alienígena", "não humano", "de sonda Thargóid")}
+|elif (source = "Anomaly;" && event.threat = 4):
+   {set warninglevel to entered}
+   {set source to OneOf("alienígena", "não humano", "de sensor Thargóid")}
+|elif source = "Anomaly;":
+   {set source to OneOf("anômalo", "desconhecido", "misterioso")}
+|elif source = "Ceremonial;":
+    {set source to "de comunicações cerimoniais"}
+|elif source = "Convoy;":
+    {set source to "de combôio"}
+|elif source = "DisruptedWakeEchoes;":
+    {set source to ""}
+|elif source = "DistressSignal;":
+   {set source to "de pedido de socorro"}
+|elif source = "MissionTarget;":
+   {set source to OneOf("de missão", "de missão codificada")}
+|elif source = "NonHuman;":
+   {set source to OneOf("alienígena", "não humano")}
+|elif source = "Salvage;":
+    {set source to "de transmissões degradadas"}
+|elif source = "ValuableSalvage;":
+    {set source to "de transmissões codificadas"}
+|elif source = "VeryValuableSalvage;":
+    {set source to "de transmissões de alto grau"}
+|elif source = "WeaponsFire;":
+   {set source to OneOf("de combate", "de disparo de armas")}
+}
+
+{Pause(2000)}
+{warninglevel} {OneOf("fonte de sinal", "local")} {source} .
+
+{if system.state = "Anarchy" && source = "degraded emissions" && system.population > 0: 
+   {set group to OneOf("clã", "gangue", "sindicato")}
+   {set are to OneOf("conhecido por estar", "reportado")}
+   {set opera to OneOf("operante", "operando")}
+   {set type to OneOf("ativo", "presente", "{opera}")}
+   {set type2 to OneOf("atividade reportada", "presença reportada", "conhecido por estar {opera}")}
+
+   {Occasionally(2, "
+      Cuidado:
+      {OneOf('de criminosos', 'pirata')}
+      {OneOf('{group}s (OneOf('de criminosos', 'pirata')) {are} {type}', '{group} (OneOf('de criminosos', 'pirata')) {type2}')}
+      n{OneOf('a área', 'as proximidades', 'este setor', 'este sistema')}.
+      {OneOf('Esteja', 'Fique', 'Mantenha-se')} {OneOf('vigilante', 'alerta', 'ligado', 'de olho')}
+      {Occasionally(3,', {F('Honorific')}')}.
+   ")}
+}
+

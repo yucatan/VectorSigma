@@ -1,0 +1,40 @@
+{if (cmdr.gender) = "Female":
+   {set A to:a}
+|else:
+   {set A to:o}
+}
+
+Parabéns Comandante {cmdr.name}!
+
+{OneOf("A Marinha Federal {OneOf('concedeu-lhe uma promoção', 'promoveu-lhe', 'avançou-lhe')} ao rank de {event.rank}",
+       "Você {OneOf(\"{OneOf('elevou sua posição','foi promovid{A}')} a\",
+                        \"{OneOf('recebeu','mereceu')} um rank mais alto de\")} {event.rank} na Marinha Federal")}
+
+{Occasionally(2, "por seus serviços à Federação")}
+
+{if (cmdr.gender) = "Female":
+   {set A to:a}
+|else:
+   {set A to:""}
+}
+
+{if event.rank = "Cabo":
+   , e recebeu permissão para comprar a nave Federal Dropship
+|elif event.rank = "Terceiro-Sargento":
+   , e recebeu acesso ao sistema {P("Sol")}
+|elif event.rank = "Segundo-Sargento":
+   , e recebeu permissão para comprar a nave Federal Assault Ship. E agora tem permissão para entrar nos sistemas {P("Vega")} e {P("Beta Hydri")}
+|elif event.rank = "Primeiro-Sargento":
+   , e recebeu acesso ao sistema PLX 695
+|elif event.rank = "Suboficial":
+   , e recebeu permissão para comprar a nave Federal Gunship. E agora tem permissão para entrar no sistema Ross 128
+|elif event.rank = "Tenente":
+   , e recebeu acesso ao sistema {P("Exbeur")}
+|elif event.rank = "Capitão de Corveta":
+   , e recebeu acesso ao sistema {P("Hors")}
+|elif event.rank = "Contra-Almirante":
+   , e recebeu permissão para comprar a nave Federal Corvette
+|elif event.rank = "Almirante":
+   . Você alcançou o mais alto rank possível Senhor{A}
+}.
+
