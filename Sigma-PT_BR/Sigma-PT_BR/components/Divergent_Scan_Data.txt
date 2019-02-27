@@ -1,0 +1,2 @@
+Dados de escaneamento divergente:
+Capturado a partir de redes de ponto de dados de assentamentos. Os dados de varredura geralmente formam um grande conjunto de dados, com apenas uma pequena quantidade de informações pertinentes. Na maior parte, elas são facilmente analisadas, mas alguns dados do sensor têm propriedades incomuns e, embora isso geralmente seja causado por um mau funcionamento, pode gerar alguns resultados interessantes.

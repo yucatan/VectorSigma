@@ -1,0 +1,3 @@
+Componente de Tecnologia Guardian:
+
+Esta recuperação contém circuitos e outros componentes de origem Guardian.

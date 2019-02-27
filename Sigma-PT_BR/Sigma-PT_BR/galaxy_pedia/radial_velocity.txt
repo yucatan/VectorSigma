@@ -1,0 +1,1 @@
+Velocidade Radial: A velocidade radial de um objeto em relação a um dado ponto é a taxa de mudança da distância entre o objeto e o ponto. Ou seja, a velocidade radial é o componente da velocidade do objeto que aponta na direção do raio que conecta o objeto e o ponto.

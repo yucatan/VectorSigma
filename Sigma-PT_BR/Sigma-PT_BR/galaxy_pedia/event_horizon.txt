@@ -1,0 +1,3 @@
+Horizonte de eventos:
+
+Na relatividade geral, um horizonte de eventos é um limite no espaço-tempo, além do qual os eventos não podem afetar um observador externo. Em termos leigos, é definida como a concha de "pontos sem retorno", ou seja, os pontos nos quais a atração gravitacional se torna tão grande que impossibilita a fuga, mesmo para a luz. Um horizonte de eventos é mais comumente associado a buracos negros. A luz emitida de dentro do horizonte de eventos nunca pode alcançar o observador externo.

@@ -1,0 +1,3 @@
+Magnitude:
+
+Na astronomia, magnitude é uma medida logarítmica do brilho de um objeto, medida em um comprimento de onda específico ou banda passante, geralmente no espectro visível ou próximo ao infravermelho.

@@ -1,0 +1,2 @@
+Certo comandante, estou assumindo o controle. Controle de vôo, esta é {TXT:Ship ident} {TXT:Ship name} iniciando os procedimentos de decolagem;
+Como quiser comandante. Controle de vôo, esta é {TXT:Ship ident} {TXT:Ship name} iniciando os procedimentos de decolagem;

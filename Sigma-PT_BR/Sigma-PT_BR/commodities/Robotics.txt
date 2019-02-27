@@ -1,0 +1,1 @@
+Robótica: Eles são usados para executar tarefas automatizadas simples ou para atuar como avatares para humanos localizados remotamente em ambientes perigosos. Eles também são usados para tarefas de linha de produção repetitivas e altamente precisas.

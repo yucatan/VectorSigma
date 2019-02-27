@@ -1,0 +1,2 @@
+Arquivos de Escaneamento Não Identificados:
+Coletado durante o exame básico: frequentemente retirado de naves de transporte. A maioria dos scanners mantém um registro de suas leituras e isso normalmente se encaixa no perfil de desempenho da instrumentação e é marcado pela heurística de identificação. Às vezes, os dados digitalizados não são marcados e, portanto, tornam-se de interesse para aqueles que investigam várias anomalias.

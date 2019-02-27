@@ -1,0 +1,2 @@
+Dados Estruturais Thargoid:
+Dados coletados durante uma varredura básica de estruturas Thargoid.

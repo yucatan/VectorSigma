@@ -1,0 +1,1 @@
+Registradores Estruturais: Monitoram a estabilidade estrutural de edifícios sob uma ampla gama de gravidades. Eles gerarão alertas se forem detectados estresses ou danos perigosos.

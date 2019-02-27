@@ -1,0 +1,1 @@
+Este sistema tem {INT:System orbital stations} estações orbitais,  {INT:System starports} portos estelares, {INT:System planetary outposts} postos planetários e {INT:System planetary stations} estações planetárias.

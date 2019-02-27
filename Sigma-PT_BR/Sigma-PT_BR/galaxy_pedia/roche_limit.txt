@@ -1,0 +1,3 @@
+Limite de Roche:
+
+O limite de Roche é a distância mínima a que um grande satélite pode se aproximar de seu corpo primário sem ser dilacerado por forças de maré. Se o satélite e o primário tiverem composição semelhante, o limite teórico é cerca de 2,5 vezes o raio do corpo maior.

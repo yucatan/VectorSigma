@@ -1,0 +1,2 @@
+﻿Controle de voo, esta é {TXT:Ship ident} {TXT:Ship name} solicitando permissaum para pousar;
+Controle de voo, esta é {TXT:Ship ident} {TXT:Ship name} pedindo permissaum para docar

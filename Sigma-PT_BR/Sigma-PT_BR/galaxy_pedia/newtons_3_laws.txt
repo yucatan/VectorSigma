@@ -1,0 +1,4 @@
+Leis do movimento de Newton:
+1, Em um referencial inercial, um objeto permanece em repouso ou continua a se mover a uma velocidade constante, a menos que seja influenciado por uma força.
+2, A taxa de mudança de momento de um corpo é diretamente proporcional à força aplicada, e essa mudança no momento ocorre na direção da força aplicada.
+3, Quando um corpo exerce uma força sobre um segundo corpo, o segundo corpo exerce simultaneamente uma força igual em magnitude e oposta em direção ao primeiro corpo.

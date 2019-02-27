@@ -1,0 +1,2 @@
+Dados de Rastro Thargoid:
+Dados de rastro de um Interceptador Thargoid.

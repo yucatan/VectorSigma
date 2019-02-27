@@ -1,0 +1,1 @@
+Nós precisamos atualizar nosso conhecimento do estado atual da {TXT:Ship name}. Podemos executar os diagnósticos agora?

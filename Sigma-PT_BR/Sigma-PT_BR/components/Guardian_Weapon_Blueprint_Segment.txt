@@ -1,0 +1,3 @@
+Segmento de Projeto de Arma Guardian:
+
+Este é um esquema parcial detalhando os sistemas internos de uma arma Guardian.

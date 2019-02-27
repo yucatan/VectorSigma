@@ -1,0 +1,2 @@
+[Aqui está;Abrindo] o painel inicial;
+Painel inicial [ativado;aberto]

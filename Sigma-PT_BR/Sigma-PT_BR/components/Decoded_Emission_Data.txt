@@ -1,0 +1,2 @@
+Dados de Emissão Decodificados:
+Coletado durante a varredura básica: freqüentemente retirado de embarcações orientadas para combate. Conhecido por ser recuperado de fontes de sinal. Os dados de emissão assumem uma variedade de formas e muitas vezes são mesclados em conjuntos de dados mais amplos para pesquisar anomalias e outros dados de destaque. Isso tende a ser compactado em pacotes decodificados para manter uma cópia separada de resultados anômalos.

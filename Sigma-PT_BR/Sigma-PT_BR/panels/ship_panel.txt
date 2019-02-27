@@ -1,0 +1,2 @@
+[Abrindo;Mostrando] o painel da nave;
+Painel da nave ativado

@@ -1,0 +1,3 @@
+Magnitude Aparente:
+
+A magnitude aparente de um objeto celeste é um número que é uma medida de seu brilho, como visto por um observador na Terra. Quanto mais brilhante um objeto aparece, menor é seu valor de magnitude (isto é, relação inversa). O Sol, em magnitude aparente de -27, é o objeto mais brilhante no céu.

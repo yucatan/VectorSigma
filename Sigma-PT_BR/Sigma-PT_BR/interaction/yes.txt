@@ -1,0 +1,5 @@
+Sim comandante?;
+Sim?;
+Estou aqui;
+Você me chamou?;
+Estou bem aqui

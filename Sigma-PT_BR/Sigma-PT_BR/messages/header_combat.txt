@@ -1,0 +1,1 @@
+Atenção! Aqui fala {TXT:Name} na nave de guerra {TXT:Ship name}.  

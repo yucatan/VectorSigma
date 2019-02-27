@@ -1,0 +1,1 @@
+Controle do sistema, aqui fala {TXT:Name} a bordo da nave de guerra {TXT:Ship name}.  

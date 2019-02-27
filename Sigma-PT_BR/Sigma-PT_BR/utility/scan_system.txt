@@ -1,0 +1,4 @@
+Aumentando a abrangência dos sensores para ler todo o sistema comandante;
+Iniciando leitura agora mesmo;
+Não precisa pedir duas vezes comandante;
+Lendo o sistema como solicitado

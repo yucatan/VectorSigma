@@ -1,0 +1,3 @@
+Segmento de Projeto de Módulo Guardian:
+
+Este é um esquema parcial detalhando o funcionamento interno de um módulo Guardian.

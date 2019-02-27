@@ -1,0 +1,1 @@
+No painel direito, qual aba está selecionada? Inicial, Módulos, Grupos de Disparo, Nave, Inventário, Status ou Reprodução?

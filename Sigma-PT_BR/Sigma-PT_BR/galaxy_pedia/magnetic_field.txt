@@ -1,0 +1,3 @@
+Campo magnético:
+
+Um campo magnético é o efeito magnético de correntes elétricas e materiais magnéticos. O campo magnético em qualquer ponto é especificado por uma direção e uma magnitude (ou força), como tal é representado por um campo vetorial.

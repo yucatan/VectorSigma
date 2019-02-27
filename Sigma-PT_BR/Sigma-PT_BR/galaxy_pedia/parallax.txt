@@ -1,0 +1,3 @@
+Paralacse:
+
+Paralacse é um deslocamento ou diferença na posição aparente de um objeto visto ao longo de duas linhas de visão diferentes, e é medido pelo ângulo ou semi-ângulo de inclinação entre essas duas linhas.

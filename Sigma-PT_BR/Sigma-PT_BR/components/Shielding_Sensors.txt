@@ -1,0 +1,2 @@
+Sensores de Proteção:
+Componente encontrado em naves: freqüentemente usado por naves de combate. Conhecido por ser recuperado de fontes de sinal em sistemas de alta segurança. Os sensores de proteção são usados para monitorar um escudo ativo.

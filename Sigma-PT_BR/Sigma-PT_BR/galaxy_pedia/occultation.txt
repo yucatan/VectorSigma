@@ -1,0 +1,3 @@
+Ocultação:
+
+Ocultação é um evento que ocorre quando um objeto é escondido por outro objeto que passa entre ele e o observador. Um eclipse é um exemplo de ocultação.

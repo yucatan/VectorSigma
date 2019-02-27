@@ -1,0 +1,2 @@
+Fragmento de Escaneamento Classificado:
+Capturado a partir de redes de ponto de dados de assentamentos. Alguns sistemas de sensores cospem automaticamente os lotes de dados quando encontram determinados perfis de contato. A natureza desses perfis geralmente é mantida em segredo, mas há uma demanda em certos quadrantes para qualquer captura desses dados.

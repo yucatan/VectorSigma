@@ -1,0 +1,1 @@
+Distribuidores de íons: eles são usados para controlar os fluxos de íons dentro de um dispositivo. Estes podem ser encontrados em Stevens Orbital no sistema HIP 18327.

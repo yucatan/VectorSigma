@@ -1,0 +1,3 @@
+Dados de Emissão Irregular:
+
+Usado por facções como recompensa por contratos de missão. Conhecido por ser recuperado de fontes de sinal. Os dados de emissão contêm principalmente leituras identificáveis, mas anomalias geralmente surgem. Embora muitas vezes sejam causadas por falhas no sistema, elas podem revelar dados interessantes ou até mesmo pontos fracos em sensores e tecnologia de camuflagem.
