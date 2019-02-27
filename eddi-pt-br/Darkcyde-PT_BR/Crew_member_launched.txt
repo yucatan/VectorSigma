@@ -1,0 +1,6 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'crew')}
+{SetState('eddi_context_last_action', 'launch')}
+{SetState('eddi_context_crew_name', event.crew)}
+
+{event.crew} lançou seu caça.

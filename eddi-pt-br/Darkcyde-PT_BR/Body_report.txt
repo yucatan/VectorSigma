@@ -1,0 +1,206 @@
+{_ Preferences _}
+{set reportGravity to 1}        {_ Set to 1 to report the body's gravity. _}
+{set reportTerraformState to 1} {_ Set to 1 to report the body's terraform state. _}
+{set reportRings to 1}          {_ Set to 1 to report the body's rings. _}
+{set reportRadius to 1}         {_ Set to 1 to report the body's radius. _}
+{set reportMass to 1}           {_ Set to 1 to report the body's mass. _}
+{set reportRotation to 1}       {_ Set to 1 to report the body's rotation. _}
+{set reportVolcanism to 1}      {_ Set to 1 to report the body's volcanism. _}
+{set reportAtmosphere to 1}     {_ Set to 1 to report the body's atmosphere. _}
+{set reportMaterials to 1}      {_ Set to 1 to report the body's materials. _}
+{set reportScanValue to 1}      {_ Set to 1 to report the body's estimated value. _}
+
+
+{_ Fetch from context }
+{if event:
+    {set reportbody to BodyDetails(event.name, system.name)}
+}
+{if !reportbody.name || reportbody.name = "": 
+    {set reportbody to BodyDetails(state.eddi_context_body_name, state.eddi_context_body_system)}
+}
+{if !reportbody.name || reportbody.name = "": 
+    {set reportbody to BodyDetails(state.eddi_context_body_name)}
+}
+
+{if !reportbody.name || reportbody.name = "":
+    {_ If it's still not possible to get the body name...  _}
+    Não
+    {OneOf("estou certo","tenho certeza")}
+    sobre qual corpo você está
+    {OneOf("perguntando","se referindo")}.
+
+|else:
+    {set compare(stat) to:
+        {if stat > 0.95 && stat < 1.05:
+            {OneOf("aproximadamente","mais ou menos","quase")} igual a 
+        |elif stat > 1:
+            {Humanise(stat)} vezes
+        |elif stat < 1:
+            {if stat > 0.89: {OneOf("fractionally","just")}}
+            menos que
+        }
+
+        {if stat < 0.01:
+            um porcento
+        |elif stat < 0.1:
+            dez porcento
+        |elif stat < 0.2:
+            um quinto
+        |elif stat < 0.3:
+            um terço
+        |elif stat < 0.4:
+            quarenta porcento
+        |elif stat < 0.5:
+            metade
+        |elif stat < 0.6:
+            dois terços
+        |elif stat < 0.7:
+            setenta porcento
+        |elif stat < 0.8:
+            oitenta porcento
+        |elif stat < 0.9:
+            noventa porcento
+        }
+    }
+
+    {set class_check(body) to:
+        {_ Fix roman numerals being spoken as letters _}
+        {set body_array to split(body, " ")}
+        {set pos to find(body_array, "Class") + 1}
+
+        {if pos > 0:
+            {if body_array[pos] = "I":
+                {set num to 1}
+            |elif body_array[pos] = "II":
+                {set num to 2}
+            |elif body_array[pos] = "III":
+                {set num to 3}
+            |elif body_array[pos] = "IV":
+                {set num to 4}
+            |elif body_array[pos] = "V":
+                {set num to 5}
+            }
+            {set body to token(body, " ", pos, num)}
+        }
+        {body}
+    }
+
+    {F("Body Name Tidy")}
+    {body} tem
+
+    {if reportgravity > 0:
+        {if reportbody.gravity < 0.5:
+            baixa gravidade,
+        |elif reportbody.gravity < 2:
+            gravidade média,
+        |elif reportbody.gravity < 4:
+            gravidade alta,
+        |else:
+            gravidade altíssima,
+        }
+    |else:
+        é um
+    }
+
+    {if reportTerraformState = 1:
+        {if reportbody.terraformstate = "Candidate for terraforming":
+            terraformável
+        |elif reportbody.terraformstate = "Terraformed":
+            terraformado
+        }
+    }
+
+    {if reportbody.planettype:
+        {class_check(reportbody.planettype)}
+    |else:
+        {body_type}
+    }
+
+    {if reportRings = 1 && len(reportbody.rings) > 0:
+        com {if len(reportbody.rings) = 1: uma}
+        {if find(reportbody.reserves, "Pristine") > -1:
+            intocada
+        |elif find(reportbody.reserves, "Major") > -1:
+            rica
+        }
+        {set ringname to []}
+        {set ringcomposition to []}
+        {for Ring in reportbody.rings:
+            {set ringcomposition to cat(ringcomposition, [Ring.composition])}
+        }
+        {if len(ringcomposition) > 0:
+            {List(ringcomposition)}
+        }
+        {if find(ringname[0], "Belt") > -1: 
+            {set ring to "cinturão"}
+        |else:
+            {set ring to "anéis"}
+        }
+        {ring}{if len(reportbody.rings) > 1:s}
+    }
+
+    {if reportTerraformState = 1 && reportbody.terraformstate = "Terraforming":
+      em processo de terraformação
+    }
+
+    {if type(reportbody.landable) != "void": 
+        que é
+        {if !reportbody.landable:in}adequado
+        para pouso
+    }
+    . {_ note the full stop}
+
+    {_ Radius}
+    {if reportRadius = 1 && reportbody.radius:
+        {set radius to round(reportbody.radius)}
+
+        Tem um raio de {radius} kilômetros,
+
+        {set compare_radius to radius / 6371}
+        {compare(compare_radius)}
+        do {OneOf("tamanho","raio")} da Terra
+        {if reportMass = 0:.}
+    }
+
+    {_ Earth Mass}
+    {if reportMass = 1 && reportbody.earthmass:
+        {if reportRadius = 1 && reportbody.radius:
+            e
+        |else:
+            tem
+        }
+        {compare(reportbody.earthmass)}
+        da massa da Terra.
+    }
+
+    {if reportRotation = 1 && reportbody.rotationalperiod:
+        {set rotation to round(reportbody.rotationalperiod, 1)}
+        Ele tem um período de rotação 
+        {if rotation < -20.0:
+            retrógrada lenta
+        |elif rotation < -0.5:
+            retrógrada
+        |elif rotation < 0:
+            retrógrada rápida
+        |elif rotation <= 0.5:
+            rápida
+        |elif rotation > 20.0:
+            lenta
+        }
+        de {Humanise(rotation)}
+        dia{if Humanise(rotation) != "1":s}
+        {if reportbody.tidallylocked:
+           e travado no sentido horário
+        }.
+    }
+
+    {if reportVolcanism: {F("Body volcanism report")} }
+
+    {if reportAtmosphere: {F("Body atmosphere report")} }
+
+    {if reportMaterials: {F("Body materials report")} }
+
+    {if reportScanValue: {F("Report last scan value")} }
+}
+
+{SetState('scanned_yet', reportbody.name)}

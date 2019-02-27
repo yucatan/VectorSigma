@@ -1,0 +1,20 @@
+{_ Fetch from context }
+{if event: {set reportbody to event} }
+{if !event: {set reportbody to BodyDetails(state.eddi_context_star_star, state.eddi_context_star_system)}}
+
+{if !reportbody.name || reportbody.name = "":
+    Não estou certo sobre qual estrela você está se referindo.
+|else:
+    {if reportbody.estimatedhabzoneinner && reportbody.estimatedhabzoneouter:
+        Zona habitável {Occasionally(2, OneOf("calculada a", "calculada a partir de"))}
+
+        {if reportbody.estimatedhabzoneinner > 0 && reportbody.estimatedhabzoneouter > 0:
+            {Humanise(reportbody.estimatedhabzoneinner)} 
+            {Humanise(reportbody.estimatedhabzoneouter)} 
+            segundos luz.
+        |elif reportbody.estimatedhabzoneouter && reportbody.estimatedhabzoneouter > 0:
+            {Humanise(reportbody.estimatedhabzoneouter)} 
+            segundos luz no máximo.
+        }
+    }
+}

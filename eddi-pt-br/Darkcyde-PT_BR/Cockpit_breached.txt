@@ -1,0 +1,13 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'cockpit')}
+{SetState('eddi_context_last_action', 'breach')}
+
+Perigo!
+
+{OneOf("Cabine","Canópla")}
+
+{OneOf("Violada","com integridade {Occasionally(2,'estrutural')} comprometida!")}.
+
+{OneOf("Respirador do Rem-lóck","Oxigênio reserva")} ativado.
+
+

@@ -1,0 +1,263 @@
+{_ Preferences _}
+{set reportAge to 0}              {_ Set to 1 to report the star's age. _}
+{set reportChromaticity to 0}     {_ Set to 1 to report the star's colour. _}
+{set reportNotables to 1}         {_ Set to 1 to report noteworthy main sequence star features. _}
+{set reportScanValue to 0}        {_ Set to 1 to report the scan value. _}
+{set reportHabZone to 0}          {_ Set to 1 to report habitable zone details for the primary star. _}
+{set reportLuminosity to 1}       {_ Set to 1 to report the star's luminosity class. _}
+{set mainSequenceFrequency to 2}  {_ Set to determine the frequency (1 chance in n) for describing stars as "main sequence" _}
+
+{_ Fetch from context }
+{if event:
+    {set reportbody to BodyDetails(event.name, system.name)}
+}
+{if !reportbody.name || reportbody.name = "": 
+    {set reportbody to BodyDetails(state.eddi_context_body_name, state.eddi_context_body_system)}
+}
+{if !reportbody.name || reportbody.name = "": 
+    {set reportbody to BodyDetails(state.eddi_context_body_name)}
+}
+
+{if !reportbody.name || reportbody.name = "":
+    {_ If it's still not possible to get the body name...  _}
+    Não
+    {OneOf("estou certo","tenho certeza")}
+    sobre qual estrêla você está 
+    {OneOf("perguntando","se referindo")}.
+|else:
+    {set class_check(body) to:
+        {set class to ""}
+        {set pos to 0}
+        {set char to slice(body, 0, 1)}
+        {while pos < len(body):
+            {if char != "a" && char != "b":
+                {set class to cat(class, char)}
+            |else:
+                {set subclass to cat(subclass, "-", char)}
+            }
+            {set pos to pos + 1}
+            {set char to slice(body, pos, 1)}
+        }
+        {_ Fix roman numerals being spoken as letters _}
+        {if class = "I":
+            {set class to "1"}
+        |elif class = "II":
+            {set class to "2"}
+        |elif class = "III":
+            {set class to "3"}
+        |elif class = "IV":
+            {set class to "4"}
+        |elif class = "V":
+            {set class to "5"}
+        |elif class = "VI":
+            {set class to "6"}
+        }
+
+        {cat(class, ucase(subclass))}
+    }
+    {set mainsequence to 0}
+    {if len(reportbody.rings) > 0 && ord(reportbody.rings) != 0: {set ringed to "anelada"}}
+    {F("Body Name Tidy")}
+    {body} é
+    {if reportbody.stellarclass = "O":
+        uma incrívelmente rara estrêla {ringed} de sequência principal
+        {set mainsequence to 1}
+    |elif reportbody.stellarclass = "B":
+        uma estrêla {ringed} de sequência principal muito rara
+        {set mainsequence to 1}
+    |elif reportbody.stellarclass = "A":
+        uma estrêla {ringed} de sequência principal rara
+        {set mainsequence to 1}
+    |elif reportbody.stellarclass = "F":
+        uma estrêla {ringed} de sequência principal incomum
+        {set mainsequence to 1}
+    |elif reportbody.stellarclass = "G":
+        uma estrêla {ringed} de sequência principal comum
+        {set mainsequence to 1}
+    |elif reportbody.stellarclass = "K":
+        uma estrêla {ringed} de sequência principal comum
+        {set mainsequence to 1}
+    |elif reportbody.stellarclass = "M":
+        uma estrêla {ringed} de sequência principal muito comum
+        {set mainsequence to 1}
+    |elif find(["L", "T", "Y"], reportbody.stellarclass) > -1:
+        uma anã marrom {ringed}
+    |elif reportbody.stellarclass = "TTS":
+        uma estrêla T Tauri {ringed} em processo de contração gravitacional
+    |elif reportbody.stellarclass = "AEBE":
+        uma próto-estrêla {ringed} muito nova que ainda não entrou em sequência principal 
+        {Occasionally(4, "mas a caminho de se tornar uma estrêla classe A ou B")}
+    |elif reportbody.stellarclass = "WC":
+        uma estrêla Uôlf-Rêiet {ringed} de carbono {Occasionally(2, "em queima rápida")} 
+        {Occasionally(2, ", derramando massa considerável e expondo carbono ionizado em seu núcleo, ")}
+    |elif reportbody.stellarclass = "WN":
+        uma estrêla Uôlf-Rêiet de hélio e nitrogênio {ringed} {Occasionally(2, "em queima rápida")}
+        {Occasionally(2, ", derramando massa considerável e expondo hélio e nitrogênio ionizado em seu núcleo, ")}
+    |elif reportbody.stellarclass = "WO":
+        uma estrêla Uôlf-Rêiet {ringed} rica em oxigênio {Occasionally(2, "em queima rápida")}
+        {Occasionally(2, ", derramando massa considerável e expondo oxigênio ionizado em seu núcleo, ")}
+    |elif reportbody.stellarclass = "WNC":
+       uma estrêla Uôlf-Rêiet {ringed} {Occasionally(2, "em queima rápida")}
+           {Occasionally(2, ", derramando massa considerável e expondo nitrogênio, carbono, oxigênio e hélio ionizado em seu núcleo, ")}
+    |elif reportbody.stellarclass = "W":
+       uma estrêla Uôlf-Rêiet {ringed} {Occasionally(2, "em queima rápida")}
+           {Occasionally(2, ", derramando massa considerável e expondo elementos mais pesados em seu núcleo, ")}
+    |elif reportbody.stellarclass = "CS":
+        uma estrêla de carbono {ringed}
+    |elif find(["C", "CN", "CH", "CHd"], reportbody.stellarclass) > -1:
+                uma estrêla de carbono {ringed}
+        a {ringed} {Occasionally(2, "late-sequence")} carbon star
+        {Occasionally(4, "com uma atmosféra dominada por carbono")}
+    |elif reportbody.stellarclass = "CJ":
+        a {ringed} {Occasionally(2, "late-sequence")} carbon star
+        {Occasionally(2, "com altos níveis de carbono 13 em sua atmosféra")}
+    |elif reportbody.stellarclass = "MS":
+        a {ringed} late sequence star
+        {Occasionally(4, "que uma vez foi uma estrêla classe M e está a caminho de se tornar uma estrêla de carbono")}
+    |elif reportbody.stellarclass = "S":
+        a {ringed} late sequence star
+        {Occasionally(4, "que uma vez foi uma estrêla classe M e está se tornando uma estrêla de carbono")}
+    |elif reportbody.stellarclass = "D":
+        uma anã branca {ringed}
+    |elif reportbody.stellarclass = "DA":
+        uma anã branca {ringed}
+        {Occasionally(4, "com uma atmosféra rica em hidrogênio")}
+    |elif reportbody.stellarclass = "DAB":
+        uma anã branca {ringed}
+        {Occasionally(4, "com uma atmosféra rica em hidrogênio e hélio")}
+    |elif slice(reportbody.stellarclass, 0, 1) = "D":
+        uma anã branca {ringed}
+    |elif slice(reportbody.stellarclass, 0, 1) = "N":
+        uma estrêla de nêutrons {ringed}
+        {Occasionally(4, "que tem um núcleo de densidade perigosamente alta")}
+    |elif reportbody.stellarclass = "H":
+        um buraco negro
+    |elif reportbody.stellarclass = "X":
+        uma exótica entidade estelar
+    |elif reportbody.stellarclass = "SuperMassiveBlackHole":
+        um buraco negro super massívo
+    |elif reportbody.stellarclass = "A_BlueWhiteSuperGiant":
+        uma super gigante branca-azulàda {ringed}
+        {Occasionally(4, "que está expandindo para se tornar uma super gigante vermelha")}
+    |elif reportbody.stellarclass = "F_WhiteSuperGiant":
+        uma supergigante branca-amareláda {ringed}
+        {Occasionally(4, "que está expandindo para se tornar uma super gigante vermelha")}
+    |elif reportbody.stellarclass = "M_RedSuperGiant":
+        uma super gigante vermelha {ringed} {Occasionally(4, "na sua fase de queima de hélio")}
+    |elif reportbody.stellarclass = "M_RedGiant":
+        uma gigante vermelha {ringed}
+        {Occasionally(4, "que está expandindo para se tornar uma super gigante vermelha")}
+    |elif reportbody.stellarclass = "K_OrangeGiant":
+        uma gigante laranja {ringed}
+        {Occasionally(4, "que está se expandindo para o fim de sua vida")}
+    |elif reportbody.stellarclass = "RoguePlanet":
+        um planeta órfão {ringed}
+    |elif reportbody.stellarclass = "Nebula":
+        uma nebulosa
+    |elif reportbody.stellarclass = "StellarRemnantNebula":
+        uma nebulosa remanescente
+    |else:
+        uma estrêla classe {Spacialise(reportbody.stellarclass)}
+    }
+
+    {if reportLuminosity = 1 && reportbody.luminosityclass:
+        com uma classe de luminosidade de {class_check(reportbody.luminosityclass)},
+    }
+    {if reportAge = 1 && reportbody.age:
+        {set ageInYears to reportbody.age * 1000000}
+        {if reportbody.age > 0:
+            {OneOf("que existe por {Humanise(ageInYears)} anos",
+                   "que tem {Humanise(ageInYears)} anos",
+                   "de {Humanise(ageInYears)} anos",
+            )}
+        |else:
+            que
+            {OneOf("tem menos de um milhão de anos",
+                   "existe a menos de um milhão de anos")},
+        }
+        {if ageInYears < 1000000:
+           que faz dela uma das mais novas estrelhas na galácsiaa
+        |elif ageInYears >14000000000:
+           que faz dela uma das mais antigas estrêlas da galácsiaa
+        }.
+    }
+    {if reportChromaticity = 1 && reportbody.chromaticity && mainsequence = 1:
+            {Occasionally(2,"Como você pode ver, ela emite uma luz {reportbody.chromaticity}.")}
+    }
+    {if reportNotables = 1:
+        {set notables to []}
+
+        {if reportbody.massporbability:
+            {if reportbody.massprobability < 0.01:
+                {set notables to cat(notables, [cat("uma massa solar incrivelmente pequena de  ", Humanise(reportbody.solarmass))])}
+            |elif reportbody.massprobability < 0.1:
+                {set notables to cat(notables, [cat("uma massa solar extremamente pequena de ", Humanise(reportbody.solarmass))])}
+            |elif reportbody.massprobability < 1:
+                {set notables to cat(notables, ["uma massa solar extraordinariamente baixa"])}
+            |elif reportbody.massprobability < 10:
+                {set notables to cat(notables, ["uma massa solar menor que a média"])}
+            |elif reportbody.massprobability > 99.99:
+                {set notables to cat(notables, [cat("uma massa solar incrivelmente alta de ", Humanise(reportbody.solarmass))])}
+            |elif reportbody.massprobability > 99.9:
+                {set notables to cat(notables, [cat("uma massa solar extremamente alta de ", Humanise(reportbody.solarmass))])}
+            |elif reportbody.massprobability > 99:
+                {set notables to cat(notables, ["uma massa solar extraordinariamente alta"])}
+            |elif reportbody.massprobability > 90:
+                {set notables to cat(notables, ["uma massa solar mais alta que a média"])}
+            }
+        }
+        {if reportbody.radiusprobability:
+            {if reportbody.radiusprobability < 0.01:
+                {set notables to cat(notables, [cat("um raio solar incrivelmente pequeno de ", Humanise(reportbody.solarradius))])}
+            |elif reportbody.radiusprobability < 0.1:
+                {set notables to cat(notables, [cat("um raio solar extremamente pequeno de ", Humanise(reportbody.solarradius))])}
+            |elif reportbody.radiusprobability < 1:
+                {set notables to cat(notables, ["um raio solar extraordinariamente pequeno"])}
+            |elif reportbody.radiusprobability <1 0:
+                {set notables to cat(notables, ["um raio solar menor que a média"])}
+            |elif reportbody.radiusprobability > 99.99:
+                {set notables to cat(notables, [cat("um raio solar extremamente grande de ", Humanise(reportbody.solarradius))])}
+            |elif reportbody.radiusprobability > 99.9:
+                {set notables to cat(notables, [cat("um raio solar incrivelmente grande de ", Humanise(reportbody.solarradius))])}
+            |elif reportbody.radiusprobability > 99:
+                {set notables to cat(notables, ["um raio solar extraordinariamente grande"])}
+            |elif reportbody.radiusprobability > 90:
+                {set notables to cat(notables, ["um raio solar maior que a maioria"])}
+            }
+        }
+        {if reportbody.tempprobability:
+            {if reportbody.tempprobability < 0.01:
+                {set notables to cat(notables, [cat("uma temperatura de superfície incrivelmente baixa de ", Humanise(reportbody.temperature), " kelvin")])}
+            |elif reportbody.tempprobability < 0.1:
+                {set notables to cat(notables, [cat("uma temperatura de superfície extremamente baixa de ", Humanise(reportbody.temperature), " kelvin")])}
+            |elif reportbody.tempprobability < 1:
+                {set notables to cat(notables, ["uma temperatura de superfície extraordinariamente baixa"])}
+            |elif reportbody.tempprobability < 10:
+                {set notables to cat(notables, ["uma temperatura de superfície menor que a média"])}
+            |elif reportbody.tempprobability > 99.99:
+                {set notables to cat(notables, [cat("uma temperatura de superfície extremamente alta de  ", Humanise(reportbody.temperature), " kelvin")])}
+            |elif reportbody.tempprobability > 99.9:
+                {set notables to cat(notables, [cat("uma temperatura de superfície incrivelmente alta de ", Humanise(reportbody.temperature), " kelvin")])}
+            |elif reportbody.tempprobability > 99:
+                {set notables to cat(notables, ["uma temperatura de superfície extraordinariamente alta"])}
+            |elif reportbody.tempprobability > 90:
+                {set notables to cat(notables, ["uma temperatura de superfície maior que a média"])}
+            }
+        }
+        {if len(notables) = 0:
+            {OneOf("", "Este é um típico exemplo de uma estrêla desta classe.", "Não há nada notável em particular sobre esta estrêla.", "É um exemplo mediano para este tipo de estrêla.")}
+        |else:
+            {OneOf('Comparada a outras estrelhas de sua classe', 'Em comparação a outras estrêlas Classe {reportbody.stellarclass}', 'Em relação a outras estrêlas classe {reportbody.stellarclass}')}, esta estrêla é 
+            {if len(notables) = 1:
+                notável por ter {notables[0]}.
+            |elif len(notables) = 2:
+                {OneOf('interessante', 'incomum')}, com {notables[0]} e {notables[1]}.
+            |elif len(notables) = 3:
+                {OneOf('excepcional', 'notável')}, com {notables[0]}, {notables[1]} e {notables[2]}.
+            }
+        }
+    }
+    {if reportScanValue = 1: {F("Report last scan value")} }
+    {if reportHabZone = 1 && event.mainstar: {F("Star habitable zone")} }
+}
+

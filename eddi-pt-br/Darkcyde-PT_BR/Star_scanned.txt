@@ -1,0 +1,46 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'star')}
+{SetState('eddi_context_last_action', 'scan')}
+{SetState('eddi_context_star_system', system.name)}
+{SetState('eddi_context_star_star', event.name)}
+{SetState('eddi_context_last_scan_estimated_value', event.estimatedvalue)}
+
+
+{if state.lastscanbody != event.name:
+
+    {if event.estimatedvalue:
+        {SetState("eddi_context_system_value", state.eddi_context_system_value + event.estimatedvalue)}
+        {SetState("eddi_context_session_scan_value", state.eddi_context_session_scan_value + event.estimatedvalue)}
+    }
+
+    {if event.stellarclass = "SuperMassiveBlackHole":
+        {set class to "Supermassive black hole"}
+    |elif event.stellarclass = "A_BlueWhiteSuperGiant":
+        {set class to "A-"}
+    |elif event.stellarclass = "F_WhiteSuperGiant":
+        {set class to "F-"}
+    |elif event.stellarclass = "M_RedSuperGiant":
+        {set class to "M-"}
+    |elif event.stellarclass = "M_RedGiant":
+        {set class to "M-"}
+    |elif event.stellarclass = "K_OrangeGiant":
+        {set class to "K-"}
+    |elif event.stellarclass = "RoguePlanet":
+        {set class to "Rogue planet-"}
+    |elif event.stellarclass = "Nebula":
+        {set class to "Nebula-"}
+    |elif event.stellarclass = "StellarRemnantNebula":
+        {set class to "Nebula remnant-"}
+    |else:
+        {set class to join(split(Spacialise(event.stellarclass), " "), "-")}
+    }
+
+    {Pause(1000)}
+
+    Varredura da estrela classe {class} {OneOf("completada", "finalizada")}.
+
+    {if ship.Role.edname = "Exploration" || ship.Role.edname = "Multipurpose":
+        {F("Star report")}
+    }
+    {SetState('lastscanbody', event.name)}
+}

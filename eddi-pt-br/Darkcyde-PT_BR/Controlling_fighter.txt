@@ -1,0 +1,1 @@
+{OneOf("Link neural", "Link", "Uplink")} {Occasionally(2, "com o caça")} {OneOf("iniciado", "estabelecido", "acionado")}.

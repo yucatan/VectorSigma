@@ -1,0 +1,18 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'bounty')}
+{SetState('eddi_context_last_action', 'incur')}
+{SetState('eddi_context_bounty_name', event.victim)}
+{SetState('eddi_context_bounty_faction', event.faction)}
+{SetState('eddi_context_bounty_amount', event.bounty)}
+
+{_ Update Fines & Bounties}
+{F("FinesBounties_Add")}
+
+{set FACCAO to: {P(event.faction)}}
+{if FACCAO = " The Pilots Federation": {set FACCAO to: Federação de Pilotos}}
+
+{OneOf("A {FACCAO} acabou de pôr sua cabeça a prêmio por {event.bounty} créditos, por {event.crime}",
+       "Você {OneOf('levou','recebeu')} uma recompensa de {event.bounty} créditos
+       {OneOf('da {FACCAO} por {event.crime}','por {event.crime}, da {FACCAO}')}"
+       )}.
+

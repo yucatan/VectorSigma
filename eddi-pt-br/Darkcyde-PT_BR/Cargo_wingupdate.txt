@@ -1,0 +1,20 @@
+{_ Cargo wingupdate }
+{_ Triggered when a wing-mate collects or delivers cargo for a wing mission }
+
+
+{if event.updatetype = "Collect":
+    Seu colega de esquadrão coletou {event.amount} tonelada{if event.amount != 1:s}
+    {if event.commodity != "Unknown": de {event.commodity}} no depósito da missão.
+|elif event.updatetype = "Deliver":
+    Seu colega de esquadrão entregou {event.amount} tonelada{if event.amount != 1:s} 
+    {if event.commodity != "Unknown": de {event.commodity}} no depósito da missão.
+}
+
+{Pause(500)}
+{set remaining to event.totaltodeliver - event.delivered}
+{if remaining = 0:
+    Requerimentos da missão de esquadrão foram completados.
+|elif event.updatetype = "Deliver":
+    A missão de esquadrão está agora {round(event.delivered / event.totaltodeliver * 100, 0)} porcento finalizada.
+}
+

@@ -1,0 +1,36 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'bounty')}
+{SetState('eddi_context_last_action', 'redeem')}
+{SetState('eddi_context_bounty_amount', event.amount)}
+
+{_ Update Fines & Bounties}
+{F("FinesBounties_Delete")}
+
+Vales recompensas no valor de {Humanise(event.amount)} créditos recolhidos
+
+{if len(event.rewards[0].faction) > 0:
+    {Occasionally(2, "pela 
+        {set cur to 0}
+        {set length to len(event.rewards) - 1}
+        {while cur < len(event.rewards):
+            {set faction to event.rewards[cur].faction}
+            {if faction = 'Alliance' || faction = 'Empire' || faction = 'Federation': }
+	    {if faction = 'The Pilots Federation': {set faction to: Federação de Pilotos}}
+	    {if faction = 'Alliance': {set faction to: Aliança}}
+	    {if faction = 'Federation': {set faction to: Federação}}
+	    {if faction = 'Empire': {set faction to: Império}}
+            {faction}
+            {set cur to cur + 1}
+            {if cur = length: e
+            |elif cur < length:,
+            }
+        }
+    ")}
+}
+
+{if event.brokerpercentage && event.brokerpercentage > 0:
+    após deduzir 
+    {OneOf("pagamentos", "taxas")} de
+    {ceil((event.amount / (100 - event.brokerpercentage)) * event.brokerpercentage)} créditos.
+}.
+

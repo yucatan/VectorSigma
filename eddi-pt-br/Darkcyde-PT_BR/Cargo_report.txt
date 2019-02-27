@@ -1,0 +1,87 @@
+{_ Cargo report }
+{_ Report current cargo manifest }
+
+{set cargocarried to 0}
+{set haulage to 0}
+{set illegal to false}
+{set stolen to false}
+
+{if len(inventory) > 0:
+    {for cargo in inventory:
+        {set cargocarried to cargocarried + cargo.total}
+        {set haulage to haulage + cargo.haulage}
+        {if cargo.stolen > 0: {set stolen to true}}
+        {if status.docked:
+            {for prohibited in station.prohibited:
+                {if cargo.name = prohibited: {set illegal to true}}
+            }
+        }
+    }
+}
+
+{if cargocarried > 0:
+    {if cargocarried = ship.cargocapacity:
+        Seu compartimento de carga está cheio
+    |else:
+        Você está carregando {cargocarried} tonelada{if cargocarried != 1:s}
+    }
+
+    {if len(inventory) = 1:
+        {if inventory[0].name = "Limpet":
+            de drones.
+        |else:
+            de {inventory[0].name}.
+            {if haulage = cargocarried:
+                Detalhe: Toda a carga é relativa à missão.
+            }
+        }
+    |else:
+        {if cargocarried < ship.cargocapacity: of cargo}.
+        {OneOf("Manifesto", "Inventário")} {Occasionally(2, "de Carga")} é o seguinte:
+
+        {set c to []}
+        {for cargo in inventory:
+            {if cargo.total > 0:
+                {set c to cat(c, [cargo])}
+            }
+        }
+
+        {set cur to 0}
+        {set length to len(c) - 1}
+        {for cargo in c:
+            {cargo.total} tonelada{if cargo.total != 1:s} de 
+            {if cargo.name = "Limpet":
+                drones
+            |else:
+                {cargo.name}
+            }
+            {set cur to cur + 1}
+            {if cur = length: e
+            |elif cur < length:,
+            }
+        }
+        {if haulage > 0:
+            . Detalhe: {haulage} tonelada{if haulage != 1:s} do seu manifesto é relativo a missões
+        }
+    }.
+
+    {if cargocarried < ship.cargocapacity:
+        {set free to ship.cargocapacity - cargocarried}
+        Você {OneOf("tem {free} tonelada{if free != 1:s} disponível",
+            "tem {free} tonelada{if free != 1:s} de espaço livre",
+            "pode carregar um adicional de {free} tonelada{if free != 1:s}")}.
+    }
+
+    {if stolen || illegal:
+        Alerta: Você está carregando
+        {if stolen: produtos roubados}
+        {if illegal:
+            {if stolen:, e }
+            produtos que são ilegais nesta jurisdição
+        }.
+    }
+
+|else:
+    {OneOf("Seu compartimento de carga está vazio.","Você não tem carga.","Você não está carregando nada.")}
+}
+

@@ -1,0 +1,102 @@
+{_ FinesBounties_CheckShip}
+{_ Checks current ship for any crimes}
+
+{if status.vehicle = "SRV" || status.vehicle = "Fighter":
+    {set v_type to "Sua nave atual"}
+|else:
+    {set v_type to cat(OneOf("Esta", "Sua"), " nave")}
+}
+
+{if len(state.eddi_context_bounties_type) > 0 && state.eddi_context_bounties_type != null && (find(state.eddi_context_bounties_type, "Fine") > -1 || find(state.eddi_context_bounties_type, "BountyInc") > -1):
+
+    {set shipid to cast(state.eddi_context_currentshipid, "s")}
+    {set shipname to ShipName(shipid)}
+
+    {set bounties_shipid_array to split(state.eddi_context_bounties_shipid, "+=")}
+    {set bounties_type_array to split(state.eddi_context_bounties_type, "+=")}
+    {set bounties_amount_array to split(state.eddi_context_bounties_amount, "+=")}
+
+    {_ Set up temp arrays of items that match "Fine" or "BountyInc"}
+
+    {_ Set up variables}
+    {set ship_fines_count to 0}
+    {set ship_bounties_count to 0}
+    {set ship_fines_total to 0}
+    {set ship_bounties_total to 0}
+    {set crime_array to []}
+
+    {_ run loop from 0 to number of entries}
+    {set cur to 0}
+    {while cur < len(bounties_type_array):
+        {if bounties_shipid_array[cur] = shipid:
+            {if bounties_type_array[cur] = "Fine"
+                {set ship_fines_count to ship_fines_count + 1}
+                {set ship_fines_total to ship_fines_total + bounties_amount_array[cur]}
+            |elif bounties_type_array[cur] = "BountyInc":
+                {set ship_bounties_count to ship_bounties_count + 1}
+                {set ship_bounties_total to ship_bounties_total + bounties_amount_array[cur]}
+            }
+        |else:
+            {if bounties_type_array[cur] = "Fine" || bounties_type_array[cur] = "BountyInc":
+                {set pos to find(crime_array, bounties_shipid_array[cur])}
+                {if pos > -1:
+                    {set pos to bounties_shipid_array[cur]}
+                    {set amount to crime_array[pos] + bounties_amount_array[cur]}
+                    {set crime_array to union(crime_array, [pos:amount])}
+                |else:
+                    {set pos to bounties_shipid_array[cur]}
+                    {set amount to bounties_amount_array[cur]}
+                    {set crime_array to union(crime_array, [pos:amount])}
+                }
+           }
+       }
+       {set cur to cur + 1}
+    }
+
+    {_ Report info}
+
+    {if ship_bounties_count > 0: Cuidado: {vehicle} está procurado!}
+
+    {if ship_fines_count > 0:
+        {if ship_bounties_count > 0: Ela |else: {v_type}}
+        tem {ship_fines_count} multa{if ship_fines_count > 1:s} a pagar,
+        num total de {ship_fines_total} créditos.
+    }
+
+    {if ship_bounties_count > 0:
+        {if ship_fines_count > 0: Ela também |else: Ela}
+        tem {ship_bounties_count} recompensa{if ship_fines_count > 1:s |else:y} a pagar,
+        num total de {ship_bounties_total} créditos.
+    }
+
+    {if len(crime_array) > 0:
+        {if ship_fines_count = 0 && ship_bounties_count = 0:
+            {v_type}
+            {OneOf("está limpa. Entretanto, você tem mandados pendentes",
+                   "não tem mandados pendentes. Entretanto, há alguns")}
+            nas suas outras naves.
+        |else:
+            Você também tem mandados pendentes em
+            {if len(crime_array) = 1: outra nave
+            |else: suas outras naves
+            }.
+        }
+
+        {set cur to 0}
+        {set length to len(crime_array) - 1}
+        {for id, amount in crime_array:
+            {amount} credits on 
+            {if ShipName(id) != "your ship": {ShipName(id)}
+            |else: {ShipCallsign(id)}
+            }
+            {set cur to cur + 1}
+            {if cur = length: and
+            |elif cur < length:,
+            }
+        }
+    }.
+
+|else:
+    {v_type} {OneOf("está limpa", "não tem mandados pendentes")}.
+}
+

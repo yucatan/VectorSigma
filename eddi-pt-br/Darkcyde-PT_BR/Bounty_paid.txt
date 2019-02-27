@@ -1,0 +1,16 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'bounty')}
+{SetState('eddi_context_last_action', 'pay')}
+{SetState('eddi_context_fine_amount', event.amount)}
+
+
+Recompensa de {Humanise(event.amount)} créditos paga.
+
+{_ Update Fines & Bounties}
+{F("FinesBounties_Delete")}
+
+{if event.brokerpercentage:
+  {Pause(1000)}
+  O agente ficou comhe
+  {floor((event.amount / (100 - event.brokerpercentage)) * event.brokerpercentage)} créeditos.
+}

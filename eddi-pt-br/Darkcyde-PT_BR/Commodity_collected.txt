@@ -1,0 +1,17 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'commodity')}
+{SetState('eddi_context_last_action', 'collect')}
+{SetState('eddi_context_cargo_name', event.commodity)}
+
+{if event.commodity != "Occupied Escape Pod":
+    {OneOf("Contêiner","Cilindro")}
+    {if event.commodity:
+        de
+    }
+}
+
+{if event.commodity:
+    {event.commodity},
+}
+
+{OneOf("guardado","carregado","agora")} {OneOf("no compartimento","no compartimento de carga","no compartimento da nave","a bordo")}.

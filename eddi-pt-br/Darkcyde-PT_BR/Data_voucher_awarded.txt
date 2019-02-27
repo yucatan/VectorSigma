@@ -1,0 +1,16 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'data_voucher')}
+{SetState('eddi_context_last_action', 'award')}
+{SetState('eddi_context_bond_amount', event.reward)}
+{SetState('eddi_context_bond_faction', event.payeefaction)}
+
+{set faction to event.payeefaction}
+
+Comprovante de dados concedido  
+
+{if faction = "Empire": {set faction to:pelo Império}
+|elif faction = "Federation": {set faction to:pela Federação}
+|elif faction = "Alliance": {set faction to:pela Aliança}
+|else: por }
+
+{faction} no valor de {event.reward} créditos.

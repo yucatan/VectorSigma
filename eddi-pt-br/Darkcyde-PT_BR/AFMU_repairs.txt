@@ -1,0 +1,15 @@
+{event.item} 
+{if event.repairedfully:
+    totalmente reparado
+|else:
+    parcialmente reparado 
+    {Occasionally(2, cat(
+        OneOf("em ", "a "),
+        Humanise(event.health * 100),
+        " por cento de funcionalidade"
+    ))}
+}
+
+{Occasionally(2, 
+    cat(OneOf(", ", "e está"), " pronto para reativação")
+)}.

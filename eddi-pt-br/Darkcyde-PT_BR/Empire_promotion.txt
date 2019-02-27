@@ -1,0 +1,31 @@
+
+{set rank to when(cmdr.gender = "Female", event.femininerank, event.rank)}
+{if (cmdr.gender) = "Female":
+   {set A to a}
+|else:
+   {set A to:o}
+}
+
+{F("Empire honorific")},
+
+{OneOf("a marinha Imperial {OneOf('concedeu-lhe uma promoção', 'promoveu-lhe', 'avançou-lhe')} ao pôsto de {rank}",
+       "Você {OneOf(\"{OneOf('elevou sua posição','foi promovid{A}')} a\",
+                        \"{OneOf('recebeu','foi agraciad{A} com')} um rank mais alto de\")} {rank} na Marinha Imperial")}
+
+{Occasionally(2, "for your service to the Empire")}.
+
+{if event.rank = "Outsider":
+   Você recebeu acesso à compra da Impírial Ígôl.
+|elif event.rank = "Master":
+   Você recebeu acesso à compra da Impírial Curriêr.
+|elif event.rank = "Squire":
+   Você recebeu a honra de poder entrar no sistema {P("Archenar")}.
+|elif event.rank = "Baron":
+   Você recebeu acesso à compra da Impírial Clípper. E a honra de poder entrar no sistema {P("Summer-land")}.
+|elif event.rank = "Earl":
+   Você recebeu a honra de poder entrar no sistema {P("Facece")}.
+|elif event.rank = "Duke":
+   Você recebeu acesso à compra da Impírial Câtter.
+|elif event.rank = "King":
+   Você alcançou o pôsto mais alto possível meu soberano.
+}

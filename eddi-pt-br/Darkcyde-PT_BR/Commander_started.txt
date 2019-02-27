@@ -1,0 +1,29 @@
+
+{SetState('eddi_context_last_subject', 'load_game')}
+{SetState('eddi_context_system_system', system.name)}
+{SetState('eddi_context_body_name', body.name)}
+{SetState('eddi_context_station_name', station.name)}
+{SetState('eddi_context_lastdocked', station.name)}
+{SetState('eddi_context_currentshipid', event.shipid)}
+
+{_ If VoiceAttack is not used, set Auto Route to no, and set default Routing system _}
+{if state.eddi_context_mission_route_useauto = "" || state.eddi_context_mission_route_useauto = null:
+    {SetState('eddi_context_mission_route_useauto', "no")}
+    {SetState('missionsrouteuseeddi', "no")}
+}
+
+{set time to token(format(SecondsSince(0), "dl:yyyy-MM-dd HH:mm:ss"), " ", 1)}
+{set time to cast(token(time, ":", 0), "n")}
+
+{if time < 12: {set GREETING to:m dia}
+|elif time > 11 && time <17: {set GREETING to:a tarde}
+|else: {set GREETING to:a noite}
+}
+
+Bo{GREETING}
+
+e bem vindo a bordo {F("Honorific")}.
+
+{_ Clear Fines & Bounties}
+{F("FinesBounties_Initialise")}
+

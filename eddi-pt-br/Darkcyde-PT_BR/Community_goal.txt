@@ -1,0 +1,123 @@
+{_ Set Context _}
+{SetState('eddi_context_last_subject', 'community goal')}
+{_ Save goal location to context if there is only one goal present _}
+{if len(event.cgid) = 1:
+   {SetState('eddi_context_goal_system_name', event.system[0])}
+   {SetState('eddi_context_goal_station_name', event.station[0])}
+}
+
+{F('Honorific')}, 
+
+{if len(event.name) > 1:
+    {OneOf("você mostrou interesse nos", "estou monitorando os")}
+    seguintes objetivos da comunidade:
+|else: 
+    O objetivo da comunidade,    
+}
+
+{set cur to 0}
+{while cur < len(event.name):
+
+   {if cur = 0 && len(event.name) = 1:
+      {_ nothing _}
+   |elif cur = 0 && len(event.name) > 1:
+      O primeiro,
+   |elif cur < (len(event.name) - 1):
+      O próximo, 
+   |else:
+      O último,
+   }
+
+   {event.name[cur]},
+
+   {if event.iscomplete[cur]:
+      {OneOf("está completo", "foi finalizado")} 
+   |else: 
+      {if (event.expiry[cur] / 3600) < 12:
+         {OneOf("está próximo de ser completado", 
+                "deve terminar em {Humanise(round(event.expiry[cur] / 3600, 1))} horas", 
+                "está quase completo")}
+      |else:
+         {OneOf("ainda não está completo", 
+                "está ativo", 
+                "está incompleto")} 
+      }
+   }
+
+   {if event.tier[cur]:
+       {OneOf("e alcançou", "e atualmente em")} {event.tier[cur]}.
+       {if event.contribution[cur] > 0:
+           Sua recompensa esperada é
+           {Occasionally(2, "atualmente")}
+           {Occasionally(2, "calculada em")}
+           {Humanise(event.tierreward[cur])} créditos
+           {Occasionally(2, "nos {event.percentileband[cur]}º percentual")}
+       }
+   }.
+
+   {_ Create a comparison function _}
+   {set compare(stat) to:     
+       {if stat < 0.01:
+            apenas uma {OneOf("fração", "parte")} do            
+       |elif stat < 0.10:
+            menos de um décimo do
+       |elif stat < 0.25:
+            menos de um quarto do
+       |elif stat < 0.5:
+            menos da metade do
+       |elif stat < 0.75:
+            menos que
+       |elif stat < 0.96: 
+            {OneOf("fracionariamente","apenas")}
+            menos que
+       |elif stat < 1.05:
+            {OneOf("aproximadamente","mais ou menos","quase")} 
+            igual a
+       |elif stat < 1.25:
+            um pouco mais que
+       |elif stat < 1.5:
+            mais que
+       |elif stat < 2:
+            significativamente mais que
+       |else:
+            bem mais que
+       }
+    }
+    {set compare_contribution to (event.contribution[cur] / round(event.total[cur] / event.contributors[cur], 0))}
+
+    {if compare_contribution != 0:
+       {if event.toprank[cur]: 
+          Parabéns! 
+          Você é um dos {event.topranksize[cur]} top comandantes neste evento, tendo contribuído
+          {compare(compare_contribution)}
+          a média.
+       |else:
+          {Occasionally(2, "Você contribuiu 
+          {compare(compare_contribution)}
+          a média.")}
+       }
+    }
+
+    {if !event.iscomplete[cur]:
+       Você pode 
+       {if event.contribution[cur] > 0: 
+          {OneOf("contribuir mais", "dar contribuições adicionais")} 
+       |else: 
+          {OneOf("contribuir", "dar uma contribuição")}
+       }
+       {if event.station[cur] = station.name:
+          {Occasionally(2, "aqui")}
+          {Occasionally(2, "nesta estação")}.
+       |elif event.system[cur] = system.name:
+          at {P(event.station[cur])}
+          {Occasionally(2, "aqui")}
+          {Occasionally(2, "neste sistema", "no sistema atual")}.
+       |else:
+          na {P(event.station[cur])},
+          {OneOf("em {P(event.system[cur])}", "no sistema {P(event.system[cur])}" )}.
+       }
+    }
+
+    {set cur to cur + 1}
+    {Pause(1000)}
+}

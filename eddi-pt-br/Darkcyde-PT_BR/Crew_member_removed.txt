@@ -1,0 +1,6 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'crew')}
+{SetState('eddi_context_last_action', 'remove')}
+{SetState('eddi_context_crew_name', event.crew)}
+
+Você removeu {event.crew} da sua tripulação.

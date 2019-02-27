@@ -1,0 +1,9 @@
+{_ Data scanned }
+{_ Triggered when scanning some types of data links }
+
+{_ Context }
+{SetState('eddi_context_last_subject', 'scan')}
+{SetState('eddi_context_last_action', 'data')}
+{SetState('eddi_context_data_scan_type', event.datalinktype)}
+
+Scaneamento de {event.datalinktype} completo.

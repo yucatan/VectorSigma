@@ -1,0 +1,6 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'crew')}
+{SetState('eddi_context_last_action', 'hire')}
+{SetState('eddi_context_crew_name', event.name)}
+
+{event.name} foi contratado, e {OneOf("juntou-se à","é agora {OneOf('membro','parte')} da")} {OneOf("","sua")} tripulação.

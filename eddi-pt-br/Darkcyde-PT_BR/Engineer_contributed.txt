@@ -1,0 +1,16 @@
+
+{event.engineer}: obrigado por contribuir com {event.amount}
+
+{if event.contributiontype = "Commodity":
+    {set type to "tonelada"}
+|elif event.contributiontype = "Material":
+    {if material.category = 'Data':
+        {set type to "registro"}
+    |else:
+        {set type to "fragmento"}
+    }
+    {set type to OneOf("unidade", "amostra", type)}
+
+}
+{type}{if event.amount != 1:s}
+de {event.contribution}.

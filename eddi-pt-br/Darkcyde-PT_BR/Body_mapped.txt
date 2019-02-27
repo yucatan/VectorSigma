@@ -1,0 +1,8 @@
+{OneOf("Mapeamento de", "Mapa {Occasionally(2, 'da superfície')} de")}
+{Occasionally(2, "corpo {P(event.name)}")}
+{OneOf("está", "agora está")}
+{OneOf("completo", "finalizado")}.
+
+{if event.probesused <= event.efficiencytarget:
+    Bônus de eficiência {OneOf("recebido", "concedido")}.
+}

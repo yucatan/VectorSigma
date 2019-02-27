@@ -1,0 +1,7 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'commodity')}
+{SetState('eddi_context_last_action', 'refine')}
+{SetState('eddi_context_commodity_name', event.commodity)}
+
+{Occasionally(2,"Uma {OneOf('unidade','tonelada')} de")} {event.commodity} {OneOf("refineada","processada")}.
+

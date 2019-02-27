@@ -1,0 +1,8 @@
+{event.name},
+
+{if event.role = "Active":
+    {OneOf("agora em","chamado em")} serviço
+|else:
+    {OneOf("recebendo uma folga","saindo do serviço")}
+}
+.

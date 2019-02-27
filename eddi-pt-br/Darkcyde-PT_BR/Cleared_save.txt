@@ -1,0 +1,9 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'save')}
+{SetState('eddi_context_last_action', 'clear')}
+
+Apagando {OneOf("o sistema","a personalidade")}. Adeus {F("Honorific")}.  Foi um prazer lhe servir.
+
+{_ Clear Fines & Bounties}
+{F("FinesBounties_Initialise")}
+

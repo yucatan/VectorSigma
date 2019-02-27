@@ -1,0 +1,206 @@
+{_ Preferences _}
+{set reportAtmoPressure to 1}   {_ Set to 1 to report atmospheric pressure. _}
+{set reportAtmoTempScale to 0}  {_ Set to 0 to report temperatures in Kelvin _}
+                                {_ Set to 1 to report temperatures in Celsius _}
+                                {_ Set to 2 to report temperatures in Fahrenheit _}
+                                {_ Set to 3 if you don't want to hear about the temperature of the body _}
+{set reportAtmoComp to 1}       {_ Set to 0 to report only the main atmospheric element. _}
+                                {_ Set to 1 to report full atmospheric composition. _}
+
+
+{_ Fetch from context }
+{if event:
+    {set reportbody to BodyDetails(event.name, system.name)}
+}
+{if !reportbody.name || reportbody.name = "": 
+    {set reportbody to BodyDetails(state.eddi_context_body_name, state.eddi_context_body_system)}
+}
+{if !reportbody.name || reportbody.name = "": 
+    {set reportbody to BodyDetails(state.eddi_context_body_name)}
+}
+
+{if !reportbody.name || reportbody.name = "":
+    {_ If it's still not possible to get the body name...  _}
+    Não
+    {OneOf("tenho certeza","estou certo")}
+    sobre qual corpo você está
+    {OneOf("perguntando","se referindo")}.
+
+|else:
+    {_ Define functions for converting temperature scales _}
+    {set ToCelsius(kelvin) to: {round(kelvin - 273)}}
+    {set ToFahrenheit(kelvin) to: {round((kelvin-273)*9/5 + 32)}}
+    {set TempCalc(kelvin) to: 
+        {if reportAtmoTempScale = 0: {round(kelvin)}}
+        {if reportAtmoTempScale = 1: {ToCelsius(kelvin)}}
+        {if reportAtmoTempScale = 2: {ToFahrenheit(kelvin)}}
+    }
+
+    {_ Name our temperature scale _}
+    {if reportAtmoTempScale = 0: {set tempscale to: Kélvin}}
+    {if reportAtmoTempScale = 1: {set tempscale to: graus Celsius}}
+    {if reportAtmoTempScale = 2: {set tempscale to: graus Fahrenheit}}
+
+    {if !body:
+        {F("Body Name Tidy")}
+        For {body},
+    }
+
+    {if find(reportbody.planettype, "giant") > -1:
+        {if find(reportbody.planettype, "Class") > -1: 
+            {set sudarsky to Occasionally(3, "Sud-dar-ski")}
+        }
+        {set planetdesc to OneOf("{sudarsky} Gigantes gasosos como este têm", "Este gigante gasoso {sudarsky} tem")}
+        {if find(reportbody.planettype, "Class V") > -1:
+            {planetdesc} 
+            {if reportAtmoTempScale < 3: 
+                {set tempmin to: {TempCalc(1373)}}
+                temperatures above {Humanise(tempmin)} {tempscale}, {OneOf("e", "com", "formando")}
+            }
+            uma densa camada de nuvens de {OneOf("ferro e silicatos vaporizados", "vapores de ferro e silicato")}.
+        |elif find(reportbody.planettype, "Class IV") > -1:
+            {planetdesc} 
+            {if reportAtmoTempScale < 3: 
+                {set tempmin to: {TempCalc(354)}}
+                {set tempmax to: {TempCalc(903)}}
+                temperatures {OneOf("que variam", "variando")} entre {Humanise(tempmin)} e
+                {Humanise(tempmax)} {tempscale}, {OneOf("e", "com", "formando")}
+            }
+            uma densa camada de núvens de {OneOf("vapores de metal alcalino", "metais alcalinos vaporizados")}.   
+        |elif find(reportbody.planettype, "Class III") > -1:
+            {planetdesc} 
+            {if reportAtmoTempScale < 3: 
+                {set tempmin to: {TempCalc(251)}}
+                {set tempmax to: {TempCalc(353)}}
+                temperaturas da superfície {OneOf("que variam", "variando")} entre {Humanise(tempmin)} e
+                {Humanise(tempmax)} {tempscale},
+            }
+            uma temperatura em que
+            {OneOf("nenhum elemento gasoso formará quaisquer nuvens",
+                   "produtos químicos adequados não estão presentes na atmosféra para formar uma camada de nuvem sustentável",
+                   "a atmosféra não sustenta uma camada de núvens persistente")}.
+        |elif find(reportbody.planettype, "Class II") > -1:
+            {planetdesc} 
+            {if reportAtmoTempScale < 3: 
+                {set tempmin to: {TempCalc(154)}}
+                {set tempmax to: {TempCalc(250)}}
+                temperaturas na superfície {OneOf("que variam", "variando")} entre {Humanise(tempmin)} e
+                {Humanise(tempmax)} {tempscale}, {OneOf("e", "com", "formando")}
+            }
+            uma densa camada de núvens de vapor de água.  
+        |elif find(reportbody.planettype, "Class I") > -1:
+            {planetdesc} 
+            {if reportAtmoTempScale < 3: 
+                {set tempmin to: {TempCalc(153)}}
+                {set tempmax to: {TempCalc(83)}}
+                temperaturas na superfície de {Humanise(tempmax)} {tempscale}
+                {Occasionally(2, OneOf(", ou menos,", ", quando muito,"))} {OneOf("e", "com", "formando")}
+            }
+            uma densa camada de vapor de amônia.  
+        }
+
+    |elif reportbody.atmosphere = "No atmosphere" || !reportbody.atmosphere:
+        {Occasionally(4, OneOf("Não há atmosféra.",
+                               "É desprovido de qualquer atmosfera.",
+                               "Os anos o deixaram sem qualquer atmosfera."))}
+        {if reportbody.temperature && reportAtmoTempScale < 3:
+            A temperatura média na superfície é de 
+            {TempCalc(reportbody.temperature)} {tempscale}.
+        }
+
+    |elif reportbody.pressure: 
+        {if reportbody.pressure < 0.1:
+            {set pressdesc to OneOf("com traços de gás", "super fina")}
+        |elif reportbody.pressure < 0.25:
+            {set pressdesc to "muito fina"}
+        |elif reportbody.pressure < 0.5:
+            {set pressdesc to "fina"}
+        |elif reportbody.pressure < 2:
+            {set pressdesc to ""}
+        |elif reportbody.pressure < 10:
+            {set pressdesc to "grossa"}
+        |elif reportbody.pressure < 50:
+            {set pressdesc to OneOf("densa", "muito grossa")}
+        |elif reportbody.pressure < 100:
+            {set pressdesc to OneOf("muito densa", "super grossa")}
+        |elif reportbody.pressure >= 100:
+            {set pressdesc to OneOf("esmagadôra", "super densa")}
+        }
+
+        {if find(reportbody.atmosphere, "-rich") > -1:
+            {set element to token(reportbody.atmosphere, "rico em", "")}
+            {set desc to OneOf("É uma", "Há uma", "Sensores detectam uma")}
+            {OneOf("atmosféra {desc} {pressdesc} {reportbody.atmospherecompositions[0].name}",
+                   "A atmosféra {pressdesc} é {reportbody.atmospherecompositions[0].name}")}
+            {if reportbody.atmospherecompositions[0].name != element:
+                , {OneOf("que é","e")}
+                rica em {element}
+            }
+        |elif find(reportbody.atmosphere, "vapour") > -1:
+            A atmosféra {pressdesc} 
+            {OneOf("é composta de {reportbody.atmosphere}s",
+                   "é rica em {reportbody.atmosphere}s",
+                   "contém altos níveis de {reportbody.atmosphere}s")}
+        |else:
+            {if len(reportbody.atmospherecompositions) > 1:
+                {set mostly to OneOf("primariamente", "principalmente", "em boa parte")}
+                {OneOf("A atmosféra {pressdesc} é composta {mostly} de",
+                       "O mais predominante na atmosfera {pressdesc} é")}
+            |else:
+                A atmosféra {pressdesc} é
+                {Occasionsally(2,"composta de")}
+
+            }
+            {reportbody.atmospherecompositions[0].name}
+        }
+
+        {_ Atmospheric Composition _}
+        {if reportAtmoComp = 1 && len(reportbody.atmospherecompositions) > 1:
+
+            {set atmocomp to []}
+            {set cur to 1}
+            
+            {while cur < len(reportbody.atmospherecompositions):
+                {if (reportbody.atmospherecompositions[cur].name != element):
+                    {set atmocomp to cat(atmocomp, [reportbody.atmospherecompositions[cur].name])}
+                }
+                {set cur to cur + 1}
+            }
+
+            {if len(atmocomp) = 1:
+                , com {OneOf("algum","um elemento adicional de")}
+                {atmocomp[0]}
+                {Occasionally(2,"também presente")}
+            |elif len(atmocomp) > 1:
+                , com {OneOf("algum","um elemento adicional de")}
+                {set cur to 0}
+                {set length to len(atmocomp) - 1}
+                {while cur < len(atmocomp):
+                    {P(atmocomp[cur])}
+                    {set cur to cur + 1}
+                    {if cur = length: e
+                    |elif cur < length:,
+                    }
+                }
+                {Occasionally(2,"também presente")}
+            }
+        }.
+
+        {if reportAtmoPressure = 1:
+            {if reportAtmoComp = 1 && len(reportbody.atmospherecompositions) > 0:
+                {OneOf("Ela tem", "Há", "Sensores detectam")}
+            |else:
+                , com
+            }
+            a pressão na superfície de {Humanise(reportbody.pressure)}
+            atmosféra{if Humanise(reportbody.pressure) != "1":s} da Terra
+        }
+
+        {if reportbody.temperature && reportAtmoTempScale < 3:
+            {set temp to: {TempCalc(reportbody.temperature)}}
+            {if reportAtmoPressure = 1: e |else: com }
+            uma temperatura média na superfície de {temp} {tempscale}
+        }.
+    }
+}
+

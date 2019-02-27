@@ -1,0 +1,59 @@
+{_ Body Name Tidy _}
+{_ Tidy up body names _}
+{_ If the body name contains the system name, it is removed _}
+{_ Adds Star, Planet, or Moon depending on body location within the system _}
+{_ Corrects pronunciation of letters in body names. No more 'hour' for 'h' with some TTS voices _}
+{_ Returns 'body' and 'body_type 'for use in other scripts _}
+
+
+{if len(reportbody.shortname) = 0:
+    {if event:
+        {set reportbody to BodyDetails(event.name, system.name)}
+    |elif reportbody.stellarclass:
+        {set reportbody to BodyDetails(state.eddi_context_star_name, state.eddi_context_star_system)}
+    |else:
+        {set reportbody to BodyDetails(state.eddi_context_body_name, state.eddi_context_system_system)}
+    }
+}
+
+{set body to reportbody.name}
+{set system to reportbody.systemname}
+{set type to reportbody.type}
+{set parent to BodyDetails(slice(body, 0, len(body)-2), system).type}
+
+{if body = system:
+    {set body to "A estrela principal"}
+    {set body_type to "Estrela"}
+
+|elif find(body, system) > -1:
+
+    {_ Remove system name from the body name _}
+    {if len(reportbody.shortname) > 0:
+        {set body to reportbody.shortname}
+    |else:
+        {set body to slice(body, len(system)+1)}
+    }
+
+    {_ Remove Ring designation if it's a ring _}
+    {if find(body, "Ring") > -1:
+        {set body to split(body, " ") _}
+        {set body to join(except(body, [len(body)-1:"", len(body)-2:""]), " ")}
+    }
+
+    {_ Replacing spaces with dashes makes letters spoken as alphabetic letters _}
+    {set body to ucase(join(split(body, " "), "-"))}
+    {set last_char to ord(slice(body, len(body)-1))}
+
+    {if find(body, "+") > -1:
+        {set body to List(split(body, "+"))}
+        {set body_type to "Planetas"}
+    |elif type = "Star" || (last_char > 64 && find(body, "-", 1) = -1):
+        {set body_type to "Estrela"}
+    |elif parent = "Planet" || last_char > 64:
+        {set body_type to "Lua"}
+    |elif type = "Planet" || last_char > 48:
+        {set body_type to "Planeta"}
+    }
+
+    {set body to cat(body_type, "-", body)}
+}

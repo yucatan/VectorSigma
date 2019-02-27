@@ -1,0 +1,59 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'system')}
+{SetState('eddi_context_last_action', 'change_state')}
+{SetState('eddi_context_system', event.system)}
+{SetState('eddi_context_system_system', event.system)}
+
+{_ Set up our system name}
+{if event.system = homesystem.name:
+  {set system to OneOf('{P(event.system)}',
+                       'your home system')}
+|elif event.system = system.name:
+  {set system to OneOf('{P{event.system)}',
+                       'this system')}
+|else:
+  {set system to OneOf('system {P(event.system)}'
+                       '{P(event.system)}'))}
+}
+
+{set system to join(split(system, "."), " ")}
+
+{if event.newstate != 'None':
+  {_ System has entered a new state}
+  {OneOf('Local transmissions report that', 'Information: ', 'Transmission intercepted.  Contents state that ')}
+  {if event.newstate = 'Boom':
+    {OneOf('{system} is experiencing a commercial boom',
+           '{system} is entering a period of heightened commercial success')}
+  |elif event.newstate = 'Bust':
+    {system} is experiencing economic hardship
+  |elif event.newstate = 'Civil Unrest':
+    {OneOf('{system} is experiencing civil unrest',
+           'there is unrest in the {system} system')}
+  |elif event.newstate = 'Civil War':
+    {OneOf('{system} is at war with another faction in the same system',
+           'civil war has broken out in {system}',
+           '{system} has fallen in to civil war',
+           'hostilities have broken out in {system}')}
+  |elif event.newstate = 'Election':
+    {system} is undergoing elections
+  |elif event.newstate = 'Expansion':
+    {OneOf("a faction in {system}'s is attempting to expand in to a neighbouring system",
+           "a faction in {system}'s is preparing to expand in to a neighbouring system")}
+  |elif event.newstate = 'Famine':
+    {system} is suffering from famine
+  |elif event.newstate = 'Investment':
+    {system}'s controlling faction are investing heavily in their local infrastructure
+  |elif event.newstate = 'Lockdown':
+    {system} has heightened security due to a lockdown by the controlling faction
+  |elif event.newstate = 'Outbreak':
+    {system} is suffering from an outbreak of contagious disease
+  |elif event.newstate = 'Retreat':
+    {system}'s controlling faction is retreating from a neighbouring system
+  |elif event.newstate = 'War':
+    {system} is now at war with a neighbouring system
+  |else:
+    {OneOf('{system} has entered {event.state}',
+           '{system} is now in a state of {event.state}')}
+  }.
+}
+

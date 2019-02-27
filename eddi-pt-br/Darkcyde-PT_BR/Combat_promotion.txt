@@ -1,0 +1,10 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'rank')}
+{SetState('eddi_context_last_action', 'promotion')}
+{SetState('eddi_context_rank_name', 'combat')}
+{SetState('eddi_context_rank_amount', event.rating)}
+
+Suas {OneOf("habilidades de combate","habilidades em combate")} foram reconhecidas {F("Honorific")}.
+
+Você {OneOf("está agora","chegou")} no posto de {cmdr.combatrating.name}.
+

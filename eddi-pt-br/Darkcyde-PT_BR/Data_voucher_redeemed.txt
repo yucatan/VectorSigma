@@ -1,0 +1,26 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'data_voucher')}
+{SetState('eddi_context_last_action', 'redeem')}
+{SetState('eddi_context_data_voucher_amount', event.amount)}
+
+Comprovantes de dados no valor de {Humanise(event.amount)} créditos descontados
+
+{Occasionally(2, "
+   {if len(event.rewards) > 0:
+      {OneOf("de", "cortesia de")}
+      {set cur to 0}
+      {set length to len(event.rewards) - 1}
+      {while cur < len(event.rewards):
+         {P(event.rewards[cur].faction)}
+         {set cur to cur + 1}
+         {if cur = length: and
+         |elif cur < length:,
+         }
+      }
+   }
+")}.
+
+{if event.brokerpercentage:
+   {Pause(1000)}
+   O agente ficou com {event.brokerpercentage} créditos.
+}

@@ -1,0 +1,12 @@
+{_ Preferences }
+{set minScanValue to 5000} {_ Set the minimum credit value that should be voiced _}
+
+{_ Context }
+{set scanValue to state.eddi_context_last_scan_estimated_value}
+
+{if scanValue > minScanValue:
+   {OneOf("Este", "Esta informação", "Este scan")} 
+   {OneOf("pode", "deve", "poderá", "deverá") } 
+   {OneOf("conseguir", "valer", "lhe trazer", "ser vendido por")}
+   {Humanise(scanValue)} créditos.
+}

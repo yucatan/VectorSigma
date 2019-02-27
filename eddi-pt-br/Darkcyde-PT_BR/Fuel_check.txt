@@ -1,0 +1,48 @@
+{_ Fuel Check _}
+{_ Report fuel level _}
+
+{if ship.name = state.eddi_fuelcheck_shipname:
+    {if state.eddi_context_fuel_used > state.eddi_fuelcheck_maxfuel:
+        {SetState('eddi_fuelcheck_maxfuel', state.eddi_context_fuel_used)}
+    }
+|else:
+    {SetState('eddi_fuelcheck_maxfuel', state.eddi_context_fuel_used)}
+    {SetState('eddi_fuelcheck_shipname', ship.name)}
+}
+
+{set maxfuel to state.eddi_fuelcheck_maxfuel}
+{set fuelremaining to state.eddi_context_fuel_remaining}
+{set maxjump to fuelremaining/maxfuel}
+{set currentfuel to round(fuelremaining / ship.fueltanktotalcapacity * 100, 0)}
+{set shipsfuel to:
+   {Occasionally(2, "{ShipName()}'s" )} Fuel
+   {OneOf("levels", "tanks", "reserves")} {Occasionally(2, "are")} {Occasionally(2, "now")}
+}
+{set currentpercent to: 
+   at {currentfuel} percent {Occasionally(2, "capacity")}
+}
+{set title to Occasionally(3,"{F('Honorific')}")}
+
+{if maxjump < 0.5:
+   Danger!
+   {shipsfuel} depleted!
+   {Pause(500)}
+   Running on reserves. Shutdown of non-essential systems is advised!
+   {Pause(500)}
+   Emergency transponder standing by, {title}
+|elif maxjump < 1.25:
+   {OneOf("Warning:", "Caution:", "Danger:", "Attention:")}
+   {shipsfuel} {OneOf("dangerously low", "almost depleted")}.
+   {OneOf("Please refuel", "Refueling is strongly recommended")}, {title}
+|elif currentfuel < 25:
+   {OneOf("Warning:", "Caution:", "Danger:", "Attention:")}
+   {shipsfuel} {OneOf("below 25%", "{currentpercent}" )}, {title}
+|elif currentfuel < 50:
+   {shipsfuel} {OneOf("below 50%", "{currentpercent}" )}, {title}
+|elif currentfuel < 75:
+   {Occasionally(2, "{shipsfuel} {currentpercent}, {title}")}
+|elif currentfuel < 100:
+   {Occasionally(3, "{shipsfuel} {currentpercent}, {title}")}
+|else:
+   {shipsfuel} {OneOf(currentpercent, "at maximum")}, {title}
+}

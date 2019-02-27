@@ -1,0 +1,124 @@
+{_ Track if there is any damage}
+{set damaged to 0}
+
+{_ Announce hull health}
+{if ship.health < 100:
+    Casco em {Humanise(ship.health)}%.
+    {set damaged to 1}
+}
+
+{_ Announce critical module health}
+
+{set minordamage to []}
+{set majordamage to []}
+
+{if ship.powerplant.health < 60:
+    {set majordamage to cat(majordamage, [ship.powerplant])}
+|elif ship.powerplant.health < 100:
+    {set minordamage to cat(minordamage, [ship.powerplant])}
+}
+
+{if ship.thrusters.health < 60:
+    {set majordamage to cat(majordamage, [ship.thrusters])}
+|elif ship.thrusters.health < 100:
+    {set minordamage to cat(minordamage, [ship.thrusters])}
+}
+
+{if ship.frameshiftdrive.health < 60:
+    {set majordamage to cat(majordamage, [ship.frameshiftdrive])}
+|elif ship.frameshiftdrive.health < 100:
+    {set minordamage to cat(minordamage, [ship.frameshiftdrive])}
+}
+
+{if ship.powerdistributor.health < 60:
+    {set majordamage to cat(majordamage, [ship.powerdistributor])}
+|elif ship.powerdistributor.health < 100:
+    {set minordamage to cat(minordamage, [ship.powerdistributor])}
+}
+
+{if ship.lifesupport.health < 60:
+    {set majordamage to cat(majordamage, [ship.lifesupport])}
+|elif ship.lifesupport.health < 100:
+    {set minordamage to cat(minordamage, [ship.lifesupport])}
+}
+
+{if ship.sensors.health < 60:
+    {set majordamage to cat(majordamage, [ship.sensors])}
+|elif ship.sensors.health < 100:
+    {set minordamage to cat(minordamage, [ship.sensors])}
+}
+
+{if len(majordamage) > 0:
+    {set damaged to 1}
+    Grande dano no
+
+    {set cur to 0}
+    {set length to len(majordamage) - 1}
+    {while cur < len(majordamage):
+        {majordamage[cur].name}
+        {set cur to cur + 1}
+        {if cur = length: and
+        |elif cur < length:,
+        }
+    }.
+}
+
+{if len(minordamage) > 0:
+    {set damaged to 1}
+    Dano leve no
+
+    {set cur to 0}
+    {set length to len(minordamage) - 1}
+    {while cur < len(minordamage):
+        {minordamage[cur].name}
+        {set cur to cur + 1}
+        {if cur = length: and
+        |elif cur < length:,
+        }
+    }.
+}
+
+{_ Announce other module health}
+
+{set minordamage to []}
+{set majordamage to []}
+
+{for compartment in ship.compartments:
+    {if compartment.module.health < 60:
+        {set majordamage to cat(majordamage, [compartment.module.name])}
+    |elif hardpoint.module.health < 100:
+        {set minordamage to cat(minordamage, [compartment.module.name])}
+    }
+}
+
+{for hardpoint in ship.hardpoints:
+    {if hardpoint.module.health < 60:
+        {set majordamage to cat(majordamage, [hardpoint.module.name])}
+    |elif hardpoint.module.health < 100:
+        {set minordamage to cat(minordamage, [hardpiont.module.name])}
+    }
+}
+
+{if len(majordamage) > 0:
+    {set damaged to 1}
+    {if len(majordamage) = 1:
+       Um outro componente da nave com grande dano
+    |elif len(majordamage) > 1:
+        {len(majordamage)} outros componentes da nave com grande dano
+    }
+    {if len(minordamage) = 1:
+       e um outro componente da nave com dano leve
+    |elif len(minordamage) > 1:
+       e {len(minordamage)} outros componentes da nave com dano leve
+    }.
+|elif len(minordamage) = 1:
+    {set damaged to 1}
+    Um outro componente da nave com dano leve.
+|elif len(minordamage) > 1:
+    {set damaged to 1}
+    {len(minordamage)} outros componentes da nave com dano leve.
+}
+
+{if damaged = 0:
+    {OneOf("Todos os sistemas estão operacionais.", "{ShipName()} está totalmente operacional.", "{ShipName()} está sem danos.")}
+}

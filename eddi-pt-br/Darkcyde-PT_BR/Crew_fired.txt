@@ -1,0 +1,7 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'crew')}
+{SetState('eddi_context_last_action', 'fire')}
+{SetState('eddi_context_crew_name', event.name)}
+
+{event.name} teve o contrato cancelado, e não {OneOf("é mais membro","mais faz parte")} {OneOf("da","da sua")} tripulação.
+

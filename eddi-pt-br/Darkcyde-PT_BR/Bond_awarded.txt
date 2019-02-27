@@ -1,0 +1,21 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'bond')}
+{SetState('eddi_context_last_action', 'award')}
+{SetState('eddi_context_bond_amount', event.reward)}
+{SetState('eddi_context_bond_faction', event.awardingfaction)}
+
+{_ Update Fines & Bounties}
+{F("FinesBounties_Add")}
+
+{OneOf("Alvo","Inimigo combatente","Cracúdo","Facínora","Criminoso","{P('Bo-ghee')}","Alvo da {event.victimfaction}","nave da {event.victimfaction}")}
+{OneOf("destruído","eliminado","arregaçado","abatido")},
+
+{OneOf("Aqui estão {event.reward} créditos","{event.reward} créditos recebidos","{event.reward} créditos a mais pra conta","{event.reward} créditos coletados")}
+
+{Occasionally(3,"da {event.awardingfaction}")}.
+
+{Pause(250)}
+
+{Occasionally(20,"Todd Dê Bléster MacQuinn ficaria orgulhoso!")}
+
+{Occasionally(3,"{OneOf('Fique de olho em sua retaguarda','Se liga aqui fora','Olha pra trás','Escolha seu próximo alvo')} Comandante!")}

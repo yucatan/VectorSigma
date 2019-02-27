@@ -1,0 +1,9 @@
+{_ Cargo updated }
+{_ Triggered when the cargo inventory is updated }
+
+
+{_ Context }
+{SetState('eddi_context_last_subject', 'cargo')}
+{SetState('eddi_context_last_action', 'updated')}
+{SetState('eddi_context_cargo_carried', event.cargocarried)}
+

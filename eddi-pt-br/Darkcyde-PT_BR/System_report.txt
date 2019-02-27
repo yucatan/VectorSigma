@@ -1,0 +1,61 @@
+{_ Fetch from context }
+{set reportsystem to SystemDetails(state.eddi_context_system_system)}
+
+{if !reportsystem.name || reportbody.name = "":
+    Não tenho certeza sobre qual sistema você está perguntando.
+|else:
+    {join(split(reportsystem.name, "."), " ")} é
+
+    {if reportsystem.population && reportsystem.population > 0:
+        um sistema 
+		{if reportsystem.allegiance = "Federation":
+            Federal
+        |elif reportsystem.allegiance = "Empire":
+            Imperial
+        |else:
+            Independente
+        }, 
+        {if reportsystem.government:
+            {reportsystem.government}
+        |else:
+          system
+        }, 
+        {OneOf("com", "com uma população de", "lar de", "suportando")} {Humanise(reportsystem.population)} {OneOf("pessoas", "almas")}
+        {if reportsystem.power:
+            , {OneOf("aliado a", "aliado com", "controlado por")} {P(reportsystem.power)}
+        }.
+
+        {if reportsystem.faction:
+          {reportsystem.faction} é a facção {OneOf("controladora", "local", "imediata")}.
+        }
+
+        {if len(reportsystem.stations) = 0:
+          Não há estações presentes
+        |else:
+            {if len(reportsystem.orbitalstations) = 0:
+                {if len(reportsystem.planetarystations) = 1:
+                    Há {OneOf("somente","apenas")} uma estação planetária 
+                |else:
+                    Há {len(reportsystem.planetarystations)} estações planetárias
+                }
+            |elif len(reportsystem.orbitalstations) = 1:
+                Há {OneOf("somente","apenas")} estação orbital
+                {if len(reportsystem.planetarystations) = 1:
+                    e {OneOf("somente","apenas")} estação planetária
+                |elif len(reportsystem.planetarystations) > 1:
+                    e {len(reportsystem.planetarystations)} estações planetárias
+                }
+            |else:
+                Há {len(reportsystem.orbitalstations)} estações orbitais
+                {if len(reportsystem.planetarystations) = 1:
+                    e {OneOf("somente","apenas")} estação planetária
+                |elif len(reportsystem.planetarystations) > 1:
+                    e {len(reportsystem.planetarystations)} estações planetárias
+                }
+            }
+        }
+        neste sistema
+    |else:
+       não populado.
+   }.
+}

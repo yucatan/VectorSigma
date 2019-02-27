@@ -1,0 +1,26 @@
+{_ Forms of address taken from <https://en.wikipedia.org/wiki/Forms_of_address_in_the_United_Kingdom>}
+{if cmdr.empirerating.rank <= 4: {_ Commoner }
+   Comandante {Occasionally(3,"{cmdr.name}")}
+|elif cmdr.empirerating.rank = 5: {_ Knight / Dame }
+    {if cmdr.gender = "Male": 
+        Senhor 
+    |elif cmdr.gender = "Female": 
+        Senhora
+    |else: 
+        Comandante
+    }
+|elif cmdr.empirerating.rank <= 11: {_ Peer / Peeress }
+    {if cmdr.gender = "Male": 
+        {OneOf("Meu Lorde", "Seu Senhorio")}
+    |elif cmdr.gender = "Female": 
+        {OneOf("Minha lêide", "Sua Senhoria")}
+    |else: 
+        Comandante
+    }
+|elif cmdr.empirerating.rank = 12:
+    Vossa Graça
+|elif cmdr.empirerating.rank = 13:
+    Vossa alteza real
+|elif cmdr.empirerating.rank = 14:
+    Vossa Majestade
+}

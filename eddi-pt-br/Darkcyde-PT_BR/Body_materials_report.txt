@@ -1,0 +1,119 @@
+{_ Preferences _}
+{set reportMats to 2} {_ Set to 0 if you only want to hear about materials below your minimum inventory level _}
+                      {_ Set to 1 if you also want to hear about materials below your desired inventory level _}
+                      {_ Set to 2 if you want to hear about all materials on the body _}
+
+{set reportMatConc to 2} {_ Set to 0 if you do not want to hear about material percent concentrations _}
+                         {_ Set to 1 if you only want to hear about great material percent concentrations _}
+                         {_ Set to 2 if you want to hear about good and great material percent concentrations _}
+                         {_ Set to 3 if you want to hear about all material percent concentrations _}
+
+
+{_ Fetch from context }
+{if event:
+    {set reportbody to BodyDetails(event.name, system.name)}
+}
+{if !reportbody.name || reportbody.name = "": 
+    {set reportbody to BodyDetails(state.eddi_context_body_name, state.eddi_context_body_system)}
+}
+{if !reportbody.name || reportbody.name = "": 
+    {set reportbody to BodyDetails(state.eddi_context_body_name)}
+}
+
+{if !reportbody.name || reportbody.name = "":
+    {_ If it's still not possible to get the body name...  _}
+    Não 
+    {OneOf("estou certo","tenho certeza")}
+    sobre qual corpo você 
+    {OneOf("perguntando","se referindo")}.
+
+|else:
+    {_ Define a function to obtain a material from inventory}
+    {set _inventory(required) to:
+        {for material in materials:
+            {if material.material = required:
+                {return material}
+            }
+        }
+    }
+
+    {if reportbody.landable:
+
+        {set goodmaterials to []}
+        {set greatmaterials to []}
+        {set allmaterials to []}
+        {for material in reportbody.materials:
+            {set inventoryMat to _inventory(material.material)}
+            {if (reportMats >= 0 && inventoryMat.amount < inventoryMat.minimum && inventoryMat.minimum > 0)
+              || (reportMats >= 1 && inventoryMat.amount < inventoryMat.desired && inventoryMat.desired > 0)
+              || (reportMats >= 2):
+                {if material.percentage >= material.definition.greatpctbody:
+                    {set greatmaterials to cat(greatmaterials, [material])}
+                |elif material.percentage >= material.definition.goodpctbody:
+                    {set goodmaterials to cat(goodmaterials, [material])}
+                |else:
+                    {set allmaterials to cat(allmaterials, [material])}
+                }
+            }
+        }
+
+        {if len(goodmaterials) > 0 || len(greatmaterials) > 0 || len(allmaterials) > 0:
+            {if !body:
+                {F("Body Name Tidy")}
+                {body}
+            |else:
+                Este corpo
+            }
+            contém
+
+            {if len(greatmaterials) > 0:
+                níveis muito altos de
+                {set cur to 0}
+                {set length to len(greatmaterials) - 1}
+                {while cur < len(greatmaterials):
+                    {P(greatmaterials[cur].material)}
+                    {if reportMatConc > 0: a {round(greatmaterials[cur].percentage, 1)}% }
+                    {set cur to cur + 1}
+                    {if cur = length: e
+                    |elif cur < length:,
+                    }
+                }
+            }
+
+            {if len(goodmaterials) > 0:
+                {if len(greatmaterials) > 0: e }
+                altos níveis de
+                {set cur to 0}
+                {set length to len(goodmaterials) - 1}
+                {while cur < len(goodmaterials):
+                    {P(goodmaterials[cur].material)}
+                    {if reportMatConc > 1: a {round(goodmaterials[cur].percentage, 1)}% }
+                    {set cur to cur + 1}
+                    {if cur = length: e
+                    |elif cur < length:,
+                    }
+                }
+            }
+
+            {if len(greatmaterials) > 0 || len(goodmaterials) > 0:. }
+
+            {if len(allmaterials) > 0 && reportMats >= 2:
+                {if len(greatmaterials) > 0 || len(goodmaterials) > 0:
+                    E também é {OneOf("composto de","feito de")}
+                |else:
+                    níveis moderados de
+                }
+                {set cur to 0}
+                {set length to len(allmaterials) - 1}
+                {while cur < len(allmaterials):
+                    {P(allmaterials[cur].material)}
+                    {if reportMatConc > 2: a {round(allmaterials[cur].percentage, 1)}% }
+                    {set cur to cur + 1}
+                    {if cur = length: e
+                    |elif cur < length:,
+                    }
+                }.
+            }
+        }
+    }
+}

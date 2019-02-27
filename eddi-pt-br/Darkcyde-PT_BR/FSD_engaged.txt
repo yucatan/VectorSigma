@@ -1,0 +1,93 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'fsd')}
+{SetState('eddi_context_last_action', 'engage')}
+{SetState('eddi_context_system_name', event.system)}
+{SetState('eddi_context_system_system', event.system)}
+{SetState('eddi_context_fsd_target', event.target)}
+
+{if event.target = 'Hyperspace':
+    {_ Rewrite context to represent a jump }
+    {SetState('eddi_context_last_subject', 'jump')}
+    {SetState('eddi_context_last_action', 'start')}
+    {SetState('eddi_context_supercruise', "yes")}
+
+    {F("GetDistance")}
+
+    {set reportsystem to SystemDetails(event.system)}
+
+    {_ Wait for the FSD countdown and initial jump}
+    {Pause(5000)}
+
+    {set sys_val to cast(state.eddi_context_system_value, "n")}
+    {if sys_val > 0 && sys_val != null:
+        {set last to OneOf("anterior", "passado")}
+        {OneOf("Valor estimado do scan do sistema {last} é",
+               "scans do sistema {last} valem uma estimativa de",
+               "o valor do scan do sistema {last} está estimado em")}
+
+        {Humanise(state.eddi_context_system_value)} créditos.
+    |else:
+        {OneOf("Destino confirmado","Salto em andamento","Telemetria obtida")}.
+    }
+
+    {ShipName()} está {OneOf("dirigindo-se para", "em rota para", "viajando para", "em trânsito para")}
+    o sistema {join(split(reportsystem.name, "."), " ")}.
+    {if reportsystem.name = homesystem.name:
+        Bem vindo ao lar, {F("Honorific")}
+    |else:
+        {set scoopables to ["O", "B", "A", "F", "G", "K", "M"]}
+        {if slice(event.stellarclass, 0, 1) = "D":
+            Cuidado: anã branca detectada.
+        |elif event.stellarclass = "N":
+            Cuidado: estrela de nêutrons detectada.
+        |elif event.stellarclass = "H":
+            Cuidado: buraco negro detectado.
+        |elif find(scoopables, event.stellarclass) = -1:
+            {Occasionally(2, "Informação:")}
+            Estrela da entrada não pode ser usada para abastecimento.
+        }
+        
+        {if lastsystem.allegiance && lastsystem.allegiance != "None" && lastsystem.allegiance != "Independent" && (!reportsystem.allegiance || reportsystem.allegiance = "None" || reportsystem.allegiance = "Independent"):
+            Você {OneOf("are leaving", "deixou", "não está mais em")} espaço {lastsystem.allegiance}.
+        |elif lastsystem.allegiance && lastsystem.allegiance != reportsystem.allegiance && system.allegiance && system.allegiance != "None":
+            
+						
+			{if reportsystem.allegiance = "Federação": {set ALIANCA to:Federal}}
+			{if reportsystem.allegiance = "Império": {set ALIANCA to:Imperial}}
+			{if reportsystem.allegiance = "Aliança": {set ALIANCA to:da Aliança}}
+			
+			Você {OneOf("está agora em", "entrou em", "está entrando em")} espaço {ALIANCA}.
+            {if cmdr.title != "Commander":
+                Bem vindo de volta {F("Honorific")}.
+            }
+        }
+
+        {if reportsystem.visits = 0:
+            Esta é sua primeira visita a este sistema
+        |elif reportsystem.visits = 1:
+            Esta é sua segunda visita a este sistema
+        |elif reportsystem.visits = 2:
+            {Occasionally(2, "Esta é sua terceira visita a este sistema")}
+        |elif reportsystem.visits = 3:
+            {Occasionally(2, "Esta é sua quarta visita a este sistema")}
+        |else:
+            {Occasionally(3, "Você visitou este sistema {reportsystem.visits} vezes")}
+        }.
+
+        {if !reportsystem.population && lastsystem.population:
+            {OneOf("Este sistema não é povoado","Não há presença humana aqui", "Humanos ainda têm de colonizar este sistema")}.
+        |elif reportsystem.population && reportsystem.visits < 6:
+            {if SecondsSince(reportsystem.lastVisitSeconds) > 3600:
+                {F("System report")}
+            }
+        }
+
+        {if reportsystem.distancefromhome:
+            {Occasionally(7, "{OneOf('Você está a', 'Localização atual está a', 'Você está agora a')} {Humanise(reportsystem.distancefromhome)} anos luz de {OneOf('casa', '{homesystem.name}')}.")}
+        }
+
+        {if reportsystem.comment:
+            Você deixou um{OneOf("a anotação", " comentário", " registro")} {OneOf("sobre ", "para ", "d")}este sistema.  Que {OneOf("é o seguinte", "diz", "se lê", "é")} {reportsystem.comment}.
+        }
+    }
+}

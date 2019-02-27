@@ -1,0 +1,46 @@
+
+{_ Fetch from context }
+{if event:
+    {set reportbody to BodyDetails(event.name, system.name)}
+}
+{if !reportbody.name || reportbody.name = "": 
+    {set reportbody to BodyDetails(state.eddi_context_body_name, state.eddi_context_body_system)}
+}
+{if !reportbody.name || reportbody.name = "": 
+    {set reportbody to BodyDetails(state.eddi_context_body_name)}
+}
+
+{if !reportbody.name || reportbody.name = "":
+    {_ If it's still not possible to get the body name...  _}
+    Não 
+    {OneOf("tenho certeza","estou certo")}
+    sobre qual corpo você está
+    {OneOf("perguntando","se referindo")}.
+
+|else:
+    {if (reportbody.volcanism && len(reportbody.volcanism) > 0):
+
+        {if !body:
+            {F("Body Name Tidy")}
+            {body} tem
+        |else:
+            {OneOf("Sensores detectam", "Este {body_type} tem")}
+        }
+
+        {if reportbody.volcanism.type = "Geysers":
+            {set amount to "número"}
+            {set type to "Gêiseres"}
+        |else:
+            {set amount to "nível"}
+            {set type to OneOf("e fluxo de lava", "e fluxo de mágma")}
+        }
+
+        {if reportbody.volcanism.invariantAmount = "Major":
+            grande {amount} de
+        |elif reportbody.volcanism.invariantAmount = "Minor":
+            baixo {amount} de
+        }
+        {reportbody.volcanism.composition} {type} ativos 
+        {Occasionally(2, "na superfície")}.
+    }
+}

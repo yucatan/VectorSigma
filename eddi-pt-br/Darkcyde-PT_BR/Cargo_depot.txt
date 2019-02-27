@@ -1,0 +1,30 @@
+{_ Cargo depot }
+{_ Triggered when engaging with a mission depot }
+
+
+{if event.updatetype = "Collect":
+    Você coletou {event.amount} tonelada{if event.amount != 1:s} de {event.commodity} do depósito da missão.
+|elif event.updatetype = "Deliver":
+    Você entregou {event.amount} tonelada{if event.amount != 1:s} de {event.commodity} ao depósito da missão.
+
+    {Pause(200)}
+    {set remaining to event.totaltodeliver - event.delivered}
+    {set haulage to HaulageDetails(event.missionid)}
+
+    Requerimentos da missão 
+    {if find(haulage.name, "Wing") > -1:
+        de Esquadrão
+    |elif find(haulage.name, "Rank") > -1:
+        Naval
+    |else:
+        Solo
+    }
+
+    {if remaining = 0:
+        foram completados.
+    |else:
+        está agora {round(event.delivered / event.totaltodeliver * 100, 0)} porcento completada.
+    }
+}
+
+

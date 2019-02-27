@@ -1,0 +1,27 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'commodity')}
+{SetState('eddi_context_last_action', 'sell')}
+{SetState('eddi_context_commodity_name', event.commodity)}
+{SetState('eddi_context_commodity_amount', event.amount)}
+
+{Occasionally(2,"Você")}
+Vendeu
+
+{if event.amount = 1:
+    uma tonelada de {event.commodity} por {event.price} créditos
+|elif event.amount > 1:
+    {event.amount} toneladas de {event.commodity}
+    {Occasionally(2,"a {event.price} créditos por tonelada.")}
+    {OneOf("No valor total de","Por")}
+    {event.amount * event.price} créditos
+}
+{if event.profit < 0:
+    com uma perda de {-1 * event.profit * event.amount} créditos
+|elif event.profit = 0:
+    e ficou empatado na venda
+|elif event.profit = event.price:
+    lucro puro
+|else:
+    com um luco de {event.profit * event.amount} créditos
+}.
+

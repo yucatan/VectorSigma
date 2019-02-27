@@ -1,0 +1,30 @@
+{_ Fetch blueprint from state }
+{set blueprintname to state.blueprint}
+{if blueprintname:
+    {_ Fetch full blueprint details }
+    {set blueprint to BlueprintDetails(blueprintname)}
+
+    {_ Context }
+    {SetState('eddi_context_last_subject', 'blueprint')}
+    {SetState('eddi_context_blueprint_name', blueprintname)}
+}
+
+{if !blueprint:
+    {_ Fetch from context }
+    {set blueprint to BlueprintDetails(state.eddi_context_blueprint_name)}
+}
+
+{if blueprint:
+    {blueprintname} requires
+    {set cur to 0}
+    {set length to len(blueprint.materials) - 1}
+    {while cur < len(blueprint.materials):
+        {blueprint.materials[cur].material}
+        {set cur to cur + 1}
+        {if cur = length: and
+        |elif cur < length:,
+        }
+    }
+|else:
+    Sem informação disponível sobre os materiais requeridos por {blueprintname}
+}.

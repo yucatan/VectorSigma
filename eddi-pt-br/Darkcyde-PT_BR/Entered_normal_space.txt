@@ -1,0 +1,62 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'fsd')}
+{SetState('eddi_context_last_action', 'disengage')}
+{SetState('eddi_context_system_name', event.system)}
+{SetState('eddi_context_body_name', event.body)}
+{SetState('eddi_context_body_system', event.system)}
+{SetState('eddi_context_supercruise', "no")}
+
+{_ If following a glide event, pause is not required. _}
+{if !(status.near_surface && status.fsd_status = "masslock"):
+    {Pause(3000)}
+}
+
+{if state.eddi_context_interdicted != "yes":
+
+    {Occasionally(2, "{ShipName()}")}
+    {OneOf("saiu da supervelocidade", "{OneOf('entrou no','retornou ao','saiu para o')} espaço normal")}
+
+    {if event.bodytype && event.bodytype != "":
+        {OneOf("perto de", "próximo de", "nas proximidades de")}
+        {F("Body Name Tidy")}
+
+        {if event.bodytype = "Planet":
+
+            {set time to SecondsSince(0) - state.eddi_context_approach_time}
+            {_ If time since last settlement approach is more than 1 minute _}
+            {if time < 60:
+
+                {set settlement to state.eddi_context_last_settlement}
+                {set station to StationDetails(settlement, event.system)}
+                {if station:
+                    {SetState('eddi_context_body_name', settlement)}
+                    {if find(station.model, "Unknown") = -1: {station.model},}
+                    {P(settlement)} em
+                    {set station_missions to F("Mission check station")}
+                }
+            }
+            {body}.
+
+            {if station_missions:
+                {Pause(500)}
+                {station_missions}
+            }
+
+        |elif event.bodytype = "Star":
+            {body}.
+        |elif event.bodytype = "Station":
+            {set model to StationDetails(event.body, event.system).model}
+            {set type to token(model, " ", 1)}
+            {if find(model, "Unknown") = -1:
+                {if type != "": {type} |else: {model} },
+            }
+            {P(event.body)}.
+            {if type = "Starport": {Pause(10000)} }
+            {F("Mission check station")}.
+        |elif event.bodytype = "PlanetaryRing":
+            Anéis-{token(event.body, " ", find(split(event.body," "),"Ring")-1)}, de {body}.
+        }
+    }
+}
+
+{SetState('eddi_context_interdicted', 'no')}

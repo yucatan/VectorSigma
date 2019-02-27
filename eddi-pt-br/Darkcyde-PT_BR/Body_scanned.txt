@@ -1,0 +1,26 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'body')}
+{SetState('eddi_context_last_action', 'scan')}
+{SetState('eddi_context_body_system', system.name)}
+{SetState('eddi_context_body_name', event.name)}
+{SetState('eddi_context_last_scan_estimated_value', event.estimatedvalue)}
+
+
+{if state.lastscanbody != event.name:
+
+    {if event.estimatedvalue:
+        {SetState("eddi_context_system_value", state.eddi_context_system_value + event.estimatedvalue)}
+        {SetState("eddi_context_session_scan_value", state.eddi_context_session_scan_value + event.estimatedvalue)}
+    }
+
+    {Pause(1000)}
+
+    {OneOf("Varredura", "Análise", "Varredura e análise")}
+    {Occasionally(3, "do corpo")} {OneOf("completa", "finalizada")}.
+
+    {if ship.Role.edname = "Exploration" || ship.Role.edname = "Multipurpose":
+        {F("Body report")}
+    }
+
+    {SetState('lastscanbody', event.name)}
+}

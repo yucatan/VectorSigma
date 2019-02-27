@@ -1,0 +1,94 @@
+{_ Commander continued }
+{_ Triggered when you continue an existing game }
+
+
+{SetState('eddi_context_last_subject', 'load_game')}
+{SetState('eddi_context_system_system', system.name)}
+{SetState('eddi_context_body_name', body.name)}
+{SetState('eddi_context_station_name', station.name)}
+{SetState('eddi_context_lastdocked', station.name)}
+{SetState('eddi_context_currentshipid', event.shipid)}
+
+{_ If VoiceAttack is not used, set Auto Route to no, and set default Routing system _}
+{if state.eddi_context_mission_route_useauto = "" || state.eddi_context_mission_route_useauto = null:
+    {SetState('eddi_context_mission_route_useauto', "no")}
+    {SetState('missionsrouteuseeddi', "no")}
+}
+
+{set time to token(format(SecondsSince(0), "dl:yyyy-MM-dd HH:mm:ss"), " ", 1)}
+{set time to cast(token(time, ":", 0), "n")}
+
+{if time < 12: {set GREETING to:m dia}
+|elif time > 11 && time <17: {set GREETING to:a tarde}
+|else: {set GREETING to:a noite}
+}
+
+Bo{GREETING}
+
+{F("Honorific")}, seja bem vindo.
+
+{set station to F("Mission check station")}
+{set system to F("Mission check system")}
+{set expiring to F("Mission Check Expiring")}
+
+{if station: {station}
+|elif system: {system}
+|else: {F("Mission check galaxy")}
+}
+
+{if expiring: {expiring}}
+
+{_ Set up Mission Route from saved data _}
+{set missionsdata to split(state.missionsdata, "+=")}
+{SetState('missionsrouteuseeddi', missionsdata[0])}
+{SetState('missionsroutetype', missionsdata[1])}
+{SetState('missionsdestination', missionsdata[2])}
+{SetState('missionsroutedistance', missionsdata[3])}
+{SetState('missionsroute', missionsdata[4])}
+
+
+{if missionsCount > 0:
+    {SetState('to_system', state.missionsdestination)}
+
+    {if missionsCount > 1: Destino {OneOf("primário", "inicial")} }
+    {Occasionally(2,"de missão")} {state.to_system},
+    {Occasionally(2, "{OneOf('foi', 'está')}")} {OneOf("travado", "configurado")}.
+
+    {SetState('from_system', state.eddi_context_system_name)}
+    {F("Mission Route Get Distance")}
+    {if state.distance > 0:
+        Distância {Occasionally(2,"para o {OneOf('sistema','alvo','{state.to_system}')}")}
+        é de {state.distance)} anos luz.
+        {SetState('eddi_context_mission_destination_locked', "no")}
+    }
+}
+
+{_ Check Fines & Bounties}
+{F("FinesBounties_CheckShip")}
+{F("FinesBounties_CheckContacts")}
+
+
+{set fixed to false}
+{set gimbal to false}
+{set turret to false}
+{set weapons_array to ""}
+
+{for hp in ship.hardpoints:
+
+    {if type(hp.module.mount) != "void":
+        {for index, value in hp.module.mount: {set mount to value}}
+        {if mount = 0:
+            {SetState('eddi_weapons_fixed', true)}
+        |elif mount = 1:
+            {SetState('eddi_weapons_gimbal', true)}
+        |elif mount = 2:
+            {SetState('eddi_weapons_turret', true)}
+        }
+        {set weapons_array to cat(weapons_array, "0", mount, " ")}
+    }
+}
+
+{SetState('eddi_weapons_array', weapons_array)}
+
+{SetState('loading', true)}
+

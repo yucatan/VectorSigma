@@ -1,0 +1,33 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'commodity')}
+{SetState('eddi_context_last_action', 'purchase')}
+{SetState('eddi_context_commodity_name', event.commodity)}
+{SetState('eddi_context_commodity_amount', event.amount)}
+
+{if event.amount = 1:
+   Você acabou de comprar uma tonelada de {event.commodity} por {event.price} créditos.
+|elif event.amount > 1:
+    Você acabou de comprar {event.amount} toneladas de {event.commodity} a {event.price} créditos por tonelada.  O custo total foi de {Humanise(event.amount * event.price)} créditos.
+}
+
+{set total_required to 0}
+{set total_acquired to 0}
+
+{for mission in missions:
+    {if mission.commodity = event.commodity && mission.type = "Collection":
+        {set required to true}
+        {set total_required to total_required + mission.amount - HaulageDetails(mission.missionid).delivered}
+    }
+}
+
+{set total_acquired to event.amount + CargoDetails(event.commodity).total}
+
+{if required = true:
+    {if total_acquired >= total_required:
+        Agora você tem o suficiente para todas as suas missões
+    |else:
+        {set need to total_required - total_acquired}
+        Você ainda precisa de mais {need} tonelada{if need != 1:s} de {event.commodity} para todas as suas missões
+    }.
+}
+

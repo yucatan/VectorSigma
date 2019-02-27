@@ -1,0 +1,36 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'bond')}
+{SetState('eddi_context_last_action', 'redeem')}
+{SetState('eddi_context_bond_amount', event.amount)}
+
+{_ Update Fines & Bounties}
+{F("FinesBounties_Delete")}
+
+
+Pagamentos de combate de {Humanise(event.amount)} créditos 
+foram 
+{OneOf("resgatados", "recebidos")}
+
+{Occasionally(2, "
+   {if len(event.rewards) = 1:
+      from {event.rewards[0].faction}
+   |else:
+      , com
+      {set cur to 0}
+      {set length to len(event.rewards) - 1}
+      {while cur < len(event.rewards):
+         {Humanise(event.rewards[cur].amount)} créditos da
+         {event.rewards[cur].faction}
+         {set cur to cur + 1}
+         {if cur = length: e
+         |elif cur < length:,
+         }
+      }
+   }
+")}.
+
+{if event.brokerpercentage && event.brokerpercentage > 0:
+   depois de deduzir {OneOf("um pagamento", "taxas")} de
+   {ceil((event.amount / (100 - event.brokerpercentage)) * event.brokerpercentage)} créditos.
+}
+

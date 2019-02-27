@@ -1,0 +1,35 @@
+{_ Fetch from context }
+{set reportsystem to SystemDetails(state.eddi_context_system_system)}
+
+{if !reportsystem.name || reportsystem.name = "":
+    Não tenho certeza sobre qual sistema você está perguntando.
+|elif reportsystem.state && reportsystem.state != 'None':
+    {OneOf("Este sistema", "{reportsystem.name}")} está
+    {if reportsystem.state = "Auge":
+        em auge; deve haver bons lucros comerciais a serem adquiridos aqui
+    |elif reportsystem.state = "Recessão":
+        em recessão financeira
+    |elif reportsystem.state = "Revolta Civil":
+        passando por uma revolta civil; aconselho ter cuidado
+    |elif reportsystem.state = "Guerra Civil":
+        {OneOf("enfrentando uma","em")} guerra civil; aconselho ter cuidado
+    |elif reportsystem.state = "Eleição":
+        elegendo novos líderes
+    |elif reportsystem.state = "Expansão":
+        {OneOf("se preparando para expandir","preparinguma expansão")} para outro sistema
+    |elif reportsystem.state = "Fome":
+        em um estado de fomo; recomendo cautela
+    |elif reportsystem.state = "Investimento":
+        investindo em sua infraestrutura
+    |elif reportsystem.state = "Lei Marcial":
+        em lei marcial; recomendo cautela
+    |elif reportsystem.state = "Nenhum" || reportsystem.state = null:
+        {OneOf("em nenhum estado em particular","em estado nêutro")} {OneOf("no presente momento","atualmente","no momento")}
+    |elif reportsystem.state = "Epidemia":
+        tentando conter uma epidemia de doença; recomendo cautela
+    |elif reportsystem.state = "Retirada":
+        em retirada
+    |elif reportsystem.state = "Guerra":
+        em guerra; aconselho ter cuidado
+    }.
+}

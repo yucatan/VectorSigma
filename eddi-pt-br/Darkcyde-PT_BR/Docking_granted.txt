@@ -1,0 +1,22 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'landing pad')}
+{SetState('eddi_context_landing_pad_system', system.name)}
+{SetState('eddi_context_landing_pad_station', event.station)}
+{SetState('eddi_context_landing_pad_station_model', event.stationtype)}
+{SetState('eddi_context_landing_pad_pad', event.landingpad)}
+
+{set station_type to event.stationDefinition.basename}
+
+{if station_type = "Coriolis" || station_type = "Orbis" ||
+    station_type = "Bernal" || station_type = "AsteroidBase":
+    {Pause(11000)}
+    {F("Landing pad report")}
+|else:
+    {if station_type != "Outpost": {Pause(9000)} }
+    {Pause(2000)}
+    Platafórma {Occasionally(2,"de pouso")} 
+    {event.landingpad}
+    {OneOf("ficou", "está")}
+    {OneOf("disponível", "livre")}
+    {OneOf("para {OneOf('pouso', 'docagem')}", "para {OneOf('uso', 'pousar')}")}.
+}

@@ -1,0 +1,53 @@
+{_ Function to obtain current inventory of a material}
+{set _inventory(required) to:
+    {for material in materials:
+        {if material.material = required:
+            {return material}
+        }
+    }
+}
+
+{_ Fetch blueprint from state }
+{set blueprintname to state.blueprint}
+{if blueprintname:
+    {_ Fetch full blueprint details }
+    {set blueprint to BlueprintDetails(blueprintname)}
+
+    {_ Context }
+    {SetState('eddi_context_last_subject', 'blueprint')}
+    {SetState('eddi_context_blueprint_name', blueprintname)}
+}
+
+{if !blueprint:
+    {_ Fetch from context }
+    {set blueprint to BlueprintDetails(state.eddi_context_blueprint_name)}
+}
+
+{set canbemade to 999}
+
+{if blueprint:
+    {_ Find the smallest number of this blueprint that can be made }
+    
+    {set cur to 0}
+    {while cur < len(blueprint.materials):
+        {set inventory to _inventory(blueprint.materials[cur].material)}
+        {if !inventory:
+            {set canbemade to 0}
+        |else:
+            {if inventory.amount < canbemade:
+                {set canbemade to inventory.amount}
+            }
+        }
+        {set cur to cur + 1}
+    }
+
+    {if canbemade = 0:
+        Você não pode faze um {blueprintname}
+    |elif canbemade = 1:
+        Você pode fazer um {blueprintname}
+    |else:
+        Você pode fazer {canbemade} {blueprintname}
+    }
+|else:
+    Sem informação disponível sobre os materiais necessários para {blueprintname}
+}.

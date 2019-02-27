@@ -1,0 +1,5 @@
+{OneOf("{event.engineer} lhe deu","Você tem")}
+
+acesso ao nível {event.rank}
+
+de {OneOf("diagrâmas","projetos")} de modificação.

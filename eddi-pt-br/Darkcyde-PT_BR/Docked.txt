@@ -1,0 +1,26 @@
+{SetState('eddi_context_lastdocked', event.station)}
+{SetState('eddi_context_docked',"yes")}
+{SetState('eddi_context_mission_accepted', "no")}
+
+{if event.state = "Damaged": Emergência}
+Pouso finalizado.
+
+{Pause(1000)}
+
+{OneOf("Estabelecendo conecsão com","Inicializando conecsão",
+       "Conectando","Acessando","Comunicando com","Ligando a")}
+{OneOf("a rede de dados","a rede","as redes","os computadores","os serviços")}
+{OneOf("da estação","de {event.station}")}.
+{Pause(8300)}
+{OneOf("Conecsão","Ligação")}
+{OneOf("estabelecida","confirmada","autorizada","obtida")}.
+
+{SetState('eddi_context_new_missions', "no")}
+{SetState('eddi_context_mission_destination_locked', "no")}
+
+
+{set crime to F("FinesBounties_CheckContacts")}
+
+{if fine = 1 || bountyinc = 1 || bond = 1 || bountyawd = 1:
+    {crime}
+}

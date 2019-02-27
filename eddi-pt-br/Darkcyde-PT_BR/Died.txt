@@ -1,0 +1,37 @@
+
+{if len(event.ships) > 0:
+
+    {set commanders to []}
+    {for cmdr in event.commanders:
+        {if find(cmdr, "$ShipName") > -1:
+           {_ Ignore NPC ships _}        
+        |else: 
+           {set commanders to cat(commanders, [cmdr])}
+        }
+    }
+
+    {ShipName()} foi
+    {OneOf("explodida", "destruída", "exterminada")}
+
+    {if len(commanders) > 0:
+        por
+        {set cur to 0}
+        {set length to len(commanders) - 1}
+        {while cur < len(commanders):
+            {commanders[cur]} em uma {event.ships[cur]}, 
+            rank de combate {event.ratings[cur]}
+            {set cur to cur + 1}
+            {if cur = length: e
+            |elif cur < length:,
+            }
+        }
+    }
+}
+
+{Pause(700)}
+
+Transferência de personalidade em andamento. Por favor {OneOf("tenha mais cuidado com","cuide mais desta")} sua nova nave.
+
+{_ Clear ship of Fines & Bounties}
+{SetState('eddi_context_cmdrdied', "yes")}
+{F("FinesBounties_ClearShip")}

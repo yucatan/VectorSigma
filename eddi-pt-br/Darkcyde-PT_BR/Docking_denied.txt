@@ -1,0 +1,17 @@
+{Pause(2000)}
+
+Nosso pedido de pouso foi negado
+
+{if event.reason = "ActiveFighter":
+    porque nosso caça está liberado
+|elif event.reason = "Distance":
+    porque estamos muito longe da estação
+|elif event.reason = "Hostile":
+    porque a facção controladora da estação não gosta da gente
+|elif event.reason = "NoSpace":
+    porque não há vagas disponíveis
+|elif event.reason = "Offences":
+    porque recentemente nós os ofendemos
+|elif event.reason = "TooLarge":
+    porque não há uma plataforma que possa acomodar o tamanho da nossa nave
+}.

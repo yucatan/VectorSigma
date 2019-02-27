@@ -1,0 +1,26 @@
+{for commodity in station.commodities:
+    {if commodity.stock > 0 && commodity.buyprice < commodity.avgprice:
+        {set discount to commodity.avgprice - commodity.buyprice}
+        {if discount > best.avgprice - best.buyprice:
+            {set thirdbest to secondbest}
+            {set secondbest to best}
+            {set best to commodity}
+        |elif discount > secondbest.avgprice - secondbest.buyprice:
+            {set thirdbest to secondbest}
+            {set secondbest to commodity}
+        |elif discount > thirdbest.avgprice - thirdbest.buyprice:
+            {set thirdbest to commodity}
+        }
+    }
+}
+
+{if best:
+    O mercado local está vendendo {best.name} a um bom preço
+    {if secondbest
+       , bem como {secondbest.name}
+        {if thirdbest:
+            e {thirdbest.name}
+        }
+    }
+.}
+

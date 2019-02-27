@@ -1,0 +1,126 @@
+{_ Commodity sale check}
+{_ Check to see which commodities can be sold here}
+
+
+{_ Function to find a given commodity in market}
+{set market(commodity) to:
+    {for marketcommodity in station.commodities:
+        {if marketcommodity.name = commodity.name:
+            {return marketcommodity}
+        }
+    }
+}
+
+{_ Function to find an illegal mission related to the commodity}
+{set illegalmission(haulageData) to:
+    {for haulage in haulageData:
+        {if haulage.illegal:
+            {return true}
+        }
+    }
+    {return false}
+}
+
+{set totalprofit to 0}
+{set missioncommodities to []}
+{set profitablecommodities to []}
+{set stolencommodities to []}
+{set unknowncommodities to []}
+
+{_ set this as your max to list before total is used instead}
+{set maxcommoditycount to 5}
+
+{for cargo in inventory:
+    {if cargo.name != 'Limpet':
+        {set marketcommodity to market(cargo.commodity)}
+        {set illegal to illegalmission(cargo.haulageData)}
+        {set profit to (marketcommodity.sellprice - cargo.price) * cargo.owned}
+
+        {if cargo.stolen > 0 && !illegal:
+            {set stolencommodities to cat(stolencommodities, [cargo.commodity])}
+        |elif cargo.haulage > 0:
+            {set missioncommodities to cat(missioncommodities, [cargo.commodity])}
+        |elif !marketcommodity && lcase(cargo.category) != "powerplay" && cargo.total > 0:
+            {set unknowncommodities to cat(unknowncommodities, [cargo.commodity])}
+        |elif marketcommodity && profit > 0:
+            {set profitablecommodities to cat(profitablecommodities, [cargo.commodity])}
+            {set totalprofit to totalprofit + profit}
+        }
+    }
+}
+
+{_ Let the user know about any commodities they can sell here for a profit}
+{if len(profitablecommodities) > 0:
+    Você pode vender
+    {if len(profitablecommodities) = len(ship.cargo) - len(stolencommodities) - len(missioncommodities):
+        toda sua 
+        {if len(missioncommodities) > 0: non-mission}
+        carga 
+        {if len(stolencommodities) > 0: {OneOf("legal","legítima")} }
+        {Occasionally(2," de mercadorias")}
+    |elif len(profitablecommodities) > maxcommoditycount:
+        {len(profitablecommodities)} de mercadoria{if len(profitablecommodities) > 1:s}
+    |else:
+        {set cur to 0}
+        {set length to len(profitablecommodities) - 1}
+        {while cur < len(profitablecommodities):
+            {profitablecommodities[cur].localizedName}
+            {set cur to cur + 1}
+            {if cur = length: e
+            |elif cur < length:,
+            }
+        }
+    }
+    aqui com um lucro de {totalprofit} créditos.
+}
+
+{_ Let the user know about any commodities about which we are unsure if they can sell for a profit}
+{if len(unknowncommodities) > 0:
+    Você {if len(profitablecommodities) > 0: também } poderia vender seu{if len(unknowncommodities) > 1:s} 
+        {set cur to 0}
+        {set length to len(unknowncommodities) - 1}
+        {while cur < len(unknowncommodities):
+            {unknowncommodities[cur].localizedName}
+            {set cur to cur + 1}
+            {if cur = length: e
+            |elif cur < length:,
+            }
+        }
+    , porém verifique o lucro potencial {if len(unknowncommodities) > 1: deles |else: dele}
+    antes de confirmar a transação.
+}
+
+{_ Let the user know about any stolen commodities they can sell on the black market}
+{if len(stolencommodities) > 0:
+    {if station.hasblackmarket:
+        Você pode se livrar de
+        {set cur to 0}
+        {set length to len(stolencommodities) - 1}
+        {while cur < len(stolencommodities):
+            {stolencommodities[cur].localizedName}
+            {set cur to cur + 1}
+            {if cur = length: e
+            |elif cur < length:,
+            }
+        }
+        aqui.
+    |else:
+        Lembrete: você {OneOf("tem carga roubada a bordo", "tem produtos roubados a bordo", "está carregando carga roubada", "está carregando produtos roubados")}.
+    }
+}
+
+{_ Let the user know about any mission related commodities they can sell on the black market}
+{if len(missioncommodities) > 0 && station.hasblackmarket:
+    Você pode {if len(stolencommodities) > 0: also} {OneOf('se livrar', 'descarregar')} seus
+    {set cur to 0}
+    {set length to len(missioncommodities) - 1}
+    {while cur < len(missioncommodities):
+        {missioncommodities[cur].localizedName}
+        {set cur to cur + 1}
+        {if cur = length: e
+        |elif cur < length:,
+        }
+    }
+    relacionados à missões aqui.
+}
+

@@ -1,0 +1,29 @@
+{_ Check Fines & Bounties}
+{F("FinesBounties_CheckShip")}
+{F("FinesBounties_CheckContacts")}
+
+
+{set fixed to false}
+{set gimbal to false}
+{set turret to false}
+{set weapons_array to ""}
+
+{for hp in ship.hardpoints:
+
+    {if type(hp.module.mount) != "void":
+        {for index, value in hp.module.mount: {set mount to value}}
+        {if mount = 0:
+            {SetState('eddi_weapons_fixed', true)}
+        |elif mount = 1:
+            {SetState('eddi_weapons_gimbal', true)}
+        |elif mount = 2:
+            {SetState('eddi_weapons_turret', true)}
+        }
+        {set weapons_array to cat(weapons_array, "0", mount, " ")}
+    }
+}
+
+{SetState('eddi_weapons_array', weapons_array)}
+
+{SetState('loading', true)}
+

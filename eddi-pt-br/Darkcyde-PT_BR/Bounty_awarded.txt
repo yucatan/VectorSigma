@@ -1,0 +1,49 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'bounty')}
+{SetState('eddi_context_last_action', 'award')}
+{SetState('eddi_context_bounty_name', event.target)}
+{SetState('eddi_context_bounty_faction', event.faction)}
+{SetState('eddi_context_bounty_amount', event.reward)}
+
+{_ Update Fines & Bounties}
+{F("FinesBounties_Add")}
+
+{Pause(500)}
+{if len(event.rewards) = 1:
+   {OneOf("Vale","Tíquet")} recompensa de {Humanise(event.reward)} créditos 
+   {OneOf("recebidos da","concedidos pela")} {event.rewards[0].faction}
+|elif len(event.rewards) > 1:
+   {len(event.rewards)} {OneOf("vales","tíquets")} recompensas {OneOf("recebidos","concedidos")} n{OneOf("o total","a soma")} 
+   de {Humanise(event.reward)} créditos 
+   {set cur to 0}
+   {set length to len(event.rewards) - 1}
+   {for rewards in event.rewards:
+      {set FACCAO to: {rewards.faction}}
+      {if rewards.faction = "Alliance" || rewards.faction = "Empire" || rewards.faction = "Federation": }
+      {if rewards.faction = "Alliance": {set FACCAO to: Aliança}
+      {if rewards.faction = "Empire": {set FACCAO to: Império}
+      {if rewards.faction = "Federation": {set FACCAO to: Federação}} 
+      da {FACCAO}
+      {set cur to cur + 1}
+      {if cur = length: e
+      |elif cur < length:,
+      }
+   }
+}
+
+{if event.shared: {OneOf("para compartilhar com,","a ser compartilhado com")} seus colegas de esquadrão,}
+
+pela {OneOf("destruição","eliminação")} do
+
+{OneOf("seu alvo,","alvo")}
+
+{if event.target = "skimmer":
+   {P(event.faction)} Skimmer
+|else:
+   {set shiptype to ShipDetails(event.target).model}
+   {F("TargetType")}
+   {Occasionally(2,"{Occasionally(2,'{P(ShipDetails(event.target).manufacturer)}')} {P(shiptype)}")}
+   {Occasionally(2,", uma nave {OneOf('criminosa','procurada','criminosa procurada')} ")}
+   {Occasionally(2,"{OneOf('aliada à','membro da')} {P(event.faction)}")}
+}.
+

@@ -1,0 +1,52 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'jump')}
+{SetState('eddi_context_last_action', 'complete')}
+{SetState('eddi_context_system_name', event.system)}
+{SetState('eddi_context_system_system', event.system)}
+{SetState('eddi_context_fuel_remaining', event.fuelremaining)}
+{SetState('eddi_context_fuel_used', event.fuelused)}
+
+{_ Reset scanned body estimated total value}
+{SetState('eddi_context_system_value', 0)}
+
+{F("Fuel check")}
+{Pause(500)}
+
+{F("System state report")}
+
+{set dist to -1}
+{set thissystem to SystemDetails(state.eddi_context_system_system)}
+
+{if state.missionsdestination && state.missionsdestination != "" && state.missionsdestination != null:
+    {set route to split(state.missionsroute, "_")}
+    {set ds to SystemDetails(state.missionsdestination)}
+    {if !ds.name:
+        Seu destino não está nos mapas esteláres da Federação de Pilotos.
+    |else:
+        {set dist to round(Distance(ds.name, thissystem.name), 1)}
+        {if dist = 0:
+            {OneOf("Você", "{ShipName()}")}
+            chegou ao seu destino {if len(route) = 1:final}.
+        |else:
+            Distância até o destino da {if missionsCount > 0:missão |else:rota}, {ds.name},
+            é {dist} anos luz.
+            {set reported to "yes"}
+        }
+    }
+    {SetState('distance', dist)}
+
+    {if len(route) = 1 && thissystem.name = route[0] && missionCount = 0:
+        {SetState('missionsroute', "")}
+        {SetState('missionsdestination', "")}
+    }
+}
+
+{if missionsCount > 0:
+    {set system to F("Mission check system")}
+    {if system:
+        {system}
+    |else:
+        {F("Mission Check Near Most")}
+    }
+}
+

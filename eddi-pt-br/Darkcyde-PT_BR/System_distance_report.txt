@@ -1,0 +1,11 @@
+{_ Fetch from context }
+{set reportsystem to SystemDetails(state.eddi_context_system_system)}
+
+{if !reportsystem.name || reportbody.name = "":
+    I'm not sure which system you are asking about.
+|else:
+    Distance to {P(reportsystem.name)} is {Humanise(Distance(reportsystem.x, reportsystem.y, reportsystem.z, system.x, system.y, system.z))} light years.
+}
+
+
+
