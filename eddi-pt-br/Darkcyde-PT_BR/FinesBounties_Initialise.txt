@@ -1,0 +1,13 @@
+{_ FinesBounties_Initialise}
+{_ Setup Fines & Bounties 'database'}
+
+{SetState('eddi_context_bounties_shipid', "")}
+{SetState('eddi_context_bounties_type', "")}
+{SetState('eddi_context_bounties_faction', "")}
+{SetState('eddi_context_bounties_system', "")}
+{SetState('eddi_context_bounties_amount', "")}
+
+{SetState('eddi_context_bounties_initialised', "yes")}
+
+Multas e Recompensas Inicializado.
+

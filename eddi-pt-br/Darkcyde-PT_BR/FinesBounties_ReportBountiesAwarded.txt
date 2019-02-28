@@ -1,0 +1,55 @@
+{_ FinesBounties_ReportBountiesAwarded}
+{_ Report on the Bounties you have been awarded}
+
+{if len(state.eddi_context_bounties_type) > 0 && state.eddi_context_bounties_type != null && find(state.eddi_context_bounties_type, "BountyAwd") > -1:
+   {set bounties_type_array to split(state.eddi_context_bounties_type, "+=")}
+   {set bounties_faction_array to split(state.eddi_context_bounties_faction, "+=")}
+   {set bounties_amount_array to split(state.eddi_context_bounties_amount, "+=")}
+
+   {_ Set up temp arrays of items that match "Bounty"}
+
+   {_ Set up blank temporary arrays}
+   {set temparray_faction to []}
+   {set temparray_amount to []}
+   {set total_amount to 0}
+
+   {_ run loop from 0 to number of entries}
+   {set cur to 0}
+   {while cur < len(bounties_type_array):
+      {if bounties_type_array[cur] = "BountyAwd":
+         {set temparray_faction to cat(temparray_faction, [bounties_faction_array[cur]])}
+         {set temparray_amount to cat(temparray_amount, [bounties_amount_array[cur]])}
+         {set total_amount to total_amount + bounties_amount_array[cur]}
+      }
+      {set cur to cur + 1}
+   }
+
+   {_ Read info from temp arrays}
+
+   Recompensas concedidas:
+
+   {if len(temparray_faction) > 1:
+      {OneOf("Você tem {len(temparray_faction)} recompens{if len(temparray_faction) = 1:a |else:as} para recolher,",
+             "{len(temparray_faction)} facç{if len(temparray_faction) = 1:ão |else:ões} estão lhe devendo")} 
+      num total de {Humanise(total_amount)} créditos.
+   }
+
+   Recolha
+   {set cur to 0}
+   {set length to len(temparray_faction) - 1}
+   {while cur < len(temparray_faction):
+      {Humanise(temparray_amount[cur])}
+      {if len(temparray_faction) = 1: créditos}
+      de
+      {if temparray_faction[cur] = "Aliança" || temparray_faction[cur] = "Império"
+          || temparray_faction[cur] = "Federação": PITOMBA }
+      {temparray_faction[cur]}
+      {set cur to cur + 1}
+      {if cur = length: e
+      |elif cur < length:,
+      }
+   }
+
+|else:
+   Você não tem recompensas para recolher {Occasionally(2, "{OneOf('agora','neste momento')}")}
+}.

@@ -1,0 +1,110 @@
+{_ FinesBounties_ReportBountiesIncurred}
+{_ Report on the Bounties you have against you}
+
+{if len(state.eddi_context_bounties_type) > 0 && state.eddi_context_bounties_type != null && find(state.eddi_context_bounties_type, "BountyInc") > -1:
+
+   {set shipid to cast(state.eddi_context_currentshipid, "s")}
+
+   {set bounties_shipid_array to split(state.eddi_context_bounties_shipid, "+=")}
+   {set bounties_type_array to split(state.eddi_context_bounties_type, "+=")}
+   {set bounties_faction_array to split(state.eddi_context_bounties_faction, "+=")}
+   {set bounties_amount_array to split(state.eddi_context_bounties_amount, "+=")}
+
+   {_ Set up temp arrays of items that match "BountyInc"}
+
+   {_ Set up blank temporary arrays}
+   {set temparray_shipid to []}
+   {set temparray_type to []}
+   {set temparray_faction to []}
+   {set temparray_amount to []}
+   {set total_amount to 0}
+   {set ship_total to 0}
+   {set crime_array to []}
+
+   {_ run loop from 0 to number of entries}
+   {set cur to 0}
+   {while cur < len(bounties_type_array):
+      {if bounties_type_array[cur] = "BountyInc":
+         {if bounties_shipid_array[cur] = shipid:
+            {set temparray_shipid to cat(temparray_shipid, [bounties_shipid_array[cur]])}
+            {set temparray_type to cat(temparray_type, [bounties_type_array[cur]])}
+            {set temparray_faction to cat(temparray_faction, [bounties_faction_array[cur]])}
+            {set temparray_amount to cat(temparray_amount, [bounties_amount_array[cur]])}
+            {set ship_total to ship_total + bounties_amount_array[cur]}
+         |else:
+            {set pos to find(crime_array, bounties_shipid_array[cur])}
+            {if pos > -1:
+                {set pos to bounties_shipid_array[cur]}
+                {set amount to crime_array[pos] + bounties_amount_array[cur]}
+                {set crime_array to union(crime_array, [pos:amount])}
+            |else:
+                {set pos to bounties_shipid_array[cur]}
+                {set amount to bounties_amount_array[cur]}
+                {set crime_array to union(crime_array, [pos:amount])}
+            }
+         }
+         {set total_amount to total_amount + bounties_amount_array[cur]}
+      }
+      {set cur to cur + 1}
+   }
+
+   {set diff to total_amount - ship_total}
+
+   {_ Read info from temp arrays}
+
+   Recompensas sofridas:
+
+   {if len(temparray_faction) > 0:
+
+      {if len(temparray_faction) > 1:
+         {OneOf("Você tem {len(temparray_faction)} recompensa para pagar. Você deve",
+                "{len(temparray_faction)} facções colocaram sua cabeça a prêmio por")} 
+         um total de {total_amount} créditos.
+      }
+
+      Você tem de pagar
+      {set cur to 0}
+      {set length to len(temparray_faction) - 1}
+      {while cur < len(temparray_faction):
+         {temparray_amount[cur]}
+         {if len(temparray_faction) = 1: créditos}
+         a {temparray_faction[cur]}
+         {set cur to cur + 1}
+         {if cur = length: e
+         |elif cur < length:,
+         }
+      }.
+
+      {if diff > 0:
+         Você também deve {Humanise(diff)} créditos de recompensas em
+      |else:
+         {Occasionally(2,"{OneOf('Entretanto,','Porém,')}")} você não tem recompensas nas suas outras naves.
+      }
+
+   |else:
+      Não colocaram nenhuma recompensa por esta nave {Occasionally(2, "{OneOf('neste momento','desta vez')}")}.
+      Porém, você tem {Humanise(diff)} créditos em recompensas na
+   }
+
+   {if diff > 0:
+      {if len(crime_array) = 1: outra nave
+      |else: suas outras naves
+      }.
+
+      {set cur to 0}
+      {set length to len(crime_array) - 1}
+      {for id, amount in crime_array:
+         {amount} créditos na 
+         {if ShipName(id) != "your ship": {ShipName(id)}
+         |else: {ShipCallsign(id)}
+         }
+         {set cur to cur + 1}
+         {if cur = length: e
+         |elif cur < length:,
+         }
+      }
+   }.
+
+|else:
+   Você não levou nenhuma recompensa {Occasionally(2, "{OneOf('desta vez','neste momento')}")}
+}

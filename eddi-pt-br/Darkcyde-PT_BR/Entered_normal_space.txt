@@ -46,7 +46,7 @@
             {body}.
         |elif event.bodytype = "Estação":
             {set model to StationDetails(event.body, event.system).model}
-            {set type to token(model, " ", 1)}
+			{model}
             {if find(model, "Unknown") = -1:
                 {if type != "": {type} |else: {model} },
             }
