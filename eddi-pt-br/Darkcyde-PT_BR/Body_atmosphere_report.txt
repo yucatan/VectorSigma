@@ -101,8 +101,8 @@
 
     |elif reportbody.atmosphere = "No atmosphere" || !reportbody.atmosphere:
         {Occasionally(4, OneOf("Não há atmosféra.",
-                               "É desprovido de qualquer atmosfera.",
-                               "Os anos o deixaram sem qualquer atmosfera."))}
+                               "É desprovido de qualquer atmosféra.",
+                               "Os anos o deixaram sem qualquer atmosféra."))}
         {if reportbody.temperature && reportAtmoTempScale < 3:
             A temperatura média na superfície é de 
             {TempCalc(reportbody.temperature)} {tempscale}.
@@ -145,7 +145,7 @@
             {if len(reportbody.atmospherecompositions) > 1:
                 {set mostly to OneOf("primariamente", "principalmente", "em boa parte")}
                 {OneOf("A atmosféra {pressdesc} é composta {mostly} de",
-                       "O mais predominante na atmosfera {pressdesc} é")}
+                       "O mais predominante na atmosféra {pressdesc} é")}
             |else:
                 A atmosféra {pressdesc} é
                 {Occasionsally(2,"composta de")}

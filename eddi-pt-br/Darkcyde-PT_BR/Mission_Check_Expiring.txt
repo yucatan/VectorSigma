@@ -1,0 +1,75 @@
+{_ Mission Check Expiring }
+{_ Check what missions are close to expiring }
+
+
+{if missionsCount > 0 && missionsCount != null:
+
+    {set mission_destination to []}
+    {set mission_expiration to []}
+    {set mission_name to []}
+    {set mission_id to []}
+    {set cur to 0}
+
+    {while cur < missionsCount:
+        {set destination to missions[cur].destinationsystem}
+        {if !destination: {set destination to missions[cur].destinationsystems} }
+        {set expiry to missions[cur].expiryseconds}
+        {set status to missions[cur].status}
+        {set name to missions[cur].name}
+        {set missionid to missions[cur].missionid}
+
+        {if expiry != "" && (status != "failed" || status != "completed"):
+
+            {set seconds to floor(abs(SecondsSince(expiry)))}
+
+            {if seconds / 60 < missionWarning:
+
+                {set mission_destination to cat(mission_destination, [destination])}
+                {set mission_expiration to cat(mission_expiration, [seconds])}
+                {set mission_name to cat(mission_name, [name])}
+                {set mission_id to cat(mission_id, [missionid])}
+            }
+        }
+        {set cur to cur + 1}
+    }
+
+    {if len(mission_destination) > 0:
+        Alerta!
+        {set cur to 0}
+        {while cur < len(mission_destination):
+
+            {set mission to MissionDetails(mission_id[cur])}
+            {if find(mission.typeEDName, "Passenger") > -1:
+                {set type to "Transporte "}
+                {set type to cat(type, mission.passengertype)}
+            |else:
+                {set type to mission.type}
+            }
+            missão de {type}
+
+            {if find(mission_destination[cur], "_") > -1:
+                para múltiplos destinos,
+            |else:
+                {if mission_destination[cur] != state.eddi_context_system_name:
+                    em {mission_destination[cur]}
+                |else:
+                    n{OneOf("este", "o atual")}
+                }
+                sistema,
+            }
+            expirando em 
+
+            {set timer to split(format(mission_expiration[cur], "dl:dd:HH:mm:ss"), ":")}
+            {set days to cast(timer[0], "n") - 1}
+            {set hours to cast(timer[1], "n")}
+            {set minutes to cast(timer[2], "n") - 1}
+
+            {if days > 0: {days} day{if days > 1:s}{if hours = 0: e |else:,}}
+            {if hours > 0: {hours} hora{if hours > 1:s} e}
+            {minutes} minuto{if minutes > 1:s}.
+
+            {set cur to cur + 1}
+        }
+    }
+}
+

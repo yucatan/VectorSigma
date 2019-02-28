@@ -1,0 +1,23 @@
+{set required to []}
+
+{for material in materials:
+  {if material.desired && material.amount < material.desired:
+    {set required to cat(required, [material])}
+ }
+}
+
+{if len(required) > 0:
+    Você precisa de
+
+    {set cur to 0}
+    {set length to len(required) - 1}
+    {while cur < len(required):
+        {required[cur].desired - required[cur].amount} {required[cur].material}
+        {set cur to cur + 1}
+        {if cur = length: e
+        |elif cur < length:,
+        }
+    }.
+|else:
+    Você tem todos os materiais que deseja.
+}

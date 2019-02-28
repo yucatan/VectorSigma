@@ -1,0 +1,18 @@
+{if event.level = 'Minimum':
+    {_ Gone below the minimum level }
+    {OneOf("Quantidade", "Inventário", "Suprimento")} de {event.material.name} caiu abaixo do mínimo.
+|elif event.level = 'Maximum':
+    {_ Gone above the maximum level }
+    {OneOf("Quantidade", "Inventário", "Suprimento")} de {event.material.name} subiu acima do seu máximo.
+|else:
+    {_ Moved around the desired level }
+    Você
+    {if event.change = 'Increase': alcançou
+    |else: está abaixo do
+    }
+    seu nível desejado de {event.material.name}.
+}
+
+{OneOf("Quantidade atual é de {event.amount}",
+       "Atualmente carregando {event.amount}",
+       "{event.amount} a bordo")}.

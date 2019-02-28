@@ -1,0 +1,5 @@
+{SetState('eddi_context_last_action', "sell_limpet")}
+
+{event.amount} drone{if event.amount > 1:s}
+{Occasionally(2, "fo{if event.amount = 1:i|else:ram}")} vendido{if event.amount > 1:s}.
+

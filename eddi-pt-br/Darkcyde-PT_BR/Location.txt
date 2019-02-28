@@ -1,0 +1,34 @@
+{_ Location }
+{_ Triggered when the commander's location is reported, usually when they reload their game. }
+
+
+{_ Context }
+{SetState('eddi_context_last_subject', 'location')}
+{SetState('eddi_context_system_name', event.system)}
+{SetState('eddi_context_body_name', event.body)}
+{SetState('eddi_context_body_system', event.system)}
+{SetState('eddi_context_docked',"no")}
+
+
+{F("Body Name Tidy")}
+
+Você está
+{if event.docked:
+    {SetState('eddi_context_docked',"yes")}
+    pousado na
+    {if event.station = body:
+        estação orbital {P(event.station)}
+    |else:
+        estação planetária {P(event.station)}, em {body},
+    }
+|elif event.body:
+    {if event.longitude || event.latitude:
+        em 
+        {SetState('loading', true)}
+    |else:
+        perto de
+    }
+    {body},
+}
+no sistema {event.system}.
+

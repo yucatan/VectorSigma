@@ -1,0 +1,88 @@
+{_ Mission report }
+{_ Check what systems you have missions in }
+
+
+{_ Setup allmissions function }
+{set allmissions(system) to:
+    {set here to find(systems, system)}
+    {if here > -1:
+        {set number to systems_count[here] + 1}
+        {set systems_count to union(systems_count, [here:number])}
+    |else:
+        {set systems to cat(systems, [system])}
+        {set systems_count to cat(systems_count, [1])}
+    }
+}
+
+{if missionsCount > 0:
+
+    {set multi to 0}
+
+    Você tem {missionsCount} miss{if missionsCount != 1:ões|else:ão}.
+
+    {if missionsCount = 1:
+
+        Ela está {Occasionally(2,"localizada")}
+
+        {if missions[0].destinationsystem && missions[0].destinationsystem != "":
+            no sistema {Occasionally(2,"estelar")} {join(split(missions[0].destinationsystem, "."), " ")}.
+        |else:
+            em um sistema {Occasionally(2,"star")} desconhecido.
+        }
+
+    |else:
+        {set systems to []}
+        {set systems_count to []}
+
+        {for mission in missions:
+            {if mission.status = "Active":
+                {if mission.destinationsystems:
+                    {set multi to multi + 1}
+                    {for destination in mission.destinationsystems:
+                        {allmissions(destination.name)}
+                    }
+                |elif mission.destinationsystem && mission.destinationsystem != "":
+                    {allmissions(mission.destinationsystem)}
+                }
+            }
+        }
+
+        {if len(systems) = 0:
+            Elas não têm sistemas de destino designados.
+        |elif len(systems) = 1:
+            Elas são todas {Occasionally(2,"localizadas")}
+
+            {if systems && systems[0] != "":
+                no sistema {Occasionally(2,"estelar")} {join(split(systems[0], "."), " ")}.
+            |else:
+                num sistema {Occasionally(2,"estelar")} não designado.
+            }
+
+        |else:
+            {if multi > 0:
+
+                {if multi = missionsCount: Todas |else: {multi}}
+                estas
+                {if multi = 1: é uma |else: são}
+                miss{if multi != 1:ões|else:ão} com múltiplos destinos.
+            }
+            Há
+
+            {set cur to 0}
+            {while cur < len(systems):
+                {systems_count[cur]} 
+                {if cur = 0: destino{if systems_count[0] > 1: s}}
+                {if systems[cur] = "":
+                    em um sistema não designado
+                |else:
+                    em {join(split(systems[cur], "."), " ")}
+                }
+
+                {set cur to cur + 1}
+                {if cur = len(systems)-1: e |elif cur < len(systems):, }
+            }
+        }.
+    }
+|else:
+    Você não tem missões neste momento.
+}

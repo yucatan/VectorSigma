@@ -1,0 +1,38 @@
+{for launchbay in ship.launchbays:
+    Você tem um hangar de {launchbay.type} de tamanho {launchbay.size}.
+
+    {if launchbay.type = "SRV":
+        Ele tem {len(launchbay.vehicles)} V R S{if len(launchbay.vehicles) != 1:'s}
+        {OneOf("a bordo", "instalado{if len(launchbay.vehicles) != 1:'s}")}.
+    |else:
+        {set cur to 0}
+
+        {for vehicle in launchbay.vehicles:
+            ele {if cur > 0: também} tem
+            um {vehicle.name}, com CATRACA {vehicle.loadout} configuração
+
+            {if type(vehicle.mount) != null:
+                {if vehicle.mount = 'F':
+                    e armas fixas
+                |elif vehicle.mount = 'G':
+                    e armas guiadas
+                }
+            }
+            .{_ full stop _}
+
+            {if vehicle.rebuilds != null:
+                Ele tem
+                {if vehicle.rebuilds = 0:
+                    nenhuma
+                |else:
+                    {vehicle.rebuilds}
+                }
+                reconstruç{if vehicle.rebuilds != 1:ões|else:ão} sobrando.
+            }
+
+            {set cur to cur + 1}
+            {Pause(500)}
+        }
+    }
+}
+

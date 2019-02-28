@@ -1,0 +1,69 @@
+{SetState('eddi_context_last_subject', 'mission')}
+{SetState('eddi_context_last_action', 'accepted')}
+
+{set mission to MissionDetails(event.missionid)}
+
+{if mission.type = "Donation":
+    Missão de doação {Occasionally(2,"generosa")} foi {OneOf("escolhida","aceita")}
+    {if mission.typeEDName = "Altruism": {mission.commodity} |else: créditos} para
+    {OneOf("{P(lcase(mission.faction))} com o intúito de {OneOf('aumentar','melhorar','crescer')} sua {OneOf('reputação','moral')} com esta facção",
+          "{OneOf('aumentar','melhorar','crescer')} your {OneOf('reputação','moral')} com a {P(lcase(mission.faction))}")}
+|elif event.communal:
+    Você aceitou o objetivo da comunidade: {mission.localisedname}
+|else:
+    {if find(mission.typeEDName, "Passenger") > -1:
+        {set type to "Transport "}
+        {set type to cat(type, mission.passengertype)}
+    |else:
+        {set type to mission.type}
+    }
+    {set type to cat(type, " missão")}
+    {OneOf("{type} {if mission.faction: da {mission.faction}} aceita",
+        "{type} aceita {if mission.faction: da {mission.faction}}",
+        "Você aceitou uma {type} {if mission.faction: da {mission.faction}}")
+    }
+}
+
+{Occasionally(1,"{F('Mission faction state')}")}..
+
+{if event.passengerswanted:
+ Alerta! Vocẽ está {OneOf("transportando","carregando")}
+ {OneOf("{OneOf('passageiro','pessoal')} {OneOf('procurado','ilegal')}","criminoso conhecido")}!
+ 
+ Você pode ser atacado por {OneOf("autoridades","policiais")} {Occasionally(2,"do sistema")}. Aconselho cuidado. Evite ser scaneado.
+|elif token(mission.name,"_",2)  = "Skimmer":
+   Esta é uma {OneOf("missão","operação")} de superfície.
+|elif token(mission.name,"_",2)  = "Surface":
+   Esta é uma {OneOf("missão","operação")} de superfície, você vai precisar de um V R S.
+}
+
+{if missionsCount = 20:
+    Vocẽ alcançou o número máximo de missões que pode aceitar.
+    Por favor, complete algumas para poder aceitar outras.
+|else:
+   {OneOf("{Occasionally(2,'Agora')} Você tem {missionsCount} miss{if missionsCount > 1:ões|else:ão}",
+        "Está é sua
+    {if missionsCount = 1: 1ª
+    |elif missionsCount = 2: 2ª
+    |elif missionsCount = 3: 3ª
+    |else: {missionsCount}ª
+    }
+    missão")}.
+}
+
+{if mission.type = "Delivery" || mission.type = "Supply" || mission.type = "Smuggle":
+    {Pause(400)}
+    {SetState('eddi_context_mission_cargo', "yes")}
+    {event.amount} tonelada{if event.amount != 1:s} de {event.commodity}
+
+    {set cargo to CargoDetails(event.missionid)}
+    {if cargo.total > 0: 
+        {OneOf("adicionada{if event.amount != 1:s} ao manifesto da nave", "carregada{if event.amount != 1:s} a bordo", "armazenada{if event.amount != 1:s} na área de carga")} agora
+    |else:
+        a ser{if event.amount != 1:em} {OneOf("entregue{if event.amount != 1:s}", "transportada{if event.amount != 1:s}")}. Por favor, colete no Depósito de Cargas
+    }.
+}
+
+{set type to "Accepted"}
+{F("Mission Route Update")}
+

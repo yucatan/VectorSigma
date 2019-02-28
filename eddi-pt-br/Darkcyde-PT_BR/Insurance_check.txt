@@ -1,0 +1,11 @@
+{set covereds to floor(cmdr.credits / ship.rebuy)}
+
+{if covereds = 0:
+  Perigo: você não tem créditos suficientes para cobrir seu seguro.
+|elif covereds = 1:
+  Cuidado: você só tem créditos suficientes para cobrir um único seguro.
+|elif covereds < 4:
+  Lembrete: você só tem créditos suficientes para cobrir {covereds} seguros.
+|else:
+  {Occasionally(5, "Você tem créditos suficientes para cobrir {covereds} seguros.")}
+}

@@ -1,0 +1,28 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'material')}
+{SetState('eddi_context_last_action', 'collect')}
+{SetState('eddi_context_material_name', event.name)}
+
+{set matis to MaterialDetails(event.name)}
+
+{matis.name} {OneOf('Recebido','Coletado','Obtido')}.
+
+{if matis.category = "Dados":
+    {if matis.rarity.level > 3:
+        {Occasionally(2,"Este é")} {OneOf("um conjunto de dados","uma varredura de dados")} {matis.rarity.name}.
+    }
+
+|elif matis.category = "Bruto":
+
+|elif matis.category = "Manufactured":
+    {if matis.name = "unknownenergysource":
+        {_ Unknown Artifact Fragment}
+    }
+
+|elif matis.category = "Desconhecido":
+    {set type to slice(matis.name,0,7)}
+    {if type = "antigo":
+        {_ ancient alien data}
+    }
+}
+

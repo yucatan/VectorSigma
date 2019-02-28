@@ -1,0 +1,24 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'mission')}
+{SetState('eddi_context_last_action', 'abandon')}
+
+{set mission to MissionDetails(event.missionid)}
+{set status to mission.status}
+
+{if event.communal:
+    Você abandonou o objetivo da comunidade: {mission.localisedname}
+|else:
+    {if find(mission.typeEDName, "Passenger") > -1:
+        {set type to "Transport "}
+        {set type to cat(type, mission.passengertype)}
+    |else:
+        {set type to mission.type}
+    }
+    {set type to cat(type, " missão")}
+
+    {type} {if mission.faction: for {mission.faction}} abandonada.
+}
+
+{set type to "Abandoned"}
+{F("Mission Route Update")}
+

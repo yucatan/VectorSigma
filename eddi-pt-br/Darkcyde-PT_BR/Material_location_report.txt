@@ -1,0 +1,26 @@
+{_ Fetch material from state }
+{set material to state.material}
+{if material:
+    {_ Fetch full material details }
+    {set material to MaterialDetails(material)}
+
+    {_ Context }
+    {SetState('eddi_context_last_subject', 'material')}
+    {SetState('eddi_context_material_name', material.name)}
+}
+
+{if !material:
+    {_ Fetch from context }
+    {set material to MaterialDetails(state.eddi_context_material_name)}
+}
+
+{if material.name:
+    {if material.location:
+        {material.name} pode ser {material.location}
+    |else:
+        Não há informação disponível sobre onde encontrar {material.name}
+    }
+|else:
+    Não tenho informação sobre esse material
+}
+

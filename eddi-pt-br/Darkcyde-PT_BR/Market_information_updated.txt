@@ -1,0 +1,24 @@
+{_ Find out in advance what we have to say }
+{if ship.role = "Multipurpose" || ship.role = "Trading":
+    {set purchasecheck to F("Commodity purchase check")}
+}
+{set limpetcheck to F("Limpet check")}
+{set swapoutcheck to F("Swapout check")}
+{set salecheck to F("Commodity sale check")}
+
+{_ Pause(4500)}
+
+{if purchasecheck || salecheck || limpetcheck || swapoutcheck:
+    {OneOf("Atualizações", "Mudanças")}
+    {OneOf("dos dados", "das informações", "dos preços")}
+    {OneOf("do mercado", "do mercado local", "dos serviços da estação")}
+    {OneOf("recebidas", "obtidas")}.
+
+    {salecheck}
+    {purchasecheck}
+    {swapoutcheck}
+    {limpetcheck}
+}
+
+{F("FinesBounties_CheckContacts")}
+

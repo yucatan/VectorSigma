@@ -1,0 +1,59 @@
+
+{_ Find those that are above maximum, desired and minimum}
+{set shoulddiscardmaterials to []}
+{set coulddiscardmaterials to []}
+{set lastdiscardmaterials to []}
+
+{for material in materials:
+    {if material.maximum && material.amount > material.maximum:
+      {set shoulddiscardmaterials to cat(shoulddiscardmaterials, [material])}
+    |elif material.desired && material.amount > material.desired:
+      {set coulddiscardmaterials to cat(coulddiscardmaterials, [material])}
+    |elif material.minimum && material.amount > material.minimum:
+      {set lastdiscardmaterials to cat(lastdiscardmaterials, [material])}
+    }
+}
+
+{if len(shoulddiscardmaterials) > 0:
+    Você está acima do seu nível máximo de {len(shoulddiscardmaterials)} materia{if len(shoulddiscardmaterials) != 1:is|else:l}.
+    Você pode descartar
+
+    {set cur to 0}
+    {set length to len(shoulddiscardmaterials) - 1}
+    {while cur < len(shoulddiscardmaterials):
+        {shoulddiscardmaterials[cur].amount - shoulddiscardmaterials[cur].maximum} {shoulddiscardmaterials[cur].material}
+        {set cur to cur + 1}
+        {if cur = length: e
+        |elif cur < length:,
+        }
+    }.
+|elif len(coulddiscardmaterials) > 0:
+    Você está acima do nível desejado de {len(coulddiscardmaterials)} materia{if len(shoulddiscardmaterials) != 1:is|else:l}.
+    Você pode descartar
+
+    {set cur to 0}
+    {set length to len(coulddiscardmaterials) - 1}
+    {while cur < len(coulddiscardmaterials):
+        {coulddiscardmaterials[cur].amount - coulddiscardmaterials[cur].desired} {coulddiscardmaterials[cur].material}
+        {set cur to cur + 1}
+        {if cur = length: e
+        |elif cur < length:,
+        }
+    }.
+|elif len(lastdiscardmaterials) > 0:
+    Você está acima do seu nível mínimo de {len(lastdiscardmaterials)} materia{if len(shoulddiscardmaterials) != 1:is|else:l}.
+    Você pode descartar
+
+    {set cur to 0}
+    {set length to len(lastdiscardmaterials) -1 }
+    {while cur < len(lastdiscardmaterials):
+        {lastdiscardmaterials[cur].amount - lastdiscardmaterials[cur].minimum} {lastdiscardmaterials[cur].material}
+        {set cur to cur + 1}
+        {if cur = length: e
+        |elif cur < length:,
+        }
+    }.
+|else:
+    Nenhum material pode ser descartado e ainda ficar nos níveis mínimos.
+}
+

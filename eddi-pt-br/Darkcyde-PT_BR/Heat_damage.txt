@@ -1,0 +1,2 @@
+{Occasionally(2, "Perigo:")}
+Dano por calor.

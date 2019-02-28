@@ -1,0 +1,5 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'material')}
+{SetState('eddi_context_last_action', 'donate')}
+{SetState('eddi_context_material_name', event.name)}
+

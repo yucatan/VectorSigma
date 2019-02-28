@@ -1,0 +1,10 @@
+{if event.vehicle = vehicle:
+    {if event.health < 41:
+        Perigo:
+    |elif event.health < 61:
+        Alerta:
+    |elif event.health < 81:
+        Cuidado:
+    }
+    {OneOf("Casco", "Integridade do casco", "Integridade", "Integridade estrutural")} {Occasionally(3, "está")} a {event.health}%.
+}

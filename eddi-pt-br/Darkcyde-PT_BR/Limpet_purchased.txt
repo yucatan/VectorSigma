@@ -1,0 +1,7 @@
+{SetState('eddi_context_last_action', "buy_limpet")}
+
+{event.amount} drone{if event.amount > 1:s}
+{Occasionally(2, "fo{if event.amount = 1:i |else:ram}")}
+adicionado{if event.amount > 1:s} {OneOf('a nossa carga', 'ao invetário da {ShipName()}', 'ao compartimento de carga')}
+
+

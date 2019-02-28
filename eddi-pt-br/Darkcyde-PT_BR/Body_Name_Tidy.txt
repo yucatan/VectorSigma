@@ -22,8 +22,8 @@
 {set parent to BodyDetails(slice(body, 0, len(body)-2), system).type}
 
 {if body = system:
-    {set body to "A estrela principal"}
-    {set body_type to "Estrela"}
+    {set body to "Estrêla principal"}
+    {set body_type to "Estrêla"}
 
 |elif find(body, system) > -1:
 
@@ -48,7 +48,7 @@
         {set body to List(split(body, "+"))}
         {set body_type to "Planetas"}
     |elif type = "Star" || (last_char > 64 && find(body, "-", 1) = -1):
-        {set body_type to "Estrela"}
+        {set body_type to "Estrêla"}
     |elif parent = "Planet" || last_char > 64:
         {set body_type to "Lua"}
     |elif type = "Planet" || last_char > 48:

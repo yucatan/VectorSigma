@@ -1,0 +1,45 @@
+{_ Function to obtain a material from inventory}
+{set _inventory(required) to:
+    {for material in materials:
+        {if material.material = required:
+            {return material}
+        }
+    }
+}
+
+{_ Fetch material from state }
+{set material to state.material}
+{if material:
+    {_ Fetch full material details }
+    {set material to MaterialDetails(material)}
+
+    {_ Context }
+    {SetState('eddi_context_last_subject', 'material')}
+    {SetState('eddi_context_material_name', material.name)}
+}
+
+{if !material:
+    {_ Fetch from context }
+    {set material to MaterialDetails(state.eddi_context_material_name)}
+}
+
+{set inventory to _inventory(material.name)}
+
+
+{if inventory:
+    {if inventory.minimum && inventory.minimum > inventory.amount:
+        {set under to inventory.minimum - inventory.amount}
+        Você precisa de {under} unidade{if under > 1:s} de {inventory.material} para alcançar seu nível mínimo.
+    |elif inventory.desired && inventory.desired > inventory.amount:
+        {set under to inventory.desired - inventory.amount}
+        Você precisa de {under} unidade{if under > 1:s} de {inventory.material} para alcançar o nível desejado.
+    |elif inventory.desired:
+        Você está acima do nível desejado de {inventory.material}.
+    |elif inventory.minimum :
+        Você está acima do nível mínimo de {inventory.material}.
+    |else:
+        Você não configurou qualquer nível para {inventory.material}.
+    }
+}
+
+

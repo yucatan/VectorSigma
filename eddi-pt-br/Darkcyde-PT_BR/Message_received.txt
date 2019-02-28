@@ -1,0 +1,46 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'message')}
+{SetState('eddi_context_last_action', 'receive')}
+{SetState('eddi_context_message_name', event.from)}
+{SetState('eddi_context_message_content', event.message)}
+
+{_ Setup channel list to speak. Only messages received on these channels will be spoken _}
+{_ Options: direct, friend, local, multicrew, npc, player, voicechat, wing _}
+{set channellist to ["direct", "friend", "multicrew", "npc", "player", "voicechat", "wing"]}
+
+{_ Setup sender list to speak. Only messages FROM these will be spoken _}
+{_ Messages from Players will always be spoken _}
+{_ Options: Ambushed pilot, Bounty hunter, Capital ship, Cargo hunter _}
+{_ Civilian pilot, Commander, Cruise liner, Escort, Exploration convoy _}
+{_ Hitman, Messenger, Military, Miner, NPC, Passenger hunter, Passenger liner _}
+{_ Pirate, Police, Propagandist, Protester, Refugee, Rival power's agent _}
+{_ Search and rescue, Starship One, Station, Wedding convoy, Wing mate _}
+{set senderlist to ["Bounty hunter", "Military", "Pirate", "Police"]}
+
+
+{if event.player = true:
+    {if event.message = "o7":
+        {event.from} cumprimenta
+        {if event.channel = "player":
+            você
+        }.
+    |else:
+        {event.source} {event.from} enviou: {event.message}.
+    }
+|elif find(channellist, event.channel) > -1 && find(senderlist, event.source) > -1:
+
+    {_ List all your installed voices that you wish to use _}
+    {set voice to OneOf("Microsoft Maria Desktop", "Microsoft Daniel Desktop", "Ivona 2 Ricardo", "Ivona 2 Vitória")}
+    {if find(voice, "Desktop") > -1:
+        {set volume to "high"} {_ 'Desktop' voices are a little bit quieter, so this ups the volume _}
+    |else:
+        {set volume to "default"}
+    }
+
+    {set pitch to OneOf("x-low","low","medium","default","high","x-high")}
+    {set rate to OneOf("slow","medium","default","fast")}
+
+    De {event.from}: {Transmit(event.message)}
+ {_ Transmit(SpeechVolume(SpeechRate(SpeechPitch(Voice(event.message, voice),pitch),rate),volume)) _}
+}
+

@@ -1,0 +1,2 @@
+{Pause(1000)}
+Motor de Distorção de Fase impulsionado em {Humanise(event.boost * 100)} porcento.

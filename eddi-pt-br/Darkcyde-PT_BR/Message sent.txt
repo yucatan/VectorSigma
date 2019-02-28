@@ -1,0 +1,8 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'message')}
+{SetState('eddi_context_last_action', 'send')}
+{SetState('eddi_context_message_name', event.to)}
+{SetState('eddi_context_message_content', event.message)}
+
+{Occasionally(2,"{OneOf('Comunicação','Mensagem')}")} enviada.
+

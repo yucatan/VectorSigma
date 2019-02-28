@@ -1,0 +1,135 @@
+{_ Mission Check Near Most}
+{_ Find nearest system with missions, and system with most missions}
+
+
+{if missionsCount > 0:
+
+    {_ Setup nearest calculation function}
+    {set nearcalc(name) to:
+
+        {set distance to round(Distance(curr, name), 1)}
+
+        {if distance < nearest_distance:
+            {set nearest_distance to distance}
+            {set nearest_name to name}
+        }
+        {set mission_systems to cat(mission_systems, [name])}
+    }
+
+    {set curr to state.eddi_context_system_system}
+    {set nearest_name to ""}
+    {set mission_systems to []}
+    {set systems_names to []}
+    {set systems_count to []}
+
+    {_ Max scan range. 500 is large, 100 above average, 20-50 normal, 5-10 small}
+    {_ Missions closer than this will be reported}
+    {set nearest_distance to 50}
+
+    {for mission in missions:
+        {if mission.status = "Active":
+            {if mission.destinationsystems:
+                {set multi to multi + 1}
+                {for destination in mission.destinationsystems:
+                    {nearcalc(destination.name)}
+                }
+            |elif mission.destinationsystem && mission.destinationsystem != "":
+                {nearcalc(mission.destinationsystem)}
+            }
+
+            {set here to find(systems_names, mission.destinationsystem)}
+            {if here > -1:
+                {set number to systems_count[here] + 1}
+                {set systems_count to union(systems_count, [here:number])}
+            |else:
+                {set systems_names to cat(systems_names, [mission.destinationsystem])}
+                {set systems_count to cat(systems_count, [1])}
+            }
+        }
+    }
+
+
+    {_ Calculate system with most missions in _}
+    {set system_most to ""}
+    {set system_count to 0}
+
+    {set cur to 0}
+    {while cur < len(systems_names):
+        {if systems_count[cur] > system_count:
+            {set system_most to systems_names[cur]}
+            {set system_count to systems_count[cur]}
+        }
+        {set cur to cur + 1}
+    }
+
+    {set equal to 0}
+    {set cur to 0}
+    {while cur < len(systems_count):
+        {if systems_count[cur] = system_count:
+            {set equal to equal + 1}
+        }
+        {set cur to cur + 1}
+    }
+
+    {_ Report nearest system}
+    {if nearest_name != "":
+        {if missionsCount = 1:
+            {if multi = 1:
+                Você tem uma missão com múltiplos destinos. O mais próximo
+            |else:
+                Sua única missão
+            }
+        |else:
+            Sua missão mais próxima
+        }
+        está 
+        {if nearest_name = curr:
+            no sistema atual
+        |else:
+            sistema {nearest_name} 
+            {if reported != "yes":,
+                {if find(nearest_distance, ".00") > -1: {set nearest_distance to round(nearest_distance, 0)}}
+                que fica a {nearest_distance} anos luz.
+            }
+        }.
+
+
+        {_ Report system/s with most missions}
+        {if equal = 1:
+            {if system_most = nearest_name:
+                {if missionsCount > 1:
+                    Ele também tem
+                    {OneOf("{OneOf('a maioria','a maior parte')} das missões",
+                           "a maior parte das missões para você completar")}.
+                }
+            |else:
+                {if system_most = curr:
+                    {set system_most to "O sistema atual"}
+                |else:
+                    {set system_most to cat("The", system_most, "system")}
+                }
+                {OneOf("A maioria das suas missões está {Occasionally(2,'localizada')} em {system_most}",
+                       "em {system_most} estão {OneOf('a maioria','a maior parte')} das suas missões",
+                       "em {system_most} está a maior parte das suas missões por completar")}.
+            }
+        |else:
+            Você tem {system_count} miss{if system_count > 1:ões|else:ão} em cada
+            {set cur to 0}
+            {set length to equal - 1}
+            {while cur < equal:
+                dos {systems_names[cur]}
+                {set cur to cur + 1}
+                {if cur = length:, e
+                |elif cur < length:,
+                }
+            } sistemas.
+        }
+    }
+
+    {if !system_most && !nearest_name && missionsCount > 0:
+        Você não tem missões ativas no momento.
+    }
+|elif state.eddi_context_last_subject != "jump":
+    Você não tem missões {OneOf("no momento","desta vez")}.
+}
+

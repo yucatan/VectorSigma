@@ -1,0 +1,50 @@
+{_ Fetch material from state }
+{set material to state.material}
+{if material:
+    {_ Fetch full material details }
+    {set material to MaterialDetails(material)}
+
+    {_ Context }
+    {SetState('eddi_context_last_subject', 'material')}
+    {SetState('eddi_context_material_name', material.name)}
+}
+
+{if !material:
+    {_ Fetch from context }
+    {set material to MaterialDetails(state.eddi_context_material_name)}
+}
+
+{if material && material.name:
+    {set uses to len(material.blueprints)}
+    {if slice(material.name, len(material.name)-1) = 's':
+        {set plural to 'são'}
+        {set plural2 to 's'}
+    |else:
+        {set plural to 'é'}
+    }
+    {if uses = 0:
+        {material.name} não {plural} necessário{plural2} para qualquer diagrama.
+    |elif uses = 1:
+        {set name to cat(material.blueprints[0].name, " ", material.blueprints[0].modulename, " grade ", material.blueprints[0].grade)}
+        {material.name} {plural} usado{plugal2} no diagrama {name}
+    |elif uses = 2:
+        {set name0 to cat(material.blueprints[0].name, " ", material.blueprints[0].modulename, " grade ", material.blueprints[0].grade)}
+        {set name1 to cat(material.blueprints[1].name, " ", material.blueprints[1].modulename, " grade ", material.blueprints[1].grade)}
+        {material.name} {plural} usado{plugal2} nos diagramas {name0} e {name1}
+    |else:
+        {material.name} {plural} usado{plugal2} em {len(material.blueprints)} diagramas.  São estes:
+        {set cur to 0}
+        {set length to len(material.blueprints) - 1}
+        {while cur < len(material.blueprints):
+            {set name to cat(material.blueprints[cur].name, " ", material.blueprints[cur].modulename, " grade ", material.blueprints[cur].grade)}
+            {name}
+            {set cur to cur + 1}
+            {if cur = length: e
+            |elif cur < length:,
+            }
+        }
+    }
+|else:
+    Não tenho informações sobre esse material.
+}.
+

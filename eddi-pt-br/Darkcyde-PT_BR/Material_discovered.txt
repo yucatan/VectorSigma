@@ -1,0 +1,29 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'material')}
+{SetState('eddi_context_last_action', 'discover')}
+{SetState('eddi_context_material_name', event.name)}
+
+
+{set matis to MaterialDetails(event.name)}
+
+{Occasionally(2,"Você")} Descobriu {P(matis.name)},
+{Occasionally(2,"este é")}
+um
+
+{if matis.category = "Manufaturado":
+   manufactured {OneOf("ítem","componente")}
+|elif matis.category = "Dados":
+   conjunto de dados
+|elif matis.category = "Desconhecido":
+   {set type to slice(matis.name,0,7)}
+   {if type = "antigo":
+      antigo conjunto de dados alienígenas
+   |else:
+      {matis.name}
+   }
+|else:
+   elemento
+}
+{matis.rarity.name}
+.
+

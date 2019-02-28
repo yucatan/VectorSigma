@@ -1,0 +1,1 @@
+Drone {OneOf('lançado','liberado','disparado')}.

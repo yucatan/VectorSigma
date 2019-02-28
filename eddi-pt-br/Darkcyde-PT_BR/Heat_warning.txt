@@ -1,0 +1,2 @@
+{Occasionally(2, "Aviso:")}
+Níveis de calor acima da tolerância operacional.

@@ -1,0 +1,34 @@
+{_ Function to obtain a material from inventory}
+{set _inventory(required) to:
+    {for material in materials:
+        {if material.material = required:
+            {return material}
+        }
+    }
+}
+
+{_ Fetch material from state }
+{set material to state.material}
+{if material:
+    {_ Fetch full material details }
+    {set material to MaterialDetails(material)}
+ 
+    {_ Context }
+    {SetState('eddi_context_last_subject', 'material')}
+    {SetState('eddi_context_last_subject', 'inventory')}
+    {SetState('eddi_context_material_name', material.name)}
+}
+
+{if !material:
+    {_ Fetch from context }
+    {set material to MaterialDetails(state.eddi_context_material_name)}
+}
+
+{set inventory to _inventory(material.name)}
+
+{if inventory && inventory.amount > 0:
+    Você tem {inventory.amount} unidade{if inventory.amount != 1:s} de {inventory.material} a bordo.
+|else:
+    Você não tem {inventory.material} a bordo.
+}
+

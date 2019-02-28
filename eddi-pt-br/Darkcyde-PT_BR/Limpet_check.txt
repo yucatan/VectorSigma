@@ -1,0 +1,22 @@
+{set  controllers to 0}
+{for compartment in ship.compartments:
+    {if find(compartment.module.name, "Controller") != -1:
+        {set controllers to controllers + 1}
+    }
+}
+
+{set limpets to 0}
+{for cargo in inventory:
+    {if cargo.edname = "Drones":
+        {set limpets to cargo.total}
+    }
+}
+
+{set tenpercent to ship.cargocapacity / 10 - 1}
+{if controllers > 0 && limpets = 0:
+    Lembrete:: você tem um controlador de drones mas não os está carregando.
+|elif controllers = 0 && limpets > 0:
+    Você está carregando drones, mas nenhum controlador.
+|elif controllers > 0 && limpets < tenpercent:
+    Você só tem {limpets} {if limpets = 1: drone |else: drones} a bordo; você deveria pensar em comprar mais.
+}
