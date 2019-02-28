@@ -1,0 +1,9 @@
+{set articles to GalnetNewsArticles("Article")}
+
+{if len(articles) = 0:
+    Você não tem notícias não lidas
+|elif len(articles) = 1:
+    Você tem uma notícia não lida
+|else:
+    Você tem {len(articles)} notícias não lidas
+}.

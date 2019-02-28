@@ -1,0 +1,74 @@
+{set interesting to "Article"}
+
+{set interesting_news_title to []}
+{set interesting_news_content to []}
+{set not_interesting_news_title to []}
+{set not_interesting_news_content to []}
+
+{set item to 0}
+{while item < len(event.items):
+    {if match(event.items[item].category, interesting ):
+        {set interesting_news_title to cat(interesting_news_title, [event.items[item].title])}
+        {set interesting_news_content to cat(interesting_news_content, [event.items[item].content])}
+    |else:
+        {set not_interesting_news_title to cat(not_interesting_news_title, [event.items[item].title])}
+        {set not_interesting_news_content to cat(not_interesting_news_content, [event.items[item].content])}
+    }
+    {GalnetNewsMarkRead(event.items[item].content.id)}
+    {set item to (item + 1)}
+}
+{if len(event.items) = len(interesting_news_title): 
+    {set allinteresting to 1} 
+}
+
+{if len(interesting_news_title) > 0:
+    {if len(interesting_news_title) = 1:
+		{set remarkable to OneOf('notável', 'interessante', 'intrigante', 'incomum')}
+		Um novo artigo {remarkable} da Galnet foi publicado, com o título de {interesting_news_title[0]}.
+    |elif len(event.items) > 1:
+        {len(event.items)} 
+        novos artigos  
+		{if allinteresting: 
+             {OneOf("notáveis", "interessantes", "intrigantes", "incomuns")}
+        }
+        da Galnet foram publicados
+        {if !allinteresting:
+             , incluindo {len(interesting_news_title)} 
+             {OneOf('de interesse.', 'a serem notados.', 'dignos de observação.')}
+        }.
+    }
+|elif len(event.items) != ( len(interesting_news_title) + len(not_interesting_news_title) ):
+    {len(event.items)} novos artigos da Galnet foram publicados, mas não pude determinar
+    se algum era de seu interesse, {F('Honorific')}. 
+|elif len(interesting_news_title) = 0:
+    Notícias da Galnet foram publicadas, mas não há nada digno de relato, {F('Honorific')}.
+}
+
+{if len(interesting_news_title) > 0:
+    {if len(interesting_news_title) = 1:
+        Que está escrito: {interesting_news_content[0]}.
+    |elif len(interesting_news_title) > 1:
+        {set item to 0}
+        {while item < len(interesting_news_title):
+            {if item = 0:
+                O primeiro
+                tem o título {interesting_news_title[item]},
+                e está escrito: {interesting_news_content[item]}.
+            |elif item = 1:
+                O segundo
+                tem o título {interesting_news_title[item]},
+                e está escrito: {interesting_news_content[item]}.
+            |elif item = len(event.items) - 1:
+                O último
+                tem o título {interesting_news_title[item]},
+                e está escrito: {interesting_news_content[item]}.
+            |else:
+                O próximo
+                tem o título {interesting_news_title[item]},
+                e está escrito: {interesting_news_content[item]}.
+            }
+            {set item to item + 1}
+            {Pause(1000)}
+        }
+    }
+}

@@ -1,0 +1,30 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'fsd')}
+{SetState('eddi_context_last_action', 'glide')}
+{SetState('eddi_context_system_name', event.system)}
+{SetState('eddi_context_body_name', event.body)}
+{SetState('eddi_context_body_system', event.system)}
+
+{if event.gliding:
+    {Pause(2000)}
+    {Occasionally(2, "Modo de")} Planagem 
+    {OneOf("ativado.", "iniciado.")}
+
+    {set body to BodyDetails(event.body, event.system)}
+    {if !body.name || body.name = "" || !body.gravity:
+        Dados de aproximação planetária não estão disponíveis.
+    |else:
+        {if body.landable:
+            {set gravity to round(body.gravity,2)}
+            {if gravity > 4: Perigo! {set grav to "extremamente alta"}
+            |elif gravity > 2: Cuidado! {set grav to "alta"}
+            |elif gravity > 0.5: Aviso! {set grav to "média"}
+            |else: {set grav to "baixa"}
+            }
+            {F("Body Name Tidy")}
+            {body} é um mundo de gravidade {grav}, a {gravity} G.
+        }
+    }
+|else:
+    Planagem finalizada.
+}

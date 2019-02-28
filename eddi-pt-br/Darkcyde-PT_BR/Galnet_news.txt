@@ -1,0 +1,21 @@
+{_ Fetch article from state }
+{set articleid to state.articleid}
+{if articleid:
+    {set article to GalnetNews(articleid)}
+
+    {_ Context }
+    {SetState('eddi_context_last_subject', 'news')}
+    {SetState('eddi_context_galnet_news_id', articleid)}
+}
+
+{if !article:
+    {_ Fetch from context }
+    {set article to GalnetNews(state.eddi_context_galnet_news_id)}
+}
+
+{if article:
+    {article.title}: {article.content}
+    {GalnetNewsMarkRead(article.id)}
+|else:
+    Não tenho qualquer informação sobre esse artigo
+}.

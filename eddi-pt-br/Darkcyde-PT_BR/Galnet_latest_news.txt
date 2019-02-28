@@ -1,0 +1,17 @@
+{_ Fetch category from state }
+{set articlecategory to state.article_category}
+
+{if articlecategory:
+    {set articles to GalnetNewsArticles(articlecategory)}
+|else:
+    {set articles to GalnetNewsArticles('Article')}
+}
+
+{if len(articles) = 0:
+    Não há notícias não lidas nessa categoria.
+|else:
+    {set article to articles[0]}
+    {SetState('eddi_context_galnet_news_id', article.id)}
+    {article.title}: {article.content}
+    {GalnetNewsMarkRead(article.id)}
+}.

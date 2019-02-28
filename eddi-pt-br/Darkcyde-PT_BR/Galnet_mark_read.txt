@@ -1,0 +1,20 @@
+{_ Fetch category from state }
+{set articlecategory to state.article_category}
+
+{if articlecategory:
+    {set articles to GalnetNewsArticles(articlecategory)}
+|else:
+    {set articles to GalnetNewsArticles('Article')}
+}
+
+{if len(articles) = 0:
+    Não há notícias não lidas.
+    {if articlecategory: 'nessa categoria' }
+|else:
+    {set item to 0}
+    {while item < len(articles):
+        {GalnetNewsMarkRead(articles[item].id)}
+        {set item to (item + 1)}
+    }
+    {len(articles)} news {OneOf('artigos', 'ítens')} marcados como lidos
+}.

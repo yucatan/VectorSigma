@@ -1,0 +1,33 @@
+{_ GetDistance}
+{_ Find distance to destination}
+
+{set dist to -1}
+
+{set fs to system.name}
+{set ts to state.eddi_context_system_system}
+
+{if fs && ts:
+    {if ts = "":
+        Sistema de origem não designado.
+    |elif fs = "":
+        Sistema de destino não designado.
+    |else:
+        {set fs to SystemDetails(fs)}
+        {set ts to SystemDetails(ts)}
+
+        {if !fs.name:
+            Sua origem não está nos mapas estelares da Federação de Pilotos.
+        |elif !ts.name:
+            Seu destino não está nos mapas esteleares da Federação de Pilotos.
+        |else:
+            {set dist to round(Distance(fs.x, fs.y, fs.z, ts.x, ts.y, ts.z), 2)}
+            {if state.getdistance = 'true':
+                Distância {Occasionally(2, "de {fs.name}")} até
+                o {Occasionally(2, "{OneOf('alvo','destino')} sistema")}
+                {ts.name} é {dist} anos luz.
+            }
+        }
+    }
+}
+
+{SetState('distance', dist)}
