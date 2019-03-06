@@ -1,0 +1,22 @@
+
+{if mission.factionstate = "Boom":
+    {OneOf("durante este","neste")} {OneOf("tempo de prosperidade","auge econômico")}
+|elif mission.factionstate = "Bust":
+    durante {OneOf("este declínio econômico","esta recessão","desaceleração econômica")}
+|elif mission.factionstate = "CivilUnrest":
+    durante {Occasionally(2,"este período de")} {OneOf("revolta civil","conflito civil")}
+|elif mission.factionstate = "CivilWar":
+    durante {Occasionally(2,"este período de")} {OneOf("guerra civil","conflito civil")}
+|elif mission.factionstate = "Democracy":
+    {OneOf("em nome da","pela")} democracia
+|elif mission.factionstate = "Election":
+    durante esta eleição
+|elif mission.factionstate = "Famine":
+    {OneOf('neste','durante este')} período de fome
+|elif mission.factionstate = "Industrial":
+
+|elif mission.factionstate = "Lockdown":
+
+|elif mission.factionstate = "Outbreak"
+    , para ajudar {OneOf("na emergência médica","no alívio de surtos")}
+}

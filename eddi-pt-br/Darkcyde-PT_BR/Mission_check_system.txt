@@ -1,0 +1,173 @@
+{_ Mission check system }
+{_ Check what missions you have for the current system }
+
+
+{_ Setup addstation function }
+{set addstation(station) to:
+    {set missions_here to missions_here + 1}
+    {set station_based to station_based + 1}
+    {set here to find(stations_here, station)}
+
+    {if here > -1:
+        {if mission.status = "Active":
+            {if mission.type = "Collect" ||  mission.type= "Delivery":
+                {set depot to stations_depot[here] + 1}
+                {set stations_depot to union(stations_depot, [here:depot])}
+            |else:
+                {set active to stations_active[here] + 1}
+                {set stations_active to union(stations_active, [here:active])}
+            }
+        |else:
+            {set complete to stations_complete[here] + 1}
+            {set stations_complete to union(stations_complete, [here:complete])}
+        }
+    |else:
+        {set stations_here to cat(stations_here, [station])}
+        {if mission.status = "Active":
+            {if mission.type = "Collect" ||  mission.type= "Delivery":
+                {set stations_active to cat(stations_active, [0])}
+                {set stations_depot to cat(stations_depot, [1])}
+            |else:
+                {set stations_active to cat(stations_active, [1])}
+                {set stations_depot to cat(stations_depot, [0])}
+            }
+            {set stations_complete to cat(stations_complete, [0])}
+        |else:
+            {set stations_active to cat(stations_active, [0])}
+            {set stations_complete to cat(stations_complete, [1])}
+            {set stations_depot to cat(stations_depot, [0])}
+        }
+    }
+}
+
+
+{if missionsCount > 0:
+    {set current_system to system.name}
+    {set missions_here to 0}
+    {set station_based to 0}
+    {set stations_active to []}
+    {set stations_complete to []}
+    {set stations_depot to []}
+    {set stations_here to []}
+    {set non_stations to []}
+
+    {_ Find all missions in the current system and identify all the stations }
+    {for mission in missions:
+        {if mission.status != "Failed":
+            {if mission.destinationsystems:
+                {for destination in mission.destinationsystems:
+                    {if destination.name = current_system && !destination.visited:
+                        {set missions_here to missions_here + 1}
+                    }
+                }
+            |elif mission.destinationsystem = current_system:
+                {if mission.destinationstation && mission.destinationstation != "":
+                    {addstation(mission.destinationstation)}
+                |else:
+                    {if mission.status = "Active":
+                        {set missions_here to missions_here + 1}
+                        {if find(non_stations, mission.type) = -1:
+                            {set non_stations to cat(non_stations, [mission.type])}
+                        }
+                    }
+                }
+            |elif mission.originsystem = current_system && find(mission.type, "Delivery") > -1:
+                {if mission.originstation && mission.originstation != "":
+                    {addstation(mission.originstation)}
+                }
+            }
+        }
+    }
+
+    {if missions_here > 0:
+        Você tem {missions_here} miss{if missions_here > 1:ões|else:ão} {OneOf('aqui','neste sitema')}.
+
+        {if station_based > 0:
+
+            {set cur to 0}
+
+            {if missions_here = 1:
+                É uma missão
+                {if stations_depot[0] = 1: do depósito
+                |elif stations_active[0] = 1: ativa
+                |elif stations_complete[0] = 1: completada
+                }
+                localizada em 
+                {set model to StationDetails(stations_here[0]).model}
+                {set type to token(model, " ", 1)}
+                {if find(model, "Unknown") = -1:
+                    {if type != "": {type} |else: {model} },
+                }
+                {stations_here[0]}.
+
+            |else:
+                Há miss{if last > 1:ões|else:ão} 
+                {if stations_depot[0] > 1: are
+                |elif stations_depot[0] = 1: is
+                |elif stations_active[0] > 1: are
+                |elif stations_active[0] = 1: is
+                |elif stations_complete[0] > 1: are
+                |elif stations_complete[0] = 1: is
+                }
+
+                {while cur < len(stations_here):
+
+                    {if stations_depot[cur] > 0:
+                        {stations_depot[cur]} do depósito
+                        {if stations_active[cur] && stations_active[cur] > 0 && stations_complete[cur] && stations_complete[cur] > 0: ,
+                        |elif (stations_active[cur] && stations_active[cur] > 0) || (stations_complete[cur] && stations_complete[cur] > 0): and}
+                        {set last to stations_depot[cur]}
+                    }
+
+                    {if stations_active[cur] && stations_active[cur] > 0:
+                        {stations_active[cur]} ativas
+                        {if stations_complete[cur] && stations_complete[cur] > 0: and}
+                        {set last to stations_active[cur]}
+                    }
+
+                    {if stations_complete[cur] && stations_complete[cur] > 0:
+                        {stations_complete[cur]} completadas
+                        {set last to stations_completed[cur]}
+                    }
+
+                    em 
+                    {set model to StationDetails(stations_here[cur]).model}
+                    {set type to token(model, " ", 1)}
+                    {if find(model, "Unknown") = -1 && find(model, stations_here[cur]) = -1:
+                        {if type != "": {type} |else: {model} },
+                    }
+                    {stations_here[cur]}
+
+                    {set cur to cur + 1}
+                    {if cur = len(stations_here)-1:, e |elif cur < len(stations_here): ,}
+                }.
+            }
+        }
+
+        {if missions_here > station_based:
+
+            {if missions_here = 1:
+                É uma missão 
+                {if stations_depot[0] = 1: do depósito
+                |elif stations_active[0] = 1: ativa
+                |elif stations_complete[0] = 1: completada
+                }
+                que precisa ser {OneOf("procurada","localizada","encontrada")}.
+
+            |else:
+                {Pause(500)}
+                {set remaining to missions_here - station_based}
+                A{if remaining > 1:s} miss{if remaining > 1:ões|else:ão} {if station_based > 0: que sobra {remaining}}
+
+                {set cur to 0}
+                {while cur < len(non_stations):
+                    {non_stations[cur]}
+                    {set cur to cur + 1}
+                    {if cur = len(non_stations)-1: e |elif cur < len(non_stations): ,}
+                }
+                precisa{if remaining > 1:m} ser {OneOf("encontrada{if remaining > 1:s}","procurada{if remaining > 1:s}","determinada{if remaining > 1:s}")}.
+            }
+        }
+    }
+}
+

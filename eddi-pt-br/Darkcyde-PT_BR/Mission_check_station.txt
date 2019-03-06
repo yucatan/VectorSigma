@@ -1,0 +1,46 @@
+{_ Mission check station }
+{_ Check what missions you have for the current station }
+
+
+{if missionsCount > 0:
+    {set current_station to state.eddi_context_body_name}
+    {set active_missions to 0}
+    {set complete_missions to 0}
+    {set depot_missions to 0}
+
+    {if current_station && current_station != "":
+        {for mission in missions:
+            {if mission.destinationstation = current_station ||
+                (mission.originstation = current_station && find(mission.type, "Delivery") > -1):
+                {if mission.status = "Active":
+                    {if find(mission.type, "Collect") > -1 || find(mission.type, "Delivery") > -1:
+                        {set depot_missions to depot_missions + 1}
+                    |else:
+                        {set active_missions to active_missions + 1}
+                    }
+                |elif mission.status = "Complete":
+                    {set complete_missions to complete_missions + 1}
+                }
+            }
+        }
+    }
+
+    {set total to active_missions + complete_missions + depot_missions}
+    {if total > 0:
+        Vocẽ tem
+        {if depot_missions > 0:
+            {depot_missions} miss{if depot_missions > 1:ões|else:ão} do depósito
+            {if active_missions > 0 && complete_missions > 0: ,
+            |elif active_missions > 0 || complete_missions > 0: e}
+        }
+        {if active_missions > 0:
+            {active_missions} miss{if active_missions > 1:ões|else:ão} ativa{if active_missions > 1:s}
+            {if complete_missions > 0: e}
+        }
+        {if complete_missions > 0:
+            {complete_missions} miss{if complete_missions > 1:ões|else:ão} completada{if complete_missions > 1:s}
+        }
+        {Occasionally(3,"located")} nesta estação.
+    }
+}
+

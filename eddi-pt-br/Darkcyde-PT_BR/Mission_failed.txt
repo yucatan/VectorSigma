@@ -1,0 +1,20 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'mission')}
+{SetState('eddi_context_last_action', 'fail')}
+
+
+{set mission to MissionDetails(event.missionid)}
+
+{if find(mission.typeEDName, "Passenger") > -1:
+    {set type to "Transport "}
+    {set type to cat(type, mission.passengertype)}
+|else:
+    {set type to mission.type}
+}
+{set type to cat(type, " missão")}
+
+{OneOf("{type} {if mission.faction: para {mission.faction}} falhou", 
+    "Você falhou na missão {type} {if mission.faction: para {mission.faction}}")}.
+
+{set type to "Failed"}
+{F("Mission Route Update")}

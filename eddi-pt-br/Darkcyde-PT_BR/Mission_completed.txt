@@ -1,0 +1,85 @@
+{_ Mission completed }
+{_ Triggered when you complete a mission }
+
+{_ Context }
+{SetState('eddi_context_last_subject', 'mission')}
+{SetState('eddi_context_last_action', 'complete')}
+
+{set mission to MissionDetails(event.missionid)}
+{set status to mission.status}
+
+{if find(mission.typeEDName, "Passenger") > -1:
+    {set type to "Transport "}
+    {set type to cat(type, mission.passengertype)}
+|else:
+    {set type to mission.type}
+}
+{set type to cat(type, " missão")}
+{set ranktype to token(mission.name,"_",2)}
+
+{if mission.type = "Donation":
+    {if mission.typeEDName = "Altruism": {set donate to cat(event.amount, " tonnes of ",event.commodity)}
+    |else: {set donate to cat(Humanise(event.donation)," credits")}
+    }
+    {OneOf("Doou {Occasionally(2, '{donate}')} para {P(event.faction)}",
+           "{P(lcase(event.faction))} {Occasionally(2, 'agredecidamente')} recebeu sua doação {Occasionally(2, 'de {donate}')}",
+           "{P(lcase(event.faction))} lhe agradece por sua doação {Occasionally(2, 'de {donate}')}")}
+    {F("Mission faction state")}.
+    Sua {OneOf("reputação","moral")} {OneOf("melhorou","cresceu")}
+|elif ranktype = "RANKEMP" || ranktype = "RankEmp" || ranktype = "RANKFED" || ranktype = "RankFed":
+    Você {OneOf("completou a {type} com sucesso","completou com sucesso a {type}")}
+|elif mission.communal:
+    Você completou o objetivo da comunidade: {mission.name}. Você {OneOf('recebeu','foi agraciado com')}
+    {Humanise(mission.reward)} créditos por {OneOf("sua contribuição","sua participação","ter participado")}
+|else:
+    {if event.reward > 0:
+        {OneOf(
+         "{type} completada. Você {OneOf('recebeu','foi agraciado com')} {Humanise(event.reward)} créditos",
+         "Você {OneOf('recebeu','foi agraciado com')} {Humanise(event.reward)} créditos por {OneOf('completar {type} com sucesso','completar a {type}','ter completado a {type}')}"
+      )}
+   |else:
+      {OneOf("{type} completada","Você completou a {type} com sucesso","Você completou a {type}")}
+   }
+}
+
+{if mission.type != "Donation": {F("Mission faction state")}}.
+
+{if cargo = "yes" || cargo = "return":
+    {Pause(100)}
+    {SetState('eddi_context_mission_cargo', "yes")}
+    {if part1 = "Smuggle":
+        {event.amount} tonelada{if event.amount != 1:s} de {event.commodity}
+        {OneOf("entregues", "transportadas")} com sucesso.
+    }
+}
+
+{if event.commodityrewards:
+
+    {Pause(100)}
+    {if event.commodityrewards[0].amount = 0:
+       {if event.reward > 0:
+          {OneOf("Entretanto, ","Porém, ")}
+       }
+       você não pode aceitar a carga como recompensa, {Occasionally(2,"já que")}
+       {if ship.cargocapacity = 0:
+          você não tem estantes de carga.
+       |else:
+          seu espaço de carga está lotado.
+       }
+    |else:         
+       {if event.reward > 0:
+          {OneOf("Adicionalmente, ","Também, ")}
+       }
+
+       {set missionreward to "yes"}
+       {for commodityreward in event.commodityrewards:
+          {commodityreward.amount} tonelada{if commodityreward.amount > 1:s} de {commodityreward.commodity}
+          {set cur to cur + 1}
+          {if cur = len(event.commodityrewards) - 1:, }
+       }
+       {OneOf("agora a bordo","confirmada{if commodityreward.amount > 1:s} a bordo","fo{if commodityreward.amount > 1:ram|else:i} recebida{if commodityreward.amount > 1:s}")}.
+    }
+}
+
+{set type to "Completed"}
+{F("Mission Route Update")}

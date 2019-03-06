@@ -1,0 +1,28 @@
+{_ Mission expired }
+{_ Triggered when a mission has expired }
+
+{_ Context }
+{SetState('eddi_context_last_subject', 'mission')}
+{SetState('eddi_context_last_action', 'expired')}
+
+{set mission to MissionDetails(event.missionid)}
+
+{if find(mission.typeEDName, "Passenger") > -1:
+    {set type to "Transport "}
+    {set type to cat(type, mission.passengertype)}
+|else:
+    {set type to mission.type}
+}
+{set type to cat(type, " missão")}
+
+{type} {if mission.faction: for {mission.faction}} expirou.
+{if mission.commodity:
+    {for cargo in inventory:
+        {if cargo.name = mission.commodity && cargo.haulage > 0:
+            Toda a carga relativa à missão será marcada como roubada.
+        }
+    }
+}
+
+{set type to "Expired"}
+{F("Mission Route Update")}
