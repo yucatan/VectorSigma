@@ -443,7 +443,6 @@ components\Guardian_Sentinel_Wreckage_Components.txt;
 components\Guardian_Technology_Component.txt;
 components\Guardian_Vessel_Blueprint_Segment.txt;
 components\Guardian_Weapon_Blueprint_Segment.txt;
-components\Guardian_Wreckage_Components.txt;
 components\Heat_Conduction_Wiring.txt;
 components\Heat_Dispersion_Plate.txt;
 components\Heat_Exchangers.txt;
