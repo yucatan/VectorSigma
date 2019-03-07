@@ -80,7 +80,11 @@
     }
 
     {if missions_here > 0:
-        Você tem {missions_here} miss{if missions_here > 1:ões|else:ão} {OneOf('aqui','neste sistema')}.
+        {set NUM to missions_here}
+        {if NUM = 1: {set NUM to "uma"}
+        |elif NUM = 2: {set NUM to "duas"}
+        }
+        Você tem {NUM} miss{if missions_here > 1:ões|else:ão} {OneOf('aqui','neste sistema')}.
 
         {if station_based > 0:
 
@@ -138,7 +142,7 @@
                 É uma missão 
                 {if stations_depot[0] = 1: do depósito
                 |elif stations_active[0] = 1: ativa
-                |elif stations_complete[0] = 1: completada
+                |elif stations_complete[0] = 1: a ser completada
                 }
                 que precisa ser {OneOf("procurada","localizada","encontrada")}.
 
