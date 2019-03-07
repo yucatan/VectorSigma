@@ -88,27 +88,15 @@
 
             {if missions_here = 1:
                 É uma missão
-                {if stations_depot[0] = 1: do depósito
-                |elif stations_active[0] = 1: ativa
-                |elif stations_complete[0] = 1: completada
+                {if stations_depot[0] = 1: do depósito,
+                |elif stations_active[0] = 1: ativa,
+                |elif stations_complete[0] = 1: a ser completada,
                 }
                 localizada em 
-                {set model to StationDetails(stations_here[0]).model}
-                {set type to token(model, " ", 1)}
-                {if find(model, "Unknown") = -1:
-                    {if type != "": {type} |else: {model} },
-                }
                 {stations_here[0]}.
 
             |else:
-                Há miss{if last > 1:ões|else:ão} 
-                {if stations_depot[0] > 1: are
-                |elif stations_depot[0] = 1: is
-                |elif stations_active[0] > 1: are
-                |elif stations_active[0] = 1: is
-                |elif stations_complete[0] > 1: are
-                |elif stations_complete[0] = 1: is
-                }
+                Há 
 
                 {while cur < len(stations_here):
 
@@ -121,7 +109,7 @@
 
                     {if stations_active[cur] && stations_active[cur] > 0:
                         {stations_active[cur]} ativas
-                        {if stations_complete[cur] && stations_complete[cur] > 0: and}
+                        {if stations_complete[cur] && stations_complete[cur] > 0: e}
                         {set last to stations_active[cur]}
                     }
 
@@ -130,7 +118,7 @@
                         {set last to stations_completed[cur]}
                     }
 
-                    em 
+                    miss{if last > 1:ões|else:ão} em 
                     {set model to StationDetails(stations_here[cur]).model}
                     {set type to token(model, " ", 1)}
                     {if find(model, "Unknown") = -1 && find(model, stations_here[cur]) = -1:
