@@ -21,9 +21,9 @@
     }
 
     {if remaining = 0:
-        foram completados.
+        foram concluídos.
     |else:
-        está agora {round(event.delivered / event.totaltodeliver * 100, 0)} porcento completada.
+        está agora {round(event.delivered / event.totaltodeliver * 100, 0)} porcento concluída.
     }
 }
 

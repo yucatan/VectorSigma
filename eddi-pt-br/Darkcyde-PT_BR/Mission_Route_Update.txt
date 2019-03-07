@@ -1,0 +1,109 @@
+{_ Mission Route Update _}
+{_ Updates the route if no more missions in the current system _}
+
+{set active_count to 0}
+{set complete_count to 0}
+
+{for mission in missions:
+    {if mission.destinationsystems:
+        {for destination in mission.destinationsystems:
+            {if destination.name = system.name:
+                {if mission.status = "Active":
+                    {set active_count to active_count + 1}
+                |elif mission.status = "Complete":
+                    {set complete_count to complete_count + 1}
+                }
+            }
+        }
+    |elif mission.destinationsystem = system.name:
+        {if mission.status = "Active":
+            {set active_count to active_count + 1}
+        |elif mission.status = "Complete":
+            {set complete_count to complete_count + 1}
+        }
+    }
+}
+
+{if type = "Completed" || type = "Abandoned" || type = "Failed":
+    {if status = "Active":
+        {set active_count to active_count - 1}
+    |elif status = "Complete":
+        {set complete_count to complete_count - 1}
+    }
+}
+
+{set total_count to active_count + complete_count}
+{set route to split(state.missionsroute, "_")}
+
+{_ Set mission types that don't have a destination _}
+{_ Possible mission types are _}
+{_ Altruism, Assassinate, Collect, Courier, Delivery, Disable, Massacre, _}
+{_ Mining, Passenger, Permit, Piracy, Rescue, Salvage, Scan, Smuggle _}
+{set type_list to "Altruism Collect Mining Permit Piracy"}
+
+{if total_count > 0 && type != "Accepted":
+    {if active_count > 0:
+        Você ainda tem {active_count} miss{if total_count > 1:ões|else:ão} ativa{if active_count > 1:s}
+    }
+    {if complete_count > 0:
+        {if active_count > 0:, e |else: Você ainda tem} miss{if total_count > 1:ões|else:ão}
+        {complete_count} concluída{if complete_count > 1:s}
+    }
+    neste sistema.
+
+|else:
+
+    {if state.missionsrouteuseeddi = "yes":
+
+        {if route[0] = system.name && len(route) > 0 && type != "Accepted":
+            {set route to RouteDetails("update")}
+        |else:
+            {set route to RouteDetails("route")}
+        }
+
+    |elif state.missionsrouteuseeddi = "no":
+
+        {if route[0] = system.name && len(route) > 0 && type != "Accepted":
+
+            {SetState('missionsroute', join(except(route, [0:""]), "_"))}
+            {set route to split(state.missionsroute, "_")}
+            {SetState('missionsdestination', route[0])}
+            {SetState('missionsroutetype', "update")}
+
+            {if route[0] != "" && route[0] != null:
+                {set dist to round(Distance(system.name, route[0]), 2)}
+                {SetState('missionsroutedistance', state.missionsroutedistance - dist)}
+
+                {if route[1] != "" && route[1] != null: Próximo destino da |else: Destino de final da}
+                rota é {route[0]}, a {round(dist, 1)} anos luz.
+
+            |elif route[0] = "" || route[0] = null:
+                {SetState('missionsroutedistance', null)}
+                Você {OneOf("completou", "alcançou o final da")} sua rota.
+            |else:
+                Incapaz de atualizar o próximo destino de missão.
+            }
+
+        |elif missionsCount > 0:
+            {F("Mission Route Fast")}
+        }
+    }
+}
+
+{set dest to state.missionsdestination}
+
+{if dest != system.name && dest != "" && dest != null:
+    {SetState('eddi_context_mission_destination_locked', "no")}
+    {if state.eddi_context_mission_route_useauto = "no":
+        Por favor, trace novamente a rota no Mapa da Galácsiaa.
+    |elif state.eddi_context_supercruise = "no" && state.eddi_context_docked = "no":
+        Entre em supervelocidade para {OneOf("ativar", "habilitar")} o sistema de autodeterminação de rota.
+    |elif state.eddi_context_docked = "yes" && state.eddi_context_mission_accepted = "no":
+        Decole para {OneOf("ativar", "habilitar")} o sistema de autodeterminação de rota.
+        {SetState('eddi_context_mission_accepted', "yes")}
+    }
+}
+
+{_ Build string to save in Voice Attack _}
+{set missionsdata to cat(state.missionsrouteuseeddi, "+=", state.missionsroutetype, "+=", state.missionsdestination, "+=", state.missionsroutedistance, "+=", state.missionsroute)}
+{SetState('missionsdata', missionsdata)}

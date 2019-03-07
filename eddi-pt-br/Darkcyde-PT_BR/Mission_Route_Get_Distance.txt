@@ -1,0 +1,31 @@
+{_ Mission Route Get Distance}
+{_ Find distance to destination}
+
+{set dist to -1}
+{if state.from_system && state.to_system:
+    {if state.from_system = "":
+        Sistema de origem não designado.
+    |elif state.to_system = "":
+        Sistema de destino não designado.
+    |else:
+        {set fs to SystemDetails(state.from_system)}
+        {set ts to SystemDetails(state.to_system)}
+
+        {if !fs.name:
+            Sua origem não está nos mapas estelares da Federação de Pilotos.
+        |elif !ts.name:
+            Seu destino não está nos mapas estelares da Federação de Pilotos.
+        |else:
+            {set dist to round(Distance(fs.x, fs.y, fs.z, ts.x, ts.y, ts.z), 2)}
+            {if state.getdistance = 'true':
+                Distância {Occasionally(2, "de {fs.name}")} até
+                {Occasionally(2, "sistema {OneOf('alvo','de destino')}")}
+                {ts.name} é de {dist} anos luz.
+                {SetState('getdistance', false)}
+            }
+        }
+    }
+}
+
+{SetState('distance', dist)}
+

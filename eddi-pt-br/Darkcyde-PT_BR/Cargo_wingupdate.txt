@@ -13,7 +13,7 @@
 {Pause(500)}
 {set remaining to event.totaltodeliver - event.delivered}
 {if remaining = 0:
-    Requerimentos da missão de esquadrão foram completados.
+    Requerimentos da missão de esquadrão foram concluídos.
 |elif event.updatetype = "Deliver":
     A missão de esquadrão está agora {round(event.delivered / event.totaltodeliver * 100, 0)} porcento finalizada.
 }

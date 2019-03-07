@@ -17,7 +17,7 @@
 {set type to cat(type, " missão")}
 
 {if mission.status = "Complete" && mission.destinationsystem = mission.originsystem:
-    Requerimentos da {type} completados. Redirecionado para a origem da missão.
+    Requerimentos da {type} concluídos. Redirecionado para a origem da missão.
 |elif mission.destinations:
     {type} em cadeia redirecioada para o sistema {event.newdestinationsystem}.
 |else:

@@ -34,11 +34,11 @@
 |else:
     {if event.reward > 0:
         {OneOf(
-         "{type} completada. Você {OneOf('recebeu','foi agraciado com')} {Humanise(event.reward)} créditos",
-         "Você {OneOf('recebeu','foi agraciado com')} {Humanise(event.reward)} créditos por {OneOf('completar {type} com sucesso','completar a {type}','ter completado a {type}')}"
+         "{type} concluída. Você {OneOf('recebeu','foi agraciado com')} {Humanise(event.reward)} créditos",
+         "Você {OneOf('recebeu','foi agraciado com')} {Humanise(event.reward)} créditos por {OneOf('concluir {type} com sucesso','concluir a {type}','ter concluído a {type}')}"
       )}
    |else:
-      {OneOf("{type} completada","Você completou a {type} com sucesso","Você completou a {type}")}
+      {OneOf("{type} concoluída","Você completou a {type} com sucesso","Você completou a {type}")}
    }
 }
 

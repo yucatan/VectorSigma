@@ -16,7 +16,7 @@
     {Pause(1000)}
 
     {OneOf("Varredura", "Análise", "Varredura e análise")}
-    {Occasionally(3, "do corpo")} {OneOf("completa", "finalizada")}.
+    {Occasionally(3, "do corpo")} {OneOf("concluída", "finalizada")}.
 
     {if ship.Role.edname = "Exploration" || ship.Role.edname = "Multipurpose":
         {F("Body report")}

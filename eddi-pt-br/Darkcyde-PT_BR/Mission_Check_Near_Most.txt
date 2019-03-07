@@ -100,7 +100,7 @@
                 {if missionsCount > 1:
                     Ele também tem
                     {OneOf("{OneOf('a maioria','a maior parte')} das missões",
-                           "a maior parte das missões para você completar")}.
+                           "a maior parte das missões para você concluir")}.
                 }
             |else:
                 {if system_most = curr:
@@ -110,7 +110,7 @@
                 }
                 {OneOf("A maioria das suas missões está {Occasionally(2,'localizada')} em {system_most}",
                        "em {system_most} estão {OneOf('a maioria','a maior parte')} das suas missões",
-                       "em {system_most} está a maior parte das suas missões por completar")}.
+                       "em {system_most} está a maior parte das suas missões por concluir")}.
             }
         |else:
             Você tem {system_count} miss{if system_count > 1:ões|else:ão} em cada

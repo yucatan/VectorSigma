@@ -1,0 +1,33 @@
+{_ Mission Route Report _}
+{_ Report the current route information _}
+
+{if system.name != state.missionsdestination && len(state.missionsroute) > 0 && state.missionsroute != "Not set":
+
+    {set route to split(state.missionsroute, "_")}
+
+    Relatório de Rota: Sistema{if len(route) > 1:s} destino:
+
+    {set cur to 0}
+    {set length to len(route) - 1}
+    {while cur < len(route):
+        {route[cur]}
+        {set cur to cur + 1}
+        {if cur = length: e
+        |elif cur < length:,
+        }
+    }.
+
+    {if len(route) > 1:
+        Distância Total: {round(state.missionsroutedistance, 2)} anos luz.
+        Destinno Inicial: {state.missionsdestination}.
+    |else:
+        Distância: {round(state.missionsroutedistance, 2)} anos luz.
+    }
+
+|elif system.name = state.missionsdestination:
+    Relatório de Rota: Você está no sistema de destino, {state.missionsdestination}.
+
+|else:
+    {OneOf("Você {OneOf('não tem', 'não tem')} rota de missão {OneOf('no momento', 'desta vez')} a reportar",
+           "{OneOf('Não há', 'você não tem')} rota a reportar {OneOf('no momento', 'desta vez')}")}.
+}

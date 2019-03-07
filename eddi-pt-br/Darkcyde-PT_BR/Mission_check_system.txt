@@ -94,7 +94,7 @@
                 É uma missão
                 {if stations_depot[0] = 1: do depósito,
                 |elif stations_active[0] = 1: ativa,
-                |elif stations_complete[0] = 1: a ser completada,
+                |elif stations_complete[0] = 1: a ser concluída,
                 }
                 localizada em 
                 {stations_here[0]}.
@@ -118,7 +118,7 @@
                     }
 
                     {if stations_complete[cur] && stations_complete[cur] > 0:
-                        {stations_complete[cur]} completadas
+                        {stations_complete[cur]} concluídas
                         {set last to stations_completed[cur]}
                     }
 
@@ -142,7 +142,7 @@
                 É uma missão 
                 {if stations_depot[0] = 1: do depósito
                 |elif stations_active[0] = 1: ativa
-                |elif stations_complete[0] = 1: a ser completada
+                |elif stations_complete[0] = 1: a ser concluída
                 }
                 que precisa ser {OneOf("procurada","localizada","encontrada")}.
 

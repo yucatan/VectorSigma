@@ -119,10 +119,10 @@
     |else:
         Rota das missões 
         {if original_dest != null && original_dest != "": re}calculadas
-        for {system_count} system{if system_count != 1:s}.
+        para {system_count} sistema{if system_count != 1:s}.
         {Pause(400)}
         {if total_distance > 0:
-            Distância total é {round(total_distance, 1)} anos luz.
+            Distância total é de {round(total_distance, 1)} anos luz.
             {Pause(400)}
             {if original_dest != null && original_dest != "" && original_dest != route[0]:
                 Primeiro destino é {route[0]}.

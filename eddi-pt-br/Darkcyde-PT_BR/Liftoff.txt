@@ -1,7 +1,7 @@
 {if event.playercontrolled = true:
    {OneOf("Propulsão máxima","Motores no máximo","Motores ligados")},
    {Pause(250)}
-   Decolagem {OneOf("completada","finalizada","")}.
+   Decolagem {OneOf("concluída","finalizada","")}.
 |else:
    {ShipName()} decolou.
 }

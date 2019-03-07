@@ -34,7 +34,7 @@
       {OneOf("está completo", "foi finalizado")} 
    |else: 
       {if (event.expiry[cur] / 3600) < 12:
-         {OneOf("está próximo de ser completado", 
+         {OneOf("está próximo de ser concluído", 
                 "deve terminar em {Humanise(round(event.expiry[cur] / 3600, 1))} horas", 
                 "está quase completo")}
       |else:
