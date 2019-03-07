@@ -1,4 +1,4 @@
-{_ Mission check system }
+﻿{_ Mission check system }
 {_ Check what missions you have for the current system }
 
 
@@ -80,7 +80,7 @@
     }
 
     {if missions_here > 0:
-        Você tem {missions_here} miss{if missions_here > 1:ões|else:ão} {OneOf('aqui','neste sitema')}.
+        Você tem {missions_here} miss{if missions_here > 1:ões|else:ão} {OneOf('aqui','neste sistema')}.
 
         {if station_based > 0:
 

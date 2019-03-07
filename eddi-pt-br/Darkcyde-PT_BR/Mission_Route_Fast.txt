@@ -1,0 +1,151 @@
+{_ Missions_RoutePlot }
+{_ Plot a 'nearest neighbor' route for defined systems in the mission store }
+
+
+{_ Setup 'destination array builder' function }
+{set systems_builder(system) to:
+    {if find(systems, system) = -1:
+        {set systems to cat(systems, [system])}
+    }
+}
+
+
+{if missionsCount > 0:
+
+    {set original_dest to state.missionsdestination}
+    {set origins to []}
+    {set returns to []}
+    {set failed to []}
+
+    {for mission in missions:
+        {set origins to cat(origins, [mission.originsystem])}
+        {if mission.originreturn = true:
+            {set returns to cat(return, ["yes"])}
+        |else:
+            {set returns to cat(return, ["no"])}
+        }
+        {set failed to cat(failed, [mission.status])}
+    }
+
+    {set systems to []}
+    {set system_count to 0}
+
+    {if state.missionsroute = "" || state.missionsroute = null:
+        {set route_end to state.eddi_context_system_name}
+    |else:
+        {set temp_route to split(state.missionsroute, "_")}
+        {set route_end to temp_route[len(temp_route) - 1]}
+    }
+
+    {_ Add all mission systems that have a 'return to origin' to the destination list, unless it has failed }
+    {set pos to find(returns, "yes")}
+    {while pos > -1:
+        {if failed[pos] != "failed":
+            {systems_builder(origins[pos])}
+        }
+        {set pos to find(returns, "yes", pos + 1)}
+    }
+
+    {_ Add all destination systems to the destination list, unless they have failed }
+    {set cur to 0}
+    {while cur < missionsCount:
+        {set destination to missions[cur].destinationsystem}
+
+        {if destination != "" && failed[cur] != "failed":
+            {if find(destination, "_") > -1:
+                {set dest_array to split(destination, "::")}
+                {for destination in dest_array: {systems_builder(destination)}}
+            |else:
+                {systems_builder(destination)}
+            }
+        }
+        {set cur to cur + 1}
+    }
+
+    {_ Now create the route _}
+    {set route to []}
+
+    {_ Remove end dest from array _}
+    {set systems to split(join(except(systems, [find(systems, route_end):""]), "_"), "_")}
+    {_ Remove the current system, if it's found _}
+    {set systems to split(join(except(systems, [find(systems, state.eddi_context_system_name):""]), "_"), "_")}
+
+    {set system_count to len(systems)}
+
+    {set curr to SystemDetails(state.eddi_context_system_name)}
+    {set end to SystemDetails(route_end)}
+    {set total_distance to 0}
+    {set cur to 0}
+
+    {if systems[0] && systems[0] != "":
+        {while cur < system_count:
+            {set near to 10000}
+            {for sys in systems:
+                {set dest to SystemDetails(sys)}
+                {set dist to round(Distance(curr.x, curr.y, curr.z, dest.x, dest.y, dest.z), 2)}
+
+                {if dist < near:
+                    {set nearest to dest.name}
+                    {set near to dist}
+                }
+            }
+            {set total_distance to total_distance + near}
+            {set route to cat(route, [nearest])}
+            {set systems to split(join(except(systems, [find(systems, nearest):""]), "_"), "_")}
+            {set curr to SystemDetails(nearest)}
+            {set cur to cur + 1}
+        }
+    }
+
+    {_ Calculate total route length _}
+    {set dest to SystemDetails(route_end)}
+    {set dist to round(Distance(curr.x, curr.y, curr.z, dest.x, dest.y, dest.z), 2)}
+    {set total_distance to total_distance + dist}
+
+    {_ Join it all together _}
+    {set route to cat(route, [route_end])}
+
+    {SetState('missionsroutetype', "route")}
+    {SetState('missionsdestination', route[0])}
+    {SetState('missionsroutedistance', total_distance)}
+    {SetState('missionsroute', join(route, "_"))}
+    {set system_count to len(route)}
+
+    {if total_distance = 0:
+        Rota calculada para um sistema.
+        {OneOf("Você já está no sistema de destino",
+               "Sua{if missionsCount > 1:s} miss{if missionsCount > 1:ões estão todas |else:ão está} localizada{if missionsCount > 1:s} 
+                {OneOf('neste sistema', 'no sistema atual')}")}.
+    |else:
+        Rota das missões 
+        {if original_dest != null && original_dest != "": re}calculadas
+        for {system_count} system{if system_count != 1:s}.
+        {Pause(400)}
+        {if total_distance > 0:
+            Distância total é {round(total_distance, 1)} anos luz.
+            {Pause(400)}
+            {if original_dest != null && original_dest != "" && original_dest != route[0]:
+                Primeiro destino é {route[0]}.
+            }
+        |elif missionsCount > 0 && total_distance = 0:
+            {OneOf("Você já está no sistema destino",
+                   "Sua{if missionsCount > 1:s} miss{if missionsCount > 1:ões estão todas |else:ão está} localizada{if missionsCount > 1:s}
+                    {OneOf('neste sistema', 'no sistema atual')}")}.
+        |else:
+            Incapaz de calcular a rota das missões.
+        }
+
+        {if original_dest != null && original_dest != "" && original_dest != route[0]:
+            Destino inicial foi atualizado.
+        }
+        {if total_distance > 0:  Aguardando ordens.}
+    }
+
+    {SetState('eddi_context_mission_destination_locked', "no")}
+
+|else:
+    {if autoroute != "yes":
+        Você não tem missão para planejar rótas.
+    }
+}
+    

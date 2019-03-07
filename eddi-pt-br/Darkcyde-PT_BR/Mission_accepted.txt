@@ -1,4 +1,4 @@
-{SetState('eddi_context_last_subject', 'mission')}
+﻿{SetState('eddi_context_last_subject', 'mission')}
 {SetState('eddi_context_last_action', 'accepted')}
 
 {set mission to MissionDetails(event.missionid)}
@@ -17,7 +17,7 @@
     |else:
         {set type to mission.type}
     }
-    {set type to cat(type, " missão")}
+    {set type to cat(type, " ")}
     {OneOf("{type} {if mission.faction: da {mission.faction}} aceita",
         "{type} aceita {if mission.faction: da {mission.faction}}",
         "Você aceitou uma {type} {if mission.faction: da {mission.faction}}")
