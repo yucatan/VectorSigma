@@ -3,19 +3,19 @@
    {if event.threat < 2:
       {entered}
    |elif event.threat = 2:
-      Cuidado: {entered} ameaça média
+      Cuidado: {entered} ameaça média,
    |elif event.threat = 3:
-      Alerta: {entered} ameaça alta
+      Alerta: {entered} ameaça alta,
    |elif event.threat = 4:
-      Perigo: {entered} ameaça muito alta
+      Perigo: {entered} ameaça muito alta,
    |elif event.threat = 5:
-      Perigo extremo: {Occasionally(2, entered)} ameaça muito alta
+      Perigo extremo: {Occasionally(2, entered)} ameaça muito alta,
    |elif event.threat = 6:
-      Perigo extremo: {Occasionally(2, entered)} ameaça extremamente alta
+      Perigo extremo: {Occasionally(2, entered)} ameaça extremamente alta,
    |elif event.threat = 7:
-      Perigo extremo: {Occasionally(2, entered)} ameaça ultra alta
+      Perigo extremo: {Occasionally(2, entered)} ameaça ultra alta,
    |else:
-      Perigo extremo: {Occasionally(2, entered)} ameaça de {event.threat} sem precedentes
+      Perigo extremo: {Occasionally(2, entered)} ameaça de {event.threat} sem precedentes,
    }
 }
 

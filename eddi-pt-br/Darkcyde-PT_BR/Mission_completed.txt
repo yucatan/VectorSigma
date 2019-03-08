@@ -14,7 +14,7 @@
 |else:
     {set type to mission.type}
 }
-{set type to cat(type, " ")} {_ Era: (type, " missão") }
+{set type to cat(type, " missão")} {_ Era: (type, " missão") }
 {set ranktype to token(mission.name,"_",2)}
 
 {if mission.type = "Donation":
