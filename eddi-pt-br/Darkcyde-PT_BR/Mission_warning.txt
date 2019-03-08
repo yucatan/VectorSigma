@@ -1,0 +1,33 @@
+{_ Mission warning }
+{_ Triggered when a mission is about to expire, based on a set threshold }
+
+{_ Context }
+{SetState('eddi_context_last_subject', 'mission')}
+{SetState('eddi_context_last_action', 'warning')}
+
+{set mission to MissionDetails(event.missionid)}
+
+{if find(mission.typeEDName, "Passenger") > -1:
+    {set type to "Transport "}
+    {set type to cat(type, mission.passengertype)}
+|else:
+    {set type to mission.type}
+}
+{set type to cat("missão ",type)}
+
+Alerta: {type} {if mission.faction: para {mission.faction}}
+{if find(mission.destinationsystems, "_") > -1:
+    para múltiplos destinos,
+|elif mission.destinationsystem:
+
+    {if mission.destinationsystem = state.eddi_context_system_name:
+        esta
+    |else:
+        a {mission.destinationsystem}
+    }
+    sistema
+}
+
+vai expirar em {event.remaining} minutos.
+
+

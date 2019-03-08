@@ -1,0 +1,14 @@
+Você vendeu um {event.module.class}-{event.module.grade}
+
+{event.module.name}
+{if type(event.module.mount) != "void":
+    {for index, value in event.module.mount: {set mount to value}}
+    {if mount = 0:
+        fixo
+    |elif mount = 1:
+        guiado
+    |elif mount = 2:
+        torreta
+    }
+}
+ do seu armazenamento por {event.price} créditos.

@@ -1,0 +1,12 @@
+{_ Context _}
+{SetState('eddi_context_last_subject', 'nav beacon')}
+{SetState('eddi_context_last_action', 'scan')}
+{SetState('eddi_context_star_system', system.name)}
+{SetState('eddi_context_nav_scans', event.numbodies)}
+
+{set nav to "de navegação"}
+{set beacon to "sinalizador"}
+{OneOf("Este {beacon} {nav} transferiu detalhes de {event.numbodies} corpos deste sistema.",
+ "Detalhes recebidos {Occasionally(3, 'do {beacon} {nav}')} sobre {event.numbodies} corpos neste sistema.")}
+
+{Pause(500)}

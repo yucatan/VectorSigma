@@ -1,0 +1,8 @@
+Alerta: tentativa de interdição
+{if event.by:
+   por {event.by} 
+}
+detectada.
+
+{Occasionally(3, "Zére a aceleração para se submeter, ou siga o vetor de escape para evadir.")}
+

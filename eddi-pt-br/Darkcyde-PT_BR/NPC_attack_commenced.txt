@@ -1,0 +1,7 @@
+Alerta: ataque 
+{if event.by:
+   por {event.by} 
+}
+detectado.
+
+

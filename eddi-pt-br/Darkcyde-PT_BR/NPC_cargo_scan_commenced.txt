@@ -1,0 +1,16 @@
+{_ See if we are carrying non-limpet cargo}
+{set carryingvaluablecargo to 0}
+{for cargo in ship.cargo:
+    {if cargo.commodity != 'Limpet':
+        {set carryingvaluablecargo to 1}
+    }
+}
+
+{if carryingvaluablecargo = 1:
+  Cuidado: escaneamento de carga
+  {if event.by:
+    por {event.by} 
+  }
+  detectado.
+}
+

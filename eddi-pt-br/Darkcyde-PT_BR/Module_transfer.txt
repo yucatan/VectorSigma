@@ -1,0 +1,42 @@
+Vocẽ transferiu um {event.module.class}-{event.module.grade}
+
+{event.module.name} 
+
+{if event.module.mount:
+    {for index, value in event.module.mount: {set mount to value}}
+    {if mount = 0:
+        fixo
+    |elif mount = 1:
+        guiado
+    |elif mount = 2:
+        torreta
+    }
+}
+
+{if event.transfercost: pelo custo de {event.transfercost} créditos}.
+
+{set t_remaining to event.transfertime}
+
+{if t_remaining:
+
+   {Pause(1000)}
+   Chegada esperada em:
+
+   {if t_remaining > (60*60*24):
+      {set t_days to floor(t_remaining/(60*60*24))}
+      {t_days} dias,
+      {set t_remaining to t_remaining-(t_days*(60*60*24))}
+   }
+
+   {if t_remaining > 3600:
+      {set t_hours to floor(t_remaining/3600)}
+      {t_hours} horas,
+      {set t_remaining to t_remaining-(t_hours*(60*60))}
+   }
+
+   {if t_remaining > 60:
+      {if t_days || t_hours: and}
+      {set t_minutes to round(t_remaining/(60),0)}
+      {t_minutes} minutos.
+   }
+}

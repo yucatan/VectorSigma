@@ -1,0 +1,48 @@
+Você comprou um {event.buymodule.class}-{event.buymodule.grade}
+
+{event.buymodule.name} 
+{if type(event.buymodule.mount) != "void":
+    {for index, value in event.buymodule.mount: {set mount to value}}
+    {if mount = 0:
+        fixo
+    |elif mount = 1:
+        guiado
+    |elif mount = 2:
+        torreta
+    }
+}
+por {event.buyprice} créditos
+
+{if type(event.sellmodule) != "void":
+    , e vendeu um {event.sellmodule.class}-{event.sellmodule.grade}
+
+    {event.sellmodule.name}
+    {if type(event.sellmodule.mount) != "void":
+        {for index, value in event.sellmodule.mount: {set mount to value}}
+        {if mount = 0:
+            fixo
+        |elif mount = 1:
+            guiado
+       |elif mount = 2:
+            torreta
+        }
+    }   
+    por {event.sellprice} créditos
+
+|elif type(event.storedmodule) != "void":
+    , e armazenou um {event.storedmodule.class}-{event.storedmodule.grade}
+
+    {event.storedmodule.name}
+    {if type(event.storedmodule.mount) != "void":
+        {for index, value in event.storedmodule.mount: {set mount to value}}
+        {if mount = 0:
+            fixo
+        |elif mount = 1:
+            guiado
+       |elif mount = 2:
+            torreta
+        }
+    }    
+}
+
+

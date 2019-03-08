@@ -1,0 +1,13 @@
+
+{if event.musictrack = "GalaxyMap":
+    {if state.lastmusic = "SystemMap":
+        Retornando ao
+    |else:
+        {OneOf("Ativando", "Iniciando", "Carregando", "Inicializando")}
+    }
+    Mápa da Galácsiaa.
+|elif event.musictrack = "SystemMap":
+    {OneOf("Ativando", "Inicializando", "Carregando", "Iniciando")} Mápa do Sistema.
+}
+
+{SetState('lastmusic', event.musictrack)}

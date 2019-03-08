@@ -1,0 +1,21 @@
+Você armazenou os seguintes módulos:
+
+{for module in event.modules:
+
+    {module.class}-{module.grade}
+
+    {if type(module.mount) != "void":
+        {for index, value in module.mount: {set mount to value}}
+        {if mount = 0:
+            fixo
+        |elif mount = 1:
+            guiado
+        |elif mount = 2:
+            torreta
+        }
+    }
+    {module.name}.
+}
+
+
+

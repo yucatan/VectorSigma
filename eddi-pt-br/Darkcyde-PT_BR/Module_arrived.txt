@@ -1,0 +1,12 @@
+{Occasionally(2, "{F('Honorific')}, ")}
+Seu {event.module.name} 
+
+{OneOf("chegou {if station.name != event.station && event.station: em}", 
+       "teve a transferência concluída {if station.name != event.station && event.station: para}")}
+
+{if station.name != event.station && event.station:
+   {event.station}
+   {if system.name != event.system && event.system:
+      no sistema {event.system}
+   }
+}.

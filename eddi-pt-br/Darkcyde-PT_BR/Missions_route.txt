@@ -1,0 +1,186 @@
+{_ Missions route }
+{_ Get the missions route for various mission details }
+
+
+{set curr to SystemDetails(system.name)}
+
+{if event.routetype = "expiring":
+    {if event.distance > 0:
+        {set mission to MissionDetails(event.missionids[0])}
+
+        {if find(mission.typeEDName, "Passenger") > -1:
+            {set type to "Transport "}
+            {set type to cat(type, mission.passengertype)}
+        |else:
+            {set type to mission.type}
+        }
+        {set type to cat( "missão ",type)}
+
+        {type} {if mission.faction: for {mission.faction}}
+        {if mission.destinationsystem: no 
+            {if mission.destinationsystem = curr.name:
+                 sistema atual
+            |else:
+                {mission.destinationsystem}
+            } sistema
+        } vai expirar.
+    |else:
+        Nenhuma missão ativa encontrada.
+    }
+|elif event.routetype = "farthest":
+    {if event.distance > 0:
+        Sua {if missionsCount = 1: only |else: farthest}
+        alvo da missão está no 
+        {if event.system = curr.name:
+            sistema atual
+        |else:
+            sistema {event.system}, a {round(event.distance, 1)} anos luz
+        }.
+    |else:
+        Missão com um sistema designado não encontrada.
+    }
+|elif event.routetype = "most":
+    {if missionsCount = 1:
+        Seu único alvo de missão está {Occasionally(2,"localizado")} 
+        {if missions[0].destinationsystem = "":
+            em um sistema {Occasionally(2,"estelar")} desconhecido
+        |elif missions[0].destinationsystem = curr.name:
+            no sistema {Occasionally(2,"star")} atual
+        |else:
+            no sisetma {Occasionally(2,"star")} {missions[0].destinationsystem}
+        }
+        .
+    |else:
+        {set systems to split(event.systems, "_")}
+        {set system_most to event.system}
+        {set systems_count to len(systems)}
+
+        {if systems_count = 1:
+            {if system_most = curr.name:
+                {set system_most to "O sistema atual"}
+            |else:
+                {set system_most to cat("O sistema ", system_most)}
+            }
+            {OneOf("A maioria das suas missões estão {Occasionally(2,'localizadas')} em {system_most}",
+                "{system_most} tem {OneOf('a maioria','a maior parte')} das missões",
+                "{system_most} tem a maioria das missões para vocẽ concluir")}.
+        |elif systems_count > 1:
+            Você tem {event.count} alvo{if event.count > 1:s} de missão, cada um em 
+
+            {set cur to 0}
+            {while cur < len(equal):
+                {systems[cur]}
+                {set cur to cur + 1}
+                {if cur = systems_count-1: e |elif cur < systems_count: ,}
+            } sistemas.
+        }
+    }
+|elif event.routetype = "nearest":
+    {if event.distance > 0:
+        Seu{if missionsCount >1:s} {if missionsCount = 1: único |else: mais próximo}
+        alvo de missão está 
+        {if event.system = curr.name:
+            no sistema atual
+        |else:
+            no sistema {event.system}, a {round(event.distance, 1)} anos luz
+        }.
+    |else:
+        Missão não encontrada com um sistema alvo designado.
+    }
+|elif event.routetype = "route":
+
+    Rota de missões {if missionsCount > 1: re}calculada para {event.count} sistemas.
+
+    {if event.routedistance > 0:
+        Distância total é de {round(event.routedistance, 1)} anos luz.
+        {Pause(400)}
+        {if event.system != original_dest: Primeiro destino é {event.system}.}
+    |elif missionsCount > 0 && event.routedistance = 0:
+        {OneOf("Sua{if missionsCount > 1:s} miss{if missionsCount > 1:ões estão |else:ão está} localizada neste sistema",
+               "Você já está no sistema destino")}.
+    |else:
+        Não é possível calculcar a rota das missões.
+    }
+
+    {if original_dest != null && original_dest != "" && original_dest != route[0]:
+        Destino inicial foi atualizado.
+        {SetState('eddi_context_mission_destination_locked', "no")}
+    }
+    {if total_distance > 0:  Aguardando instruções.}
+
+|elif event.routetype = "source":
+    {if event.count > 0:
+        {set systems to split(event.route, "_")}
+
+        {set pos to 0}
+        {while pos < event.count:
+
+            {set source_cargo to []}
+            {for missionid in event.missionids:
+                {set haulage to HaulageDetails(missionid)}
+                {if haulage.sourcesystem = systems[pos]:
+                    {set cargo to CargoDetails(missionid)}
+                    {if find(source_cargo, cargo.name) = -1:
+                        {set source_cargo to cat(source_cargo, [cargo.name])}
+                    }
+                }
+            }
+
+            {if pos = 0:
+                Sua {if event.count = 1: única |else: mais próxima}
+            |elif pos = 1:
+                Adicionalmente, sua
+            |elif pos = event.count - 1:
+                Por último, sua
+            |else:
+                Sua
+            }
+
+            fonte de missão de transporte para
+            {set cur to 0}
+            {while cur < len(source_cargo):
+                {source_cargo[cur]}
+                {set cur to cur + 1}
+                {if cur = len(source_cargo) - 1: e |elif cur < len(source_cargo): ,}
+            }
+
+            está no 
+            {if systems[pos] = system.name:
+                sistema atual
+            |else:
+                sistema {systems[pos]},
+                {set distance to Distance(system.name, systems[pos])}
+                a {round(distance, 1)} anos luz
+            }.
+            {set pos to pos + 1}
+        }
+        {SetState('eddi_context_cargo_source', event.route)}
+    |else:
+        Fonte da carga não encontrada com um sistema alvo designado.
+    }
+
+|elif event.routetype = "update":
+    {set route to split(event.route, "_")}
+    {if event.system:
+        Destino da {if route[1] != "" && route[1] != null: Próxima missão |else: Rota final }
+        está a{event.system}, {round(event.distance, 1)} anos luz.
+    |elif route[0] = "" || route[0] = null:
+        {SetState('missionsroutedistance', null)}
+        Vocẽ {OneOf("concluiu", "chegou no final da")} sua róta.
+    |else:
+        Não foi possível atualizar o próximo destino de missão.
+    }
+    {if event.system != system.name:
+        {SetState('eddi_context_mission_destination_locked', "no")}
+    }
+}
+
+{SetState('missionsroutetype', event.routetype)}
+{SetState('missionsid', event.missionids[0])}
+{SetState('missionsdestination', event.system)}
+{SetState('missionsdestinations', event.systems)}
+{SetState('missionsdistance', event.distance)}
+{SetState('missionsroutedistance', event.routedistance)}
+{SetState('missionsroute', event.route)}
+{SetState('missionscount', event.count)}
+

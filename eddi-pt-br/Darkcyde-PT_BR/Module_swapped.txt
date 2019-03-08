@@ -1,0 +1,34 @@
+Você trocou a posição de um {event.frommodule.class}-{event.frommodule.grade}
+
+{event.frommodule.name}
+
+{if type(event.frommodule.mount) != "void":
+    {for index, value in event.frommodule.mount: {set mount to value}}
+    {if mount = 0:
+        fixo
+    |elif mount = 1:
+        guiado
+    |elif mount = 2:
+        torreta
+    }
+}
+ e
+
+{if event.tomodule:
+    um {event.tomodule.class}-{event.tomodule.grade}
+
+    {event.tomodule.name}
+    {if type(event.tomodule.mount) != "void":
+        {for index, value in event.tomodule.mount: {set mount to value}}
+        {if mount = 0:
+            fixo
+        |elif mount = 1:
+            guiado
+        |elif mount = 2:
+            torreta
+        }
+    }.
+|else: 
+    um espaço vazio.
+}
+
