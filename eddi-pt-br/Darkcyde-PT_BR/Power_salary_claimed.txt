@@ -1,0 +1,1 @@
+Salário de {Humanise(event.amount)}  créditos recebido {Occasionally(2, "de {P(event.power)}")}.

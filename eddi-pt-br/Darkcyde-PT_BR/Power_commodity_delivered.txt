@@ -1,0 +1,6 @@
+{set NUM to event.amount}
+{if NUM = 1: {set NUM to "uma"}
+|elif NUM = 2: {set NUM to "duas"}
+}
+{NUM} unidades de {event.commodity} entregue{if event.amount > 1:s} {Occasionally(2, "por {P(event.power)}")}.
+

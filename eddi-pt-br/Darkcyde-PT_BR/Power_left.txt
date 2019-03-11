@@ -1,0 +1,1 @@
+Você não é mais aliado de {P(event.power)}

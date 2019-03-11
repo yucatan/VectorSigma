@@ -1,0 +1,1 @@
+Você desertou de {P(event.frompower)} para {P(event.topower)}.

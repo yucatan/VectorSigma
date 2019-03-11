@@ -1,0 +1,2 @@
+Voto
+{OneOf("dado", "registrado")}

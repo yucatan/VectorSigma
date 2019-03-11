@@ -1,0 +1,37 @@
+{event.amount} 
+
+{if event.commodity.rare: rare}
+
+{if event.commodity.name = "Caixa Preta":
+   {if event.amount > 1:
+      {OneOf("registros de vôo", "caixas pretas")}
+   |else: 
+      {OneOf("registro de vôo", "caixa preta")}
+   }
+
+|elif event.commodity.name = "Cápsula de Escape Danificada":
+   {OneOf("criocápsula{if event.amount > 1:s} danificada", "cápsula{if event.amount > 1:s} de escape danificada")}{if event.amount > 1:s}
+
+|elif event.commodity.name = "Cápsula de Escape Ocupada":
+   {OneOf("cápsula{if event.amount > 1:s} de escape ocupada", "criocápsula{if event.amount > 1:s} ocupada")}{if event.amount > 1:s}
+
+|elif event.commodity.name = "Ítens Pessoais":
+   {OneOf("conjunto", "coleção")}{if event.amount > 1:s} de
+   {OneOf("ítens pessoais", "objetos pessoais")}
+
+|elif event.commodity.name = "Destroço Recuperável":
+   {set wreckage to OneOf("destroços", "restos")}
+   {set fragment to OneOf("fragmento", "pedaço", "parte")}
+   {fragment}{if event.amount > 1:s} de {wreckage}
+
+|elif event.commodity.name = "Refém":
+   refé{if event.amount > 1:ns|else:m}
+
+|else:
+   {event.commodity.name}{if event.amount > 1:s}
+}
+
+{OneOf("recuperado", "retornado", "entregue")}{if event.amount > 1:s},
+{Occasionally(2, "trocado")}
+por {Humanise(event.reward)} créditos.
+

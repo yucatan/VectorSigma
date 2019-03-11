@@ -1,0 +1,1 @@
+{Humanise(event.amount)} créditos foram gastos acelerando a liberação de mercadorias {Occasionally(2, "de {P(event.power)}")}.

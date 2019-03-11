@@ -1,0 +1,33 @@
+{set systemsrepaired to []}
+
+{if event.hull:
+   {set systemsrepaired to cat(systemsrepaired, [OneOf("do casco","da fuselagem")])} 
+}
+{if event.cockpit:
+   {set systemsrepaired to cat(systemsrepaired, ["a cabine"])} 
+}
+{if event.corrosion:
+   {set systemsrepaired to cat(systemsrepaired, [OneOf("sistemas corroídos", "sistemas afetados por corrosão")])} 
+}
+
+{if len(systemsrepaired) > 0:
+
+    {set sequence to OneOf("sequência", "ciclo")}
+    {set remote to Occasionally(2, "remot{if sequence = 'ciclo':o|else:a}")}    
+    {OneOf(
+        "O drone concluiu o reparo {remote} ", 
+        "{sequence} {remote} concluíd{if sequence = 'ciclo':o|else:a}, reparos "
+    )}
+
+    {set cur to 0}
+    {set length to len(systemsrepaired) - 1}
+    {while cur < len(systemsrepaired):
+        {systemsrepaired[cur]}
+        {set cur to cur + 1}
+        {if cur = length: e
+        |elif cur < length:,
+        }
+    }
+    feitos
+}.
+
