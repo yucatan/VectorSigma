@@ -1,0 +1,10 @@
+{Pause(2000)}
+
+Os escudos {OneOf("caíram","foram derrubados")},
+
+{set ALVO to OneOf("a nave","o casco","a fuselagem")}
+{ALVO} está
+{Occasionally(2,"agora")}
+{OneOf("vulnerável","expost{if ALVO = 'o casco':o|else:a}")}
+a danos {Occasionally(2,"permanentes")}.
+

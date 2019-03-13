@@ -1,0 +1,21 @@
+{_ Session Scan Value}
+{_ Total estimated value of exploration scans for this gaming session}
+
+{set value to state.eddi_context_session_scan_value}
+
+{if (value = 0 || value = null) && logout != "true":
+    {OneOf("Scan de valor não foi","Nenhum scan valioso foi")}
+    {OneOf("executado", "feito")}
+    {OneOf("n", "durante ")}esta sessão.
+
+|elif value && value > 0:
+    {if logout = true: 
+        Nesta sessão
+    |else:
+        Valor atual
+    }
+    de scans o valor de
+    {OneOf("corpos e estrelas", "exploração")}    
+    foi de {state.eddi_context_session_scan_value} créditos.
+}
+

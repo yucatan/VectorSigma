@@ -1,0 +1,14 @@
+{if system.population > 0:
+    {if system.security = "None":
+        {OneOf("Nenhuma {OneOf('segurança','aplicação da lei')}","Nenhum policiamento")}
+    |elif system.security = "Baixa":
+        {OneOf("Baixa {OneOf('segurança','aplicação da lei')}","Baixo policiamento")}
+    |elif system.security = "Média":
+        {OneOf("Média {OneOf('segurança','aplicação da lei')}","Médio policiamento")}
+    |elif system.security = "Alta":
+        {OneOf("{OneOf('Alta','Forte')} {OneOf('segurança','aplicação da lei')}","{OneOf('Alto','Forte')} policiamento")}
+    |else:
+        Segurança {system.security}
+    }
+    presente {OneOf("aqui", "neste sistema", "na localidade")}.
+}

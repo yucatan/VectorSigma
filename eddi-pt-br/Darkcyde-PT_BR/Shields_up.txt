@@ -1,0 +1,6 @@
+{Pause(2000)}
+
+{OneOf("Escudos {OneOf('restabelecidos','regenerados')}","Defesas {OneOf('restabelecidas','regeneradas')}")}
+
+{Occasionally(2,"a 50%")}.
+

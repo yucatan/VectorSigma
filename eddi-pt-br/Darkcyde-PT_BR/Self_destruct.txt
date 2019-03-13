@@ -1,0 +1,3 @@
+Sequẽncia de Auto-Destruição iniciada. Fechando saídas de calor.
+
+{SetState('eddi_context_selfdestruct', "yes")}
