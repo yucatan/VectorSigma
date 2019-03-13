@@ -1,0 +1,20 @@
+{_ Settlement approached }
+{_ Triggered when you approach a settlement }
+
+
+{_ Context }
+{SetState('eddi_context_last_subject', 'settlement')}
+{SetState('eddi_context_last_action', 'approach')}
+{SetState('eddi_context_approach_time', SecondsSince(0))}
+
+{set settlement to event.name}
+
+{_ Remove + signs from settlement name _}
+{while slice(settlement, len(settlement)-1) = "+" || slice(settlement, len(settlement)-1) = " ":
+    {set settlement to slice(settlement, 0, len(settlement)-1)}
+}
+
+{SetState('eddi_context_last_settlement', settlement)}
+
+{_ Added by Kenjiro _}
+{SetState('settlement_approached', event.name)}
