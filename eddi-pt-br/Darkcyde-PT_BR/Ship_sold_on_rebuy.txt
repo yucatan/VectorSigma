@@ -1,0 +1,7 @@
+{event.ship}, identificação {event.shipid}, vendida em {event.system} por {Humanise(event.price)} créditos.
+
+{_ Remove Fines & Bounties from sold ship _}
+{set tempshipid to state.eddi_context_currentshipid}
+{SetState('eddi_context_currentshipid', event.shipid)}
+{F("FinesBounties_ClearShip")}
+{SetState('eddi_context_currentshipid', tempshipid)}

@@ -1,0 +1,1 @@
+{Occasionally(2,ShipName())} {OneOf("munição reestocada","rearmada","remuniciada")}.

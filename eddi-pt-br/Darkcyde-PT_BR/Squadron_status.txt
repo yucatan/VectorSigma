@@ -1,0 +1,20 @@
+{_ Squadron status }
+{_ Triggered when your status with a squadron changes }
+
+
+{if event.status = "applied":
+    Você se inscreveu para admissão na esquadra {event.name}.
+|elif event.status = "created":
+    Você criou a esquadra {event.name}.
+|elif event.status = "disbanded":
+    A esquadra {event.name} foi dissolvida.
+|elif event.status = "invited":
+    Você recebeu convite para se juntar à esquadra {event.name}.
+|elif event.status = "joined":
+    Você entrou na esquadra {event.name}.
+|elif event.status = "kicked":
+    Você foi sofreu expulsão da esquadra {event.name}.
+|elif event.status = "left":
+    Você deixou a esquadra {event.name}.
+}
+

@@ -1,0 +1,24 @@
+{if event.storedship:
+    {OneOf("Guardando", "Estocando", "Estacionando")} {ShipName(event.storedshipid, event.storedship)} e
+|elif event.soldship:
+    {F("FinesBounties_ClearShip")}
+    Vendendo {ShipName(event.soldshipid, event.soldship)} e
+}
+
+{OneOf("trocando","mudando","transferindo")} para {ShipName(event.shipid, event.ship)}.
+{SetState('eddi_context_currentshipid', event.shipid)}
+
+{F("Limpet check")}
+{F("List launchbays")}
+
+{set fighterhangar to false}
+{for compartment in ship.compartments:
+    {if find(compartment.module.name, "Fighter Hangar") != -1:
+        {set fighterhangar to true}
+    }
+}
+{if fighterhangar = true:
+    Lembrete: você precisa designar um membro da tripulação para entrar em serviço.
+}
+
+{F("FinesBounties_CheckShip")}

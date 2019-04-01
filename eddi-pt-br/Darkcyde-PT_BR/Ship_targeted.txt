@@ -1,0 +1,38 @@
+{_ Ship targeted }
+{_ Triggered when the player selects a target }
+
+{_ event Parameters:   targetlocked - bool (ie false when losing target) }
+{_ If target locked:   name (of ship), scanstage (ie 0, 1, 2, 3) }
+{_ If scan stage >= 1: name (of pilot), rank (of pilot) }
+{_ If scan stage >= 2: shieldhealth, hullhealth (both 0-100) }
+{_ If scan stage >= 3: faction, legalstatus (ie clean, wanted, etc), bounty (if appicable), }
+{_                     subsystem (ie FSD, power plant, etc), subsystemhealth (0-100) }
+
+{_ Context }
+{SetState('eddi_context_last_subject', 'ship')}
+{SetState('eddi_context_last_action', 'targeted')}
+
+{if event.targetlocked:
+    {if event.scanstage = 0:
+        {SetState('legal_status_reported', false)}
+    |elif event.scanstage = 1:
+        {OneOf("Escaneando", "Analisando")} {Occasionally(2, OneOf("nave", "alvo"))}
+    |elif event.scanstage = 3 && state.legal_status_reported = false && !event.subsystem:
+        {set legalstatus to event.legalstatus}
+        {if legalstatus = "Procurado" || legalstatus = "Inimigo Procurado" || legalstatus = "Mandado":
+            {event.name}
+            {OneOf("tem uma recompensa", "é jogo limpo", "é um alvo legítimo","recebeu uma recompensa")}.
+        |else:
+            {Occasionally(2,"Seu")} alvo é
+            {if find(event.name, "Autoridade") = -1 && find(event.name, "Segurança") = -1 && find(event.name, "Defesa") = -1:            
+                limpa.
+            |else:
+                um {event.name}                
+                {if find(event.name, "Vessel") = -1: vessel}
+                .
+            }
+        }
+        {SetState('legal_status_reported', true)}
+    }
+}
+

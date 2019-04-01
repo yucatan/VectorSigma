@@ -1,0 +1,9 @@
+{ShipName()} registrada agora com {P(system.faction)}. 
+
+{set ICAO_ID to ICAO(event.ident)}
+{if len(ICAO_ID) > 0:
+    Identificação é {ICAO_ID}.
+|else:
+    Aviso: você escolheu uma identificação de anve que não é pronunciável no alfabeto padrão de radio.
+}
+

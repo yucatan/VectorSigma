@@ -1,0 +1,12 @@
+{_ Squadron rank }
+{_ Triggered when your rank with a squadron has changed }
+
+
+Você foi
+{if event.newrank > event.oldrank:
+    promovido 
+|else:
+    rebaixado
+}
+a {cmdr.squadronrank.name} na esquadra {event.name}.
+

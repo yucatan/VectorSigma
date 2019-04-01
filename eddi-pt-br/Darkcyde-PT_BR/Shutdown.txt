@@ -1,0 +1,3 @@
+
+{set logout to "true"}
+{F("Session Scan Value")}

@@ -1,0 +1,12 @@
+{Occasionally(2, "{F('Honorific')}, ")}
+Sua nave {event.ship} 
+
+{OneOf("chegou {if station.name != event.station && event.station: em}", 
+       "completou sua transferência {if station.name != event.station && event.station: para}")}
+
+{if station.name != event.station && event.station:
+   {event.station}
+   {if system.name != event.system && event.system:
+      no sistema {event.system}
+   }
+}.

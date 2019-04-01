@@ -1,0 +1,42 @@
+{Pause(1000)}
+
+{if event.submitted:
+   Você se submeteu à interdição
+|elif event.succeeded:
+   A evasão falhou, sistemas foram danificados.
+   Você sofreu a interdição.
+}
+
+{set shiptype to event.interdictor}
+{F("TargetType")}
+
+{if !event.succeeded:
+   {OneOf("Sucesso ao evadir a","Sucesso ao evitar a ")} interdição
+|else:
+   {SetState('eddi_context_interdicted', 'yes')}
+   pela {shiptype}
+
+   {if event.iscommander:
+      Este é um piloto humano, de nível {event.rating}!
+   |else:
+      , {OneOf("um piloto", "uma nave")} de nível {event.rating} 
+   }
+
+   {if event.faction = null:
+      que {OneOf("não tem aliança","não é aliado a ninguém")}
+   |else:
+      {Occasionally(2,"que é")} aliado de {P(event.faction)},
+   }
+
+   {if event.power = "Indpendent":
+      {Occasionally(2,"é um membro da Aliança")}
+   |elif event.power = "Pirate":
+      e é um criminoso dos clãs piratas
+   |elif event.power = "Empire":
+      {Occasionally(2,"e é um servidor do Império")}
+   |elif event.power = "Federation":
+      {Occasionally(2,"e é um recruta da Federação")}
+   }
+}
+.
+

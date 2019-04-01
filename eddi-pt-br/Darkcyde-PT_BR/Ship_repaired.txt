@@ -1,0 +1,21 @@
+
+{if event.item = "Wear" || event.item = "Ship Integrity":
+    {OneOf("Conserto","Reparo")} {OneOf("geral","normal")} {Occasionally(2,"da nave")} {OneOf("finalizado','realizado")}
+|elif event.item = "Hull":
+   {Occasionally(2,"{OneOf('Blindagem do ','Revestimento do')}")} Casco: {OneOf("reparado","consertado")}
+|elif event.item = "Paint":
+   {OneOf("Pintura {OneOf('reaplicada','renovada')}","Trabalho de pintura {OneOf('reaplicado','renovado')}")} 
+|elif event.item = "$modularcargobaydoor_name":
+   {OneOf("Sistema","Componente","Módulo")} da
+   {OneOf("Escotilha","Porta")} {Occasionally("do compartimento")} de Carga: {OneOf("reparado","consertado")}
+|elif event.item = null || event.item = "All":
+   {OneOf("danos reparados na","reparos finalizados na")} {Occasionally(2,ShipName())}
+|else:
+   {if find(event.item, "Cockpit") > -1:
+      {OneOf("Cabine","Canópla")}: {OneOf("reparada","consertada")}
+   |else:
+      {event.item}
+      {OneOf("Sistema","Componente","Módulo")}: {OneOf("reparado","consertado")}
+   }
+}.
+

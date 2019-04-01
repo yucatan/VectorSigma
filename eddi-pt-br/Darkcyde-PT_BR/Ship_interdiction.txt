@@ -1,0 +1,32 @@
+{Pause(1000)}
+
+{if !event.succeeded:
+   A interdição {OneOf("foi evitada","falhou")}.
+|else:
+   Interdição {OneOf("foi um sucesso","finalizada")}. Sistemas foram danificados.
+   O alvo é {event.interdictee}
+
+   {if event.iscommander:
+      . Este é o um piloto humano, de nível {event.rating}!
+   |else:
+      , {OneOf("um piloto", "uma nave")}
+   }
+
+   {if event.faction = null:
+      que não tem alianças
+   |else:
+      {Occasionally(2,"que é")} aliado a {P(event.faction)}
+   }
+
+   {if event.power = "Indpendent":
+      {Occasionally(2,"e é um membro da Aliança")}
+   |elif event.power = "Pirate":
+      e é um criminoso dos clãs piratas
+   |elif event.power = "Empire":
+      {Occasionally(2,"e é um servidor do Império")}
+   |elif event.power = "Federation":
+      {Occasionally(2,"e é um recruta da Federação")}
+   }
+}
+.
+

@@ -1,0 +1,48 @@
+{_ Context}
+{SetState('eddi_context_last_subject', 'refuelling')}
+{SetState('eddi_context_last_action', 'complete')}
+{SetState('eddi_context_fuel_remaining', event.total)}
+
+
+{set fuelscooped to state.eddi_fuel_scooped}
+{set fueltotal to ship.fueltanktotalcapacity}
+
+{if event.source = "Market":
+   {Occasionally(2,"{OneOf('{ShipName()}','Nave')}")}
+   {OneOf("reabastecida","tanques de combustível lotados","tanques completados")}
+   {if event.total != ship.fueltanktotalcapacity: com {Humanise(event.amount)} toneladas
+   |else: {Occasionally(3,"com {Humanise(event.amount)} toneladas")} }.
+|else:
+   {SetState('eddi_fuel_scooped',(state.eddi_fuel_scooped + event.amount))}
+
+   {if event.amount <= 5.0000:
+      {set total to (100/fueltotal)*event.total}
+
+      {set percent to round((100/fueltotal)*state.eddi_fuel_scooped, 0)}
+      {set tonnes to round(state.eddi_fuel_scooped, 0)}
+
+      {SetState('eddi_fuel_scooped', 0)}
+      {Pause(3000)}
+
+      {if tonnes = 1:
+         {set tons to "tonelada"}
+      |else:
+         {set tons to "toneladas"}
+      }
+
+      {OneOf("{percent}% reabastecidos",
+             "Reabastecido com {OneOf('{percent}%','{tonnes} {tons}')}",
+             "{OneOf('{percent}%','{tonnes} {tons}')} injetados a bordo")},
+
+      {if total = 100:
+         Tanque
+         {Occasionally(2,"{OneOf('Principal','Primário')}")}
+         {Occasionally(2,"de combustível ")}
+         {OneOf("no máximo","a 100%")}
+         {Occasionally(2,"da capacidade")}
+      |else:
+         {F("Fuel check")}
+      }
+   }
+}
+

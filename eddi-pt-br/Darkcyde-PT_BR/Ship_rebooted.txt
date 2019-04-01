@@ -1,0 +1,28 @@
+
+{Pause(5000)}
+
+{if len(event.modules) > 0:
+    Reparos finalizados {F("Honorific")}.
+    Os seguintes módulos foram consertados:
+
+    {set cur to 0}
+    {set length to len(event.modules) - 1}
+    {for mods in event.modules:
+        {if slice(mods,0,4) = "Slot":
+            {set mod to ord(slice(mods,4,1))-48}
+            {set mod1 to ord(slice(mods,5,1))-49}
+            {set mod to mod * 10 + mod1}
+            {ship.compartments[mod].module.name}
+        |else:
+            {mods}
+        }
+        {set cur to cur + 1}
+        {if cur = length: e
+        |elif cur < length:,
+        }
+    }
+|else:
+    {OneOf("Nenhum sistema pôde ser reparado","Incapaz de consertar quaisquer sistemas")} com o reparo de reinicialização.
+}
+.
+

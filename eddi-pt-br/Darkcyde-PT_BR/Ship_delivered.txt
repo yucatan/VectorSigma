@@ -1,0 +1,4 @@
+{SetState('eddi_context_currentshipid', event.shipid)}
+
+Transferência de comando da {ShipCallsign()} finalizada. 
+

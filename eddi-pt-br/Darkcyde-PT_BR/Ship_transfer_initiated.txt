@@ -1,0 +1,28 @@
+{ShipName(event.shipid, event.ship)} {OneOf("está a caminho","está sendo transferida", "transferência iniicada", "está sendo transportada")} de {P(event.system)}
+
+{if event.transfercost: por um custo de {event.price} créditos}.
+
+{set t_remaining to event.time}
+
+{if t_remaining:
+
+   Chegada esperada em:
+
+   {if t_remaining > (60*60*24):
+      {set t_days to floor(t_remaining/(60*60*24))}
+      {t_days} dias,
+      {set t_remaining to t_remaining-(t_days*(60*60*24))}
+   }
+
+   {if t_remaining > 3600:
+      {set t_hours to floor(t_remaining/3600)}
+      {t_hours} horas,
+      {set t_remaining to t_remaining-(t_hours*(60*60))}
+   }
+
+   {if t_remaining > 60:
+      {if t_days || t_hours: and}
+      {set t_minutes to round(t_remaining/(60),0)}
+      {t_minutes} minutos.
+   }
+}

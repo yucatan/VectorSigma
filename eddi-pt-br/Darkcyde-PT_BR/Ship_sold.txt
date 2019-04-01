@@ -1,0 +1,14 @@
+{set solds to ShipName(event.shipid, event.ship)}
+
+{OneOf("{solds} aposentada do serviço ativo","{solds} descomissionada","{solds} vendida")}
+
+{if event.system != system.name:
+   em {event.system}
+}.
+
+{_ Remove Fines & Bounties from sold ship _}
+{set tempshipid to state.eddi_context_currentshipid}
+{SetState('eddi_context_currentshipid', event.shipid)}
+{F("FinesBounties_ClearShip")}
+{SetState('eddi_context_currentshipid', tempshipid)}
+

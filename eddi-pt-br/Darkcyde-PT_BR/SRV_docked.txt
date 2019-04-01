@@ -1,0 +1,2 @@
+{OneOf("Búgui", "V-R-S")} {OneOf("atracado","em segurança {Occasionally(2,'a bordo')}")}.
+
