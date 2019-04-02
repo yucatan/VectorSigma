@@ -1,0 +1,3 @@
+{if !event.deployable:
+   {OneOf("Búgui", "V-R-S")} em espera para recuperação.
+}

@@ -1,0 +1,31 @@
+{_ Get real target name}
+{_ to use this function, set a variable to shiptype in the calling event}
+
+{if shiptype = "Cobra Mk. III":
+   {set shiptype to "Cobra Mark 3"}
+
+|elif shiptype = "Cobra Mk. IV":
+   {set shiptype to "Cobra Mark 4"} {_ this works}
+
+|elif shiptype = "Krait Mk. II":
+   {set shiptype to "Krait Mark 2"}
+
+|elif shiptype = "Viper Mk. III":
+   {set shiptype to "Viper Mark 3"}
+
+|elif shiptype = "Viper Mk. IV":
+   {set shiptype to "Viper Mark 4"} {_ this works}
+
+|elif shiptype = "$ShipName_Military_Alliance;":
+   {set shiptype to "a Força de Defesa da Aliança"}
+
+|elif shiptype = "$ShipName_Military_Empire;":
+   {set shiptype to "a Marinha Imperial"}
+
+|elif shiptype = "$ShipName_Military_Federation;":
+   {set shiptype to "a Marinha Federal"}
+
+|elif shiptype = "$ShipName_Military_Independent;":
+   {set shiptype to "a Força de Defesa do Sistema"}
+
+}

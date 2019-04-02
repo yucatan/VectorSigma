@@ -1,0 +1,26 @@
+{set body to BodyDetails(state.eddi_context_body_name, state.eddi_context_system_name)}
+
+{F("Body Name Tidy")}
+
+{if state.loading = false:
+    {if event.playercontrolled = true:
+        Pousamos {if body: em {body} }.
+        {OneOf("Motores","Propulsores")} {OneOf("desligados","desativados")}.
+    |else:
+        {ShipName()} pousou
+        {if body: em {body} }.
+    }
+    {Pause(2000)}
+|else:
+    {SetState('loading', false)}
+}
+
+{if type(event.latitude) != "void" && type(event.longitude) != "void" && event.playercontrolled:
+    {Occasionally(2,"Localização")}
+    {Occasionally(2,"Planetária")}
+    {Occasionally(2,"Atual")}, 
+
+    coordenadas {Occasionally(2,"são")}
+    {round(event.longitude,4)} graus de longitude,
+    {round(event.latitude,4)} graus de latitude.
+}

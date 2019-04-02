@@ -7,12 +7,12 @@
 {_ Set up our system name}
 {if event.system = homesystem.name:
   {set system to OneOf('{P(event.system)}',
-                       'your home system')}
+                       'seu sistema natal')}
 |elif event.system = system.name:
   {set system to OneOf('{P{event.system)}',
-                       'this system')}
+                       'este sistema')}
 |else:
-  {set system to OneOf('system {P(event.system)}'
+  {set system to OneOf('sistema {P(event.system)}'
                        '{P(event.system)}'))}
 }
 
@@ -20,40 +20,39 @@
 
 {if event.newstate != 'None':
   {_ System has entered a new state}
-  {OneOf('Local transmissions report that', 'Information: ', 'Transmission intercepted.  Contents state that ')}
-  {if event.newstate = 'Boom':
-    {OneOf('{system} is experiencing a commercial boom',
-           '{system} is entering a period of heightened commercial success')}
-  |elif event.newstate = 'Bust':
-    {system} is experiencing economic hardship
-  |elif event.newstate = 'Civil Unrest':
-    {OneOf('{system} is experiencing civil unrest',
-           'there is unrest in the {system} system')}
-  |elif event.newstate = 'Civil War':
-    {OneOf('{system} is at war with another faction in the same system',
-           'civil war has broken out in {system}',
-           '{system} has fallen in to civil war',
-           'hostilities have broken out in {system}')}
-  |elif event.newstate = 'Election':
-    {system} is undergoing elections
-  |elif event.newstate = 'Expansion':
-    {OneOf("a faction in {system}'s is attempting to expand in to a neighbouring system",
-           "a faction in {system}'s is preparing to expand in to a neighbouring system")}
-  |elif event.newstate = 'Famine':
-    {system} is suffering from famine
-  |elif event.newstate = 'Investment':
-    {system}'s controlling faction are investing heavily in their local infrastructure
-  |elif event.newstate = 'Lockdown':
-    {system} has heightened security due to a lockdown by the controlling faction
-  |elif event.newstate = 'Outbreak':
-    {system} is suffering from an outbreak of contagious disease
-  |elif event.newstate = 'Retreat':
-    {system}'s controlling faction is retreating from a neighbouring system
-  |elif event.newstate = 'War':
-    {system} is now at war with a neighbouring system
+  {OneOf('Transmissões locais relatam que ', 'Informação: ', 'Transmissão interceptada.  O conteúdo diz que ')}
+  {if event.newstate = 'Auge':
+    {OneOf('{system} está experimentando um auge econômico',
+           '{system} está entrando em um período de elevado sucesso comercial')}
+  |elif event.newstate = 'Recessão':
+    {system} está passando por um momento econômico muito ruim
+  |elif event.newstate = 'Revolta Civil':
+    {OneOf('{system} está passando por uma revolta civil',
+           'há uma revolta no sistema {system}')}
+  |elif event.newstate = 'Guerra Civil':
+    {OneOf('{system} está em guerra contra outra facção no mesmo sistema',
+           'uma guerra civil foi iniciada em {system}',
+           '{system} entrou em guerra civil',
+           'hostilidades começaram em {system}')}
+  |elif event.newstate = 'Eleição':
+    {system} está passando por eleições
+  |elif event.newstate = 'Expansão':
+    {OneOf("uma facção em {system} está tentando expandir para um sistema vizinho",
+           "uma facção em {system} está se preparando para expandir para um sistema vizinho")}
+  |elif event.newstate = 'Fome':
+    {system} está sofrendo por causa da fome
+  |elif event.newstate = 'Investmento':
+    A facção que controla {system} está investindo pesado na infraestrutura local
+  |elif event.newstate = 'Lei Marcial':
+    {system} aumentou a segurança devido à lei marcial estabelecida pela facção controladora
+  |elif event.newstate = 'Epidemia':
+    {system} está sofrendo com uma epidemia de uma doença contagiosa
+  |elif event.newstate = 'Retirada':
+    A facção que controla {system} está se retirando de um sistema vizinho
+  |elif event.newstate = 'Guerra':
+    {system} está em guerra com um sistema vizinho
   |else:
-    {OneOf('{system} has entered {event.state}',
-           '{system} is now in a state of {event.state}')}
+    {OneOf('{system} entrou em {event.state}',
+           '{system} está agora em um estado de {event.state}')}
   }.
 }
-

@@ -1,0 +1,101 @@
+{_ TextWisdom}
+{_ Random wisdom of the day}
+{_ Choose a random option until all are used, then reset}
+{_ From an idea put to me by Brigetiol1. Thanks!}
+
+Sabedoria diária, na rádio {ShipName()}:
+
+{Pause(300)}
+
+{_ check Wisdom string is long, else run string setup (just in case it hasn't already been setup)}
+{if len(state.wisdomstring) < 10:
+
+    {set wisdomstring to ["A melhor maneira de se encontrar é se perder no serviço a outros",
+         "Você precisa ser a mudança que quer ver no mundo",
+         "Viva como se você fosse morrer amanhã. Aprenda como se fosse viver para sempre",
+         "Primeiro eles te ignoram, então eles riem de você, aí eles te enfrentam, então você vence",
+         "Os fracos nunca perdoam. Perdão é o atributo dos fortes",
+         "Felicidade é quando aquilo que você pensa, o que você diz e o que você faz estão em harmonia",
+         "Em orações, é melhor ter um coração sem palavras, do que palavras sem um coração",
+         "A verdade perdura, mesmo sem apoio público. Ela se auto sustenta",
+         "Satisfação reside no esforço, não na realização, o esforço total é a vitória completa",
+         "A verdade nunca afeta uma causa justa",
+         "O medo tem utilidade, a covardia não",
+         "Ninguém pode me ferir sem minha permissão",
+         "Minha vida é minha mensagem",
+         "Treine a si mesmo para livrar-se de tudo que você teme perder",
+         "Insanidade: fazer a mesma coisa repetidas vezes e esperar obter resultados diferentes",
+         "A diferença entre estupidez e genialidade é que a genialidade tem limites",
+         "Aprenda com ontem, viva para hoje, espere por amanhã",
+         "A pessoa que nunca cometeu um erro, nunca tentou algo novo",
+         "Se você não consegue dar uma explicação simples, você não o suficiente do assunto",
+         "Não adianta andar em qualquer lugar para pregar, a menos que nosso andar seja nossa pregação",
+         "O mistério da vida não é um problema para resolver, mas uma realidade para experimentar",
+         "A mente comanda o corpo e obedece. A mente ordena a si mesma e encontra resistência",
+         "Tente olhar para aquele lugar onde você não ousa olhar! Você vai me encontrar lá, olhando para você",
+         "Medo é o assassino da mente",
+         "Não entre em pânico",
+         "O salgueiro se submete ao vento e prospera até que um dia são muitos salgueiros - um muro contra o vento",
+         "Você não pode fazer nada a prova de idiotas porque os idiotas são muito engenhosos",
+         "Bem, o passado se foi, eu sei disso. O futuro ainda não está aqui, seja lá o que for. Então, tudo o que existe é isso. O presente. É isso aí",
+         "Veja primeiro, pense depois, depois teste. Mas sempre veja primeiro. Caso contrário, você só verá o que estava esperando",
+         "Muito pode ser aprendido no jogo, que depois será útil quando as circunstâncias o exigirem.",
+         "Sou a favor da verdade, não importa quem a diz. Sou a favor da justiça, não importa quem é a favor ou contra",
+         "Um senso de humor bem desenvolvido é o pólo que adiciona equilíbrio ao seu passo enquanto você anda na corda bamba da vida",
+         "Conhecimento que é divorciado da justiça, pode ser chamado de astúcia ao invés de sabedoria"]
+    }
+    {SetState('wisdomstring', join(wisdomstring, "+="))}
+}
+
+{set textstring to state.wisdomstring}
+
+{_ create array from the string, using += as the split marker}
+{set textarray to split(textstring, "+=")}
+
+{_ create array of unused quotes}
+{set temparray to []}
+{for check in textarray:
+   {set index to len(check)-5}
+   {set chk to slice(check, index, 5)}
+   {if chk != " used":
+       {set temparray to cat(temparray, [check])}
+   }
+}
+
+{_ if unused array is empty then rebuild and reset all items}
+{if len(temparray) = 0:
+   {set temparray to []}
+   {for check in textarray:
+      {set index to len(check)-5}
+      {set chk to slice(check, 0, index)}
+      {set temparray to cat(temparray, [chk])}
+   }
+   {set textstring to join(temparray, "+=")}
+   {set textarray to split(textstring, "+=")}
+}
+
+{_ get a random unused item and say it}
+{set random to rand(len(temparray))}
+{set used to temparray[random]}
+{used}
+
+{_ find position of used item in text array}
+{set position to find(textarray, used)}
+
+{_ mark item as used}
+{set useditem to cat(used, " used")}
+
+{_ rebuild text array with marked item}
+{set temparray to []}
+{set cur to 0}
+{while cur < len(textarray):
+  {if cur = position:
+     {set temparray to cat(temparray, [useditem])}
+  |else:
+     {set temparray to cat(temparray, [textarray[cur]])}
+  }
+  {set cur to cur + 1}
+}
+
+{_ rebuild text string ready for next use}
+{SetState('wisdomstring', join(temparray, "+="))}

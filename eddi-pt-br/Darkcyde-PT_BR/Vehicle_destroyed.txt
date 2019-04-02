@@ -1,0 +1,4 @@
+{Pause(2000)}
+{set LINK to:{OneOf("Link neural", "Link", "Conecsão")}}
+{LINK}
+{OneOf(" terminad", " desativad")}{if LINK = "Conecsão":a |else:o}

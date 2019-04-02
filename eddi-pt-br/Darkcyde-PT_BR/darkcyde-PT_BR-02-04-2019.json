@@ -1,5 +1,5 @@
 ﻿{
-  "name": "Sigma+Darkcyde-PT_BR",
+  "name": "Darkcyde-PT_BR",
   "description": "Versão em Português da Persona do Darkcyde",
   "scripts": {
     "AFMU repairs": {
@@ -75,7 +75,7 @@
       "description": "Função para relatar os detalhes do corpo em questão"
     },
     "Body scanned": {
-      "enabled": true,
+      "enabled": false,
       "priority": 3,
       "responder": true,
       "script": "{_ Context }\r\n{SetState('eddi_context_last_subject', 'body')}\r\n{SetState('eddi_context_last_action', 'scan')}\r\n{SetState('eddi_context_body_system', system.name)}\r\n{SetState('eddi_context_body_name', event.name)}\r\n{SetState('eddi_context_last_scan_estimated_value', event.estimatedvalue)}\r\n\r\n\r\n{if state.lastscanbody != event.name:\r\n\r\n    {if event.estimatedvalue:\r\n        {SetState(\"eddi_context_system_value\", state.eddi_context_system_value + event.estimatedvalue)}\r\n        {SetState(\"eddi_context_session_scan_value\", state.eddi_context_session_scan_value + event.estimatedvalue)}\r\n    }\r\n\r\n    {Pause(1000)}\r\n\r\n    {OneOf(\"Varredura\", \"Análise\", \"Varredura e análise\")}\r\n    {Occasionally(3, \"do corpo\")} {OneOf(\"concluída\", \"finalizada\")}.\r\n\r\n    {if ship.Role.edname = \"Exploration\" || ship.Role.edname = \"Multipurpose\":\r\n        {F(\"Body report\")}\r\n    }\r\n\r\n    {SetState('lastscanbody', event.name)}\r\n}\r\n",
@@ -1266,7 +1266,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{SetState('eddi_context_last_subject', 'mission')}\n{SetState('eddi_context_last_action', 'accepted')}\n\n{set mission to MissionDetails(event.missionid)}\n\n{if mission.type = \"Donation\":\n    Missão de doação {Occasionally(2,\"generosa\")} foi {OneOf(\"escolhida\",\"aceita\")}\n    {if mission.typeEDName = \"Altruism\": {mission.commodity} |else: créditos} para\n    {OneOf(\"{P(lcase(mission.faction))} com o intúito de {OneOf('aumentar','melhorar','crescer')} sua {OneOf('reputação','moral')} com esta facção\",\n          \"{OneOf('aumentar','melhorar','crescer')} your {OneOf('reputação','moral')} com a {P(lcase(mission.faction))}\")}\n|elif event.communal:\n    Você aceitou o objetivo da comunidade: {mission.localisedname}\n|else:\n    {if find(mission.typeEDName, \"Passenger\") > -1:\n        {set type to \"Transport \"}\n        {set type to cat(type, mission.passengertype)}\n    |else:\n        {set type to mission.type}\n    }\n    {set type to cat(type, \" \")}\n    {OneOf(\"{type} {if mission.faction: da {mission.faction}} aceita\",\n        \"{type} aceita {if mission.faction: da {mission.faction}}\",\n        \"Você aceitou uma {type} {if mission.faction: da {mission.faction}}\")\n    }\n}\n\n{Occasionally(1,\"{F('Mission faction state')}\")}..\n\n{if event.passengerswanted:\n Alerta! Vocẽ está {OneOf(\"transportando\",\"carregando\")}\n {OneOf(\"{OneOf('passageiro','pessoal')} {OneOf('procurado','ilegal')}\",\"criminoso conhecido\")}!\n \n Você pode ser atacado por {OneOf(\"autoridades\",\"policiais\")} {Occasionally(2,\"do sistema\")}. Aconselho cuidado. Evite ser scaneado.\n|elif token(mission.name,\"_\",2)  = \"Skimmer\":\n   Esta é uma {OneOf(\"missão\",\"operação\")} de superfície.\n|elif token(mission.name,\"_\",2)  = \"Surface\":\n   Esta é uma {OneOf(\"missão\",\"operação\")} de superfície, você vai precisar de um V R S.\n}\n\n{if missionsCount = 20:\n    Vocẽ alcançou o número máximo de missões que pode aceitar.\n    Por favor, complete algumas para poder aceitar outras.\n|else:\n   {OneOf(\"{Occasionally(2,'Agora')} Você tem {missionsCount} miss{if missionsCount > 1:ões|else:ão}\",\n        \"Está é sua\n    {if missionsCount = 1: 1ª\n    |elif missionsCount = 2: 2ª\n    |elif missionsCount = 3: 3ª\n    |else: {missionsCount}ª\n    }\n    missão\")}.\n}\n\n{if mission.type = \"Delivery\" || mission.type = \"Supply\" || mission.type = \"Smuggle\":\n    {Pause(400)}\n    {SetState('eddi_context_mission_cargo', \"yes\")}\n    {event.amount} tonelada{if event.amount != 1:s} de {event.commodity}\n\n    {set cargo to CargoDetails(event.missionid)}\n    {if cargo.total > 0: \n        {OneOf(\"adicionada{if event.amount != 1:s} ao manifesto da nave\", \"carregada{if event.amount != 1:s} a bordo\", \"armazenada{if event.amount != 1:s} na área de carga\")} agora\n    |else:\n        a ser{if event.amount != 1:em} {OneOf(\"entregue{if event.amount != 1:s}\", \"transportada{if event.amount != 1:s}\")}. Por favor, colete no Depósito de Cargas\n    }.\n}\n\n{set type to \"Accepted\"}\n{F(\"Mission Route Update\")}\n\n",
+      "script": "{SetState('eddi_context_last_subject', 'mission')}\n{SetState('eddi_context_last_action', 'accepted')}\n\n{set mission to MissionDetails(event.missionid)}\n\n{if mission.type = \"Donation\":\n    Missão de doação {Occasionally(2,\"generosa\")} foi {OneOf(\"escolhida\",\"aceita\")}\n    {if mission.typeEDName = \"Altruism\": {mission.commodity} |else: créditos} para\n    {OneOf(\"{P(lcase(mission.faction))} com o intúito de {OneOf('aumentar','melhorar','crescer')} sua {OneOf('reputação','moral')} com esta facção\",\n          \"{OneOf('aumentar','melhorar','crescer')} your {OneOf('reputação','moral')} com a {P(lcase(mission.faction))}\")}\n|elif event.communal:\n    Você aceitou o objetivo da comunidade: {mission.localisedname}\n|else:\n    {if find(mission.typeEDName, \"Passenger\") > -1:\n        {set type to \"Transport \"}\n        {set type to cat(type, mission.passengertype)}\n    |else:\n        {set type to mission.type}\n    }\n    {set type to cat(\"missão \", type)}\n    {OneOf(\"{type} {if mission.faction: da {mission.faction}} aceita\",\n        \"{type} aceita {if mission.faction: da {mission.faction}}\",\n        \"Você aceitou uma {type} {if mission.faction: da {mission.faction}}\")\n    }\n}\n\n{Occasionally(1,\"{F('Mission faction state')}\")}..\n\n{if event.passengerswanted:\n Alerta! Vocẽ está {OneOf(\"transportando\",\"carregando\")}\n {OneOf(\"{OneOf('passageiro','pessoal')} {OneOf('procurado','ilegal')}\",\"criminoso conhecido\")}!\n \n Você pode ser atacado por {OneOf(\"autoridades\",\"policiais\")} {Occasionally(2,\"do sistema\")}. Aconselho cuidado. Evite ser scaneado.\n|elif token(mission.name,\"_\",2)  = \"Skimmer\":\n   Esta é uma {OneOf(\"missão\",\"operação\")} de superfície.\n|elif token(mission.name,\"_\",2)  = \"Surface\":\n   Esta é uma {OneOf(\"missão\",\"operação\")} de superfície, você vai precisar de um V R S.\n}\n\n{if missionsCount = 20:\n    Vocẽ alcançou o número máximo de missões que pode aceitar.\n    Por favor, complete algumas para poder aceitar outras.\n|else:\n   {OneOf(\"{Occasionally(2,'Agora')} Você tem {missionsCount} miss{if missionsCount > 1:ões|else:ão}\",\n        \"Está é sua\n    {if missionsCount = 1: 1ª\n    |elif missionsCount = 2: 2ª\n    |elif missionsCount = 3: 3ª\n    |else: {missionsCount}ª\n    }\n    missão\")}.\n}\n\n{if mission.type = \"Delivery\" || mission.type = \"Supply\" || mission.type = \"Smuggle\":\n    {Pause(400)}\n    {SetState('eddi_context_mission_cargo', \"yes\")}\n    {event.amount} tonelada{if event.amount != 1:s} de {event.commodity}\n\n    {set cargo to CargoDetails(event.missionid)}\n    {if cargo.total > 0: \n        {OneOf(\"adicionada{if event.amount != 1:s} ao manifesto da nave\", \"carregada{if event.amount != 1:s} a bordo\", \"armazenada{if event.amount != 1:s} na área de carga\")} agora\n    |else:\n        a ser{if event.amount != 1:em} {OneOf(\"entregue{if event.amount != 1:s}\", \"transportada{if event.amount != 1:s}\")}. Por favor, colete no Depósito de Cargas\n    }.\n}\n\n{set type to \"Accepted\"}\n{F(\"Mission Route Update\")}\n\n",
       "default": false,
       "name": "Mission accepted",
       "description": "Triggered when you accept a mission"
@@ -1320,7 +1320,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{_ Mission completed }\r\n{_ Triggered when you complete a mission }\r\n\r\n{_ Context }\r\n{SetState('eddi_context_last_subject', 'mission')}\r\n{SetState('eddi_context_last_action', 'complete')}\r\n\r\n{set mission to MissionDetails(event.missionid)}\r\n{set status to mission.status}\r\n\r\n{if find(mission.typeEDName, \"Passenger\") > -1:\r\n    {set type to \"Transport \"}\r\n    {set type to cat(type, mission.passengertype)}\r\n|else:\r\n    {set type to mission.type}\r\n}\r\n{set type to cat(type, \" missão\")} {_ Era: (type, \" missão\") }\r\n{set ranktype to token(mission.name,\"_\",2)}\r\n\r\n{if mission.type = \"Donation\":\r\n    {if mission.typeEDName = \"Altruism\": {set donate to cat(event.amount, \" tonnes of \",event.commodity)}\r\n    |else: {set donate to cat(Humanise(event.donation),\" credits\")}\r\n    }\r\n    {OneOf(\"Doou {Occasionally(2, '{donate}')} para {P(event.faction)}\",\r\n           \"{P(lcase(event.faction))} {Occasionally(2, 'agredecidamente')} recebeu sua doação {Occasionally(2, 'de {donate}')}\",\r\n           \"{P(lcase(event.faction))} lhe agradece por sua doação {Occasionally(2, 'de {donate}')}\")}\r\n    {F(\"Mission faction state\")}.\r\n    Sua {OneOf(\"reputação\",\"moral\")} {OneOf(\"melhorou\",\"cresceu\")}\r\n|elif ranktype = \"RANKEMP\" || ranktype = \"RankEmp\" || ranktype = \"RANKFED\" || ranktype = \"RankFed\":\r\n    Você {OneOf(\"completou a {type} com sucesso\",\"completou com sucesso a {type}\")}\r\n|elif mission.communal:\r\n    Você completou o objetivo da comunidade: {mission.name}. Você {OneOf('recebeu','foi agraciado com')}\r\n    {Humanise(mission.reward)} créditos por {OneOf(\"sua contribuição\",\"sua participação\",\"ter participado\")}\r\n|else:\r\n    {if event.reward > 0:\r\n        {OneOf(\r\n         \"{type} concluída. Você {OneOf('recebeu','foi agraciado com')} {Humanise(event.reward)} créditos\",\r\n         \"Você {OneOf('recebeu','foi agraciado com')} {Humanise(event.reward)} créditos por {OneOf('concluir {type} com sucesso','concluir a {type}','ter concluído a {type}')}\"\r\n      )}\r\n   |else:\r\n      {OneOf(\"{type} concoluída\",\"Você completou a {type} com sucesso\",\"Você completou a {type}\")}\r\n   }\r\n}\r\n\r\n{if mission.type != \"Donation\": {F(\"Mission faction state\")}}.\r\n\r\n{if cargo = \"yes\" || cargo = \"return\":\r\n    {Pause(100)}\r\n    {SetState('eddi_context_mission_cargo', \"yes\")}\r\n    {if part1 = \"Smuggle\":\r\n        {event.amount} tonelada{if event.amount != 1:s} de {event.commodity}\r\n        {OneOf(\"entregues\", \"transportadas\")} com sucesso.\r\n    }\r\n}\r\n\r\n{if event.commodityrewards:\r\n\r\n    {Pause(100)}\r\n    {if event.commodityrewards[0].amount = 0:\r\n       {if event.reward > 0:\r\n          {OneOf(\"Entretanto, \",\"Porém, \")}\r\n       }\r\n       você não pode aceitar a carga como recompensa, {Occasionally(2,\"já que\")}\r\n       {if ship.cargocapacity = 0:\r\n          você não tem estantes de carga.\r\n       |else:\r\n          seu espaço de carga está lotado.\r\n       }\r\n    |else:         \r\n       {if event.reward > 0:\r\n          {OneOf(\"Adicionalmente, \",\"Também, \")}\r\n       }\r\n\r\n       {set missionreward to \"yes\"}\r\n       {for commodityreward in event.commodityrewards:\r\n          {commodityreward.amount} tonelada{if commodityreward.amount > 1:s} de {commodityreward.commodity}\r\n          {set cur to cur + 1}\r\n          {if cur = len(event.commodityrewards) - 1:, }\r\n       }\r\n       {OneOf(\"agora a bordo\",\"confirmada{if commodityreward.amount > 1:s} a bordo\",\"fo{if commodityreward.amount > 1:ram|else:i} recebida{if commodityreward.amount > 1:s}\")}.\r\n    }\r\n}\r\n\r\n{set type to \"Completed\"}\r\n{F(\"Mission Route Update\")}\r\n",
+      "script": "{_ Mission completed }\r\n{_ Triggered when you complete a mission }\r\n\r\n{_ Context }\r\n{SetState('eddi_context_last_subject', 'mission')}\r\n{SetState('eddi_context_last_action', 'complete')}\r\n\r\n{set mission to MissionDetails(event.missionid)}\r\n{set status to mission.status}\r\n\r\n{if find(mission.typeEDName, \"Passenger\") > -1:\r\n    {set type to \"Transport \"}\r\n    {set type to cat(type, mission.passengertype)}\r\n|else:\r\n    {set type to mission.type}\r\n}\r\n{set type to cat(\"missão \",type)}\r\n{set ranktype to token(mission.name,\"_\",2)}\r\n\r\n{if mission.type = \"Donation\":\r\n    {if mission.typeEDName = \"Altruism\": {set donate to cat(event.amount, \" tonnes of \",event.commodity)}\r\n    |else: {set donate to cat(Humanise(event.donation),\" credits\")}\r\n    }\r\n    {OneOf(\"Doou {Occasionally(2, '{donate}')} para {P(event.faction)}\",\r\n           \"{P(lcase(event.faction))} {Occasionally(2, 'agredecidamente')} recebeu sua doação {Occasionally(2, 'de {donate}')}\",\r\n           \"{P(lcase(event.faction))} lhe agradece por sua doação {Occasionally(2, 'de {donate}')}\")}\r\n    {F(\"Mission faction state\")}.\r\n    Sua {OneOf(\"reputação\",\"moral\")} {OneOf(\"melhorou\",\"cresceu\")}\r\n|elif ranktype = \"RANKEMP\" || ranktype = \"RankEmp\" || ranktype = \"RANKFED\" || ranktype = \"RankFed\":\r\n    Você {OneOf(\"completou a {type} com sucesso\",\"completou com sucesso a {type}\")}\r\n|elif mission.communal:\r\n    Você completou o objetivo da comunidade: {mission.name}. Você {OneOf('recebeu','foi agraciado com')}\r\n    {Humanise(mission.reward)} créditos por {OneOf(\"sua contribuição\",\"sua participação\",\"ter participado\")}\r\n|else:\r\n    {if event.reward > 0:\r\n        {OneOf(\r\n         \"{type} concluída. Você {OneOf('recebeu','foi agraciado com')} {Humanise(event.reward)} créditos\",\r\n         \"Você {OneOf('recebeu','foi agraciado com')} {Humanise(event.reward)} créditos por {OneOf('concluir {type} com sucesso','concluir a {type}','ter concluído a {type}')}\"\r\n      )}\r\n   |else:\r\n      {OneOf(\"{type} concoluída\",\"Você completou a {type} com sucesso\",\"Você completou a {type}\")}\r\n   }\r\n}\r\n\r\n{if mission.type != \"Donation\": {F(\"Mission faction state\")}}.\r\n\r\n{if cargo = \"yes\" || cargo = \"return\":\r\n    {Pause(100)}\r\n    {SetState('eddi_context_mission_cargo', \"yes\")}\r\n    {if part1 = \"Smuggle\":\r\n        {event.amount} tonelada{if event.amount != 1:s} de {event.commodity}\r\n        {OneOf(\"entregues\", \"transportadas\")} com sucesso.\r\n    }\r\n}\r\n\r\n{if event.commodityrewards:\r\n\r\n    {Pause(100)}\r\n    {if event.commodityrewards[0].amount = 0:\r\n       {if event.reward > 0:\r\n          {OneOf(\"Entretanto, \",\"Porém, \")}\r\n       }\r\n       você não pode aceitar a carga como recompensa, {Occasionally(2,\"já que\")}\r\n       {if ship.cargocapacity = 0:\r\n          você não tem estantes de carga.\r\n       |else:\r\n          seu espaço de carga está lotado.\r\n       }\r\n    |else:         \r\n       {if event.reward > 0:\r\n          {OneOf(\"Adicionalmente, \",\"Também, \")}\r\n       }\r\n\r\n       {set missionreward to \"yes\"}\r\n       {for commodityreward in event.commodityrewards:\r\n          {commodityreward.amount} tonelada{if commodityreward.amount > 1:s} de {commodityreward.commodity}\r\n          {set cur to cur + 1}\r\n          {if cur = len(event.commodityrewards) - 1:, }\r\n       }\r\n       {OneOf(\"agora a bordo\",\"confirmada{if commodityreward.amount > 1:s} a bordo\",\"fo{if commodityreward.amount > 1:ram|else:i} recebida{if commodityreward.amount > 1:s}\")}.\r\n    }\r\n}\r\n\r\n{set type to \"Completed\"}\r\n{F(\"Mission Route Update\")}\r\n",
       "default": false,
       "name": "Mission completed",
       "description": "Triggered when you complete a mission"
@@ -1635,7 +1635,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{event.amount} units of {event.commodity} delivered {Occasionally(2, \"for {P(event.power)}\")}.\r\n",
+      "script": "{set NUM to event.amount}\r\n{if NUM = 1: {set NUM to \"uma\"}\r\n|elif NUM = 2: {set NUM to \"duas\"}\r\n}\r\n{NUM} unidades de {event.commodity} entregue{if event.amount > 1:s} {Occasionally(2, \"por {P(event.power)}\")}.\r\n",
       "default": false,
       "name": "Power commodity delivered",
       "description": "Triggered when a commander delivers a commodity to a power"
@@ -1644,8 +1644,8 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{Humanise(event.amount)} credits spent fast-tracking commodities {Occasionally(2, \"for {P(event.power)}\")}.",
-      "default": true,
+      "script": "{Humanise(event.amount)} créditos foram gastos acelerando a liberação de mercadorias {Occasionally(2, \"de {P(event.power)}\")}.",
+      "default": false,
       "name": "Power commodity fast tracked",
       "description": "Triggered when a commander fast tracks a commodity of a power"
     },
@@ -1653,7 +1653,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{event.amount} units of {event.commodity} obtained {Occasionally(2, \"for {P(event.power)}\")}.\r\n",
+      "script": "{set NUM to event.amount}\r\n{if NUM = 1: {set NUM to \"uma\"}\r\n|elif NUM = 2: {set NUM to \"duas\"}\r\n}\r\n{NUM} unidades de {event.commodity} obtida{if event.amount > 1:s} {Occasionally(2, \"de {P(event.power)}\")}.\r\n",
       "default": false,
       "name": "Power commodity obtained",
       "description": "Triggered when a commander obtains a commodity from a power"
@@ -1662,8 +1662,8 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "You have defected from {P(event.frompower)} to {P(event.topower)}.",
-      "default": true,
+      "script": "Você desertou de {P(event.frompower)} para {P(event.topower)}.",
+      "default": false,
       "name": "Power defected",
       "description": "Triggered when you defect from one power to another"
     },
@@ -1671,8 +1671,8 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "Vote\r\n{OneOf(\"cast\", \"registered\")}",
-      "default": true,
+      "script": "Voto\r\n{OneOf(\"dado\", \"registrado\")}",
+      "default": false,
       "name": "Power expansion vote cast",
       "description": "Triggered when a commander votes for system expansion"
     },
@@ -1680,8 +1680,8 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "You have aligned yourself with {P(event.power)}",
-      "default": true,
+      "script": "Você se aliou com {P(event.power)}",
+      "default": false,
       "name": "Power joined",
       "description": "Triggered when you join a power"
     },
@@ -1689,8 +1689,8 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "You are no longer aligned with {P(event.power)}",
-      "default": true,
+      "script": "Você não é mais aliado de {P(event.power)}",
+      "default": false,
       "name": "Power left",
       "description": "Triggered when you leave a power"
     },
@@ -1698,8 +1698,8 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "Vote\r\n{OneOf(\"cast\", \"registered\")}",
-      "default": true,
+      "script": "Voto\r\n{OneOf(\"dado\", \"registrado\")}",
+      "default": false,
       "name": "Power preparation vote cast",
       "description": "Triggered when a commander votes for system preparation"
     },
@@ -1707,8 +1707,8 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "Salary of {Humanise(event.amount)}  credits claimed {Occasionally(2, \"from {P(event.power)}\")}.",
-      "default": true,
+      "script": "Salário de {Humanise(event.amount)}  créditos recebido {Occasionally(2, \"de {P(event.power)}\")}.",
+      "default": false,
       "name": "Power salary claimed",
       "description": "Triggered when a commander claims salary from a power"
     },
@@ -1734,7 +1734,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{set systemsrepaired to []}\r\n\r\n{if event.hull:\r\n   {set systemsrepaired to cat(systemsrepaired, [\"the hull\"])} \r\n}\r\n{if event.cockpit:\r\n   {set systemsrepaired to cat(systemsrepaired, [\"the cockpit\"])} \r\n}\r\n{if event.corrosion:\r\n   {set systemsrepaired to cat(systemsrepaired, [OneOf(\"corroded systems\", \"systems affected by corrosion\")])} \r\n}\r\n\r\n{if len(systemsrepaired) > 0:\r\n\r\n    {set remote to Occasionally(2, \"remote\")}\r\n    {set sequence to OneOf(\"sequence\", \"cycle\")}\r\n    {OneOf(\r\n        \"The limpet has completed it's {remote} repairs to\", \r\n        \"{remote} {sequence} completed, repairs made to\"\r\n    )}\r\n\r\n    {set cur to 0}\r\n    {set length to len(systemsrepaired) - 1}\r\n    {while cur < len(systemsrepaired):\r\n        {systemsrepaired[cur]}\r\n        {set cur to cur + 1}\r\n        {if cur = length: and\r\n        |elif cur < length:,\r\n        }\r\n    }\r\n}.\r\n",
+      "script": "{set systemsrepaired to []}\r\n\r\n{if event.hull:\r\n   {set systemsrepaired to cat(systemsrepaired, [OneOf(\"do casco\",\"da fuselagem\")])} \r\n}\r\n{if event.cockpit:\r\n   {set systemsrepaired to cat(systemsrepaired, [\"a cabine\"])} \r\n}\r\n{if event.corrosion:\r\n   {set systemsrepaired to cat(systemsrepaired, [OneOf(\"sistemas corroídos\", \"sistemas afetados por corrosão\")])} \r\n}\r\n\r\n{if len(systemsrepaired) > 0:\r\n\r\n    {set sequence to OneOf(\"sequência\", \"ciclo\")}\r\n    {set remote to Occasionally(2, \"remot{if sequence = 'ciclo':o|else:a}\")}    \r\n    {OneOf(\r\n        \"O drone concluiu o reparo {remote} \", \r\n        \"{sequence} {remote} concluíd{if sequence = 'ciclo':o|else:a}, reparos \"\r\n    )}\r\n\r\n    {set cur to 0}\r\n    {set length to len(systemsrepaired) - 1}\r\n    {while cur < len(systemsrepaired):\r\n        {systemsrepaired[cur]}\r\n        {set cur to cur + 1}\r\n        {if cur = length: e\r\n        |elif cur < length:,\r\n        }\r\n    }\r\n    feitos\r\n}.\r\n",
       "default": false,
       "name": "Repair drone",
       "description": "Triggered when your ship is repaired via a repair limpet controller"
@@ -1770,7 +1770,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{event.amount} \r\n\r\n{if event.commodity.rare: rare}\r\n\r\n{if event.commodity.name = \"Black Box\":\r\n   {if event.amount > 1:\r\n      {OneOf(\"flight records\", \"black boxes\")}\r\n   |else: \r\n      {OneOf(\"flight record\", \"black box\")}\r\n   }\r\n\r\n|elif event.commodity.name = \"Damaged Escape Pod\":\r\n   {OneOf(\"damaged cryo pod\", \"damaged escape pod\")}{if event.amount > 1:s}\r\n\r\n|elif event.commodity.name = \"Occupied Escape Pod\":\r\n   {OneOf(\"occupied escape pod\", \"occupied cryo pod\")}{if event.amount > 1:s}\r\n\r\n|elif event.commodity.name = \"Personal Effects\":\r\n   {OneOf(\"set\", \"collection\")}{if event.amount > 1:s} of\r\n   {OneOf(\"personal effects\", \"personal belongings\")}\r\n\r\n|elif event.commodity.name = \"Salvageable Wreckage\":\r\n   {set wreckage to OneOf(\"wreckage\", \"debris\")}\r\n   {set fragment to OneOf(\"fragment\", \"bit\", \"piece\", \"part\", \"remnant\")}\r\n   {OneOf(\"{fragment}{if event.amount > 1:s} of {wreckage}\", \r\n          \"{wreckage} {fragment}{if event.amount > 1:s}\")}\r\n\r\n|elif event.commodity.name = \"Hostage\":\r\n   hostage{if event.amount > 1:s}\r\n\r\n|else:\r\n   {event.commodity.name}{if event.amount > 1:s}\r\n}\r\n\r\n{OneOf(\"recovered\", \"salvaged\", \"returned\", \"delivered\")}\r\n{Occasionally(2, \"in exchange\")}\r\nfor {Humanise(event.reward)} credits.\r\n",
+      "script": "{event.amount} \r\n\r\n{if event.commodity.rare: rare}\r\n\r\n{if event.commodity.name = \"Caixa Preta\":\r\n   {if event.amount > 1:\r\n      {OneOf(\"registros de vôo\", \"caixas pretas\")}\r\n   |else: \r\n      {OneOf(\"registro de vôo\", \"caixa preta\")}\r\n   }\r\n\r\n|elif event.commodity.name = \"Cápsula de Escape Danificada\":\r\n   {OneOf(\"criocápsula{if event.amount > 1:s} danificada\", \"cápsula{if event.amount > 1:s} de escape danificada\")}{if event.amount > 1:s}\r\n\r\n|elif event.commodity.name = \"Cápsula de Escape Ocupada\":\r\n   {OneOf(\"cápsula{if event.amount > 1:s} de escape ocupada\", \"criocápsula{if event.amount > 1:s} ocupada\")}{if event.amount > 1:s}\r\n\r\n|elif event.commodity.name = \"Ítens Pessoais\":\r\n   {OneOf(\"conjunto\", \"coleção\")}{if event.amount > 1:s} de\r\n   {OneOf(\"ítens pessoais\", \"objetos pessoais\")}\r\n\r\n|elif event.commodity.name = \"Destroço Recuperável\":\r\n   {set wreckage to OneOf(\"destroços\", \"restos\")}\r\n   {set fragment to OneOf(\"fragmento\", \"pedaço\", \"parte\")}\r\n   {fragment}{if event.amount > 1:s} de {wreckage}\r\n\r\n|elif event.commodity.name = \"Refém\":\r\n   refé{if event.amount > 1:ns|else:m}\r\n\r\n|else:\r\n   {event.commodity.name}{if event.amount > 1:s}\r\n}\r\n\r\n{OneOf(\"recuperado\", \"retornado\", \"entregue\")}{if event.amount > 1:s},\r\n{Occasionally(2, \"trocado\")}\r\npor {Humanise(event.reward)} créditos.\r\n",
       "default": false,
       "name": "Search and rescue",
       "description": "Triggered when delivering items to a Search and Rescue contact"
@@ -1779,8 +1779,8 @@
       "enabled": true,
       "priority": 3,
       "responder": false,
-      "script": "{if system.population > 0:\r\n    There is\r\n    {if system.security = \"None\":\r\n        no\r\n    |elif system.security = \"Low\":\r\n        {OneOf(\"minimal\", \"low\", \"weak\")}\r\n    |elif system.security = \"Medium\":\r\n        {OneOf(\"standard\", \"medium\", \"average\")}\r\n    |elif system.security = \"High\":\r\n        {OneOf(\"high\", \"heavy\", \"strong\")}\r\n    |else:\r\n        {system.security}\r\n    }\r\n    {OneOf(\"police\", \"security\", \"law enforcement\")} presence {OneOf(\"here\", \"in this system\", \"in the locality\")}.\r\n}",
-      "default": true,
+      "script": "{if system.population > 0:\r\n    {if system.security = \"None\":\r\n        {OneOf(\"Nenhuma {OneOf('segurança','aplicação da lei')}\",\"Nenhum policiamento\")}\r\n    |elif system.security = \"Baixa\":\r\n        {OneOf(\"Baixa {OneOf('segurança','aplicação da lei')}\",\"Baixo policiamento\")}\r\n    |elif system.security = \"Média\":\r\n        {OneOf(\"Média {OneOf('segurança','aplicação da lei')}\",\"Médio policiamento\")}\r\n    |elif system.security = \"Alta\":\r\n        {OneOf(\"{OneOf('Alta','Forte')} {OneOf('segurança','aplicação da lei')}\",\"{OneOf('Alto','Forte')} policiamento\")}\r\n    |else:\r\n        Segurança {system.security}\r\n    }\r\n    presente {OneOf(\"aqui\", \"neste sistema\", \"na localidade\")}.\r\n}",
+      "default": false,
       "name": "Security presence report",
       "description": "Function to report on the details of system security"
     },
@@ -1788,7 +1788,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "Self-destruct sequence initiated.  Closing heat vents.\r\n\r\n{SetState('eddi_context_selfdestruct', \"yes\")}",
+      "script": "Sequẽncia de Auto-Destruição iniciada. Fechando saídas de calor.\r\n\r\n{SetState('eddi_context_selfdestruct', \"yes\")}",
       "default": false,
       "name": "Self destruct",
       "description": "Triggered when you start the self destruct sequence"
@@ -1797,7 +1797,7 @@
       "enabled": true,
       "priority": 3,
       "responder": false,
-      "script": "{_ Session Scan Value}\r\n{_ Total estimated value of exploration scans for this gaming session}\r\n\r\n{set value to state.eddi_context_session_scan_value}\r\n\r\n{if (value = 0 || value = null) && logout != \"true\":\r\n    {OneOf(\"Valuable scans have not\",\"No valuable scans have\")} been\r\n    {OneOf(\"performed\", \"made \")}\r\n    {OneOf(\"in\", \"during\")} this session.\r\n\r\n|elif value && value > 0:\r\n    {if logout = true: \r\n        This sessions\r\n    |else:\r\n        {OneOf(\"Current value of\", \"Value of current\")}\r\n    }\r\n    {OneOf(\"body and star\", \"exploration\")}\r\n    scans is estimated {OneOf(\"to be\", \"at\")}\r\n    {state.eddi_context_session_scan_value} credits.\r\n}\r\n",
+      "script": "{_ Session Scan Value}\r\n{_ Total estimated value of exploration scans for this gaming session}\r\n\r\n{set value to state.eddi_context_session_scan_value}\r\n\r\n{if (value = 0 || value = null) && logout != \"true\":\r\n    {OneOf(\"Scan de valor não foi\",\"Nenhum scan valioso foi\")}\r\n    {OneOf(\"executado\", \"feito\")}\r\n    {OneOf(\"n\", \"durante \")}esta sessão.\r\n\r\n|elif value && value > 0:\r\n    {if logout = true: \r\n        Nesta sessão\r\n    |else:\r\n        Valor atual\r\n    }\r\n    de scans o valor de\r\n    {OneOf(\"corpos e estrelas\", \"exploração\")}    \r\n    foi de {state.eddi_context_session_scan_value} créditos.\r\n}\r\n",
       "default": false,
       "name": "Session Scan Value",
       "description": "Total estimated value of exploration scans for this gaming session"
@@ -1815,7 +1815,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{Pause(2000)}\r\n\r\nShields {OneOf(\"have collapsed\",\"gone\")},\r\n\r\n{OneOf(\"Ship\",\"Hull\")}\r\n{Occasionally(2,\"is\")}\r\n{Occasionally(2,\"now\")}\r\n{OneOf(\"vun-erable\",\"exposed\")}\r\nto\r\n{Occasionally(2,\"permanent\")}\r\ndamage.\r\n",
+      "script": "{Pause(2000)}\r\n\r\nOs escudos {OneOf(\"caíram\",\"foram derrubados\")},\r\n\r\n{set ALVO to OneOf(\"a nave\",\"o casco\",\"a fuselagem\")}\r\n{ALVO} está\r\n{Occasionally(2,\"agora\")}\r\n{OneOf(\"vulnerável\",\"expost{if ALVO = 'o casco':o|else:a}\")}\r\na danos {Occasionally(2,\"permanentes\")}.\r\n",
       "default": false,
       "name": "Shields down",
       "description": "Triggered when your ship's shields go offline"
@@ -1824,7 +1824,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{Pause(2000)}\r\n\r\n{OneOf(\"Energy screens\",\"Shields\")}\r\n\r\n{OneOf(\"regenerated\",\"at 50%\",\"powered up\",\"restored\")}.\r\n",
+      "script": "{Pause(2000)}\r\n\r\n{OneOf(\"Escudos {OneOf('restabelecidos','regenerados')}\",\"Defesas {OneOf('restabelecidas','regeneradas')}\")}\r\n\r\n{Occasionally(2,\"a 50%\")}.\r\n",
       "default": false,
       "name": "Shields up",
       "description": "Triggered when your ship's shields come online"
@@ -1833,7 +1833,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{Occasionally(2, \"{F('Honorific')}, \")}\r\nYour {event.ship} has \r\n\r\n{OneOf(\"arrived {if station.name != event.station && event.station: at}\", \r\n       \"completed its transfer {if station.name != event.station && event.station: to}\")}\r\n\r\n{if station.name != event.station && event.station:\r\n   {event.station}\r\n   {if system.name != event.system && event.system:\r\n      in the {event.system} system\r\n   }\r\n}.",
+      "script": "{Occasionally(2, \"{F('Honorific')}, \")}                                                                                                                              \r\nSua nave {event.ship} \r\n\r\n{OneOf(\"chegou {if station.name != event.station && event.station: em}\", \r\n       \"completou sua transferência {if station.name != event.station && event.station: para}\")}\r\n\r\n{if station.name != event.station && event.station:\r\n   {event.station}\r\n   {if system.name != event.system && event.system:\r\n      no sistema {event.system}\r\n   }\r\n}.",
       "default": false,
       "name": "Ship arrived",
       "description": "Triggered when you complete a ship transfer"
@@ -1842,7 +1842,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{SetState('eddi_context_currentshipid', event.shipid)}\r\n\r\n{ShipCallsign()} handover complete.\r\n",
+      "script": "{SetState('eddi_context_currentshipid', event.shipid)}\r\n\r\nTransferência de comando da {ShipCallsign()} finalizada. \r\n",
       "default": false,
       "name": "Ship delivered",
       "description": "Triggered when your newly-purchased ship is delivered to you"
@@ -1860,7 +1860,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{Pause(1000)}\r\n\r\n{if event.submitted:\r\n   You have submitted to the interdiction\r\n|elif event.succeeded:\r\n   Evasion failed, systems have been damaged.\r\n   You have been interdicted\r\n}\r\n\r\n{set shiptype to event.interdictor}\r\n{F(\"TargetType\")}\r\n\r\n{if !event.succeeded:\r\n   Interdiction {OneOf(\"evasion successful\",\"successfully evaded\")}\r\n|else:\r\n   {SetState('eddi_context_interdicted', 'yes')}\r\n   by {shiptype}\r\n\r\n   {if event.iscommander:\r\n      This is a human player, of {event.rating} rating!\r\n   |else:\r\n      , a {event.rating} {OneOf(\"pilot\", \"ship\", \"vessel\")}\r\n   }\r\n\r\n   {if event.faction = null:\r\n      who {OneOf(\"is unaligned\",\"has no allegiance\")}\r\n   |else:\r\n      {Occasionally(2,\"who is\")} aligned with {P(event.faction)},\r\n   }\r\n\r\n   {if event.power = \"Indpendent\":\r\n      {Occasionally(2,\"and is a member of the Alliance\")}\r\n   |elif event.power = \"Pirate\":\r\n      and is a free-booter of the Pirate Clans\r\n   |elif event.power = \"Empire\":\r\n      {Occasionally(2,\"and is a servitor of the Empire\")}\r\n   |elif event.power = \"Federation\":\r\n      {Occasionally(2,\"and is a recruit of the Federation\")}\r\n   }\r\n}\r\n.\r\n",
+      "script": "{Pause(1000)}\r\n\r\n{if event.submitted:\r\n   Você se submeteu à interdição\r\n|elif event.succeeded:\r\n   A evasão falhou, sistemas foram danificados.\r\n   Você sofreu a interdição.\r\n}\r\n\r\n{set shiptype to event.interdictor}\r\n{F(\"TargetType\")}\r\n\r\n{if !event.succeeded:\r\n   {OneOf(\"Sucesso ao evadir a\",\"Sucesso ao evitar a \")} interdição\r\n|else:\r\n   {SetState('eddi_context_interdicted', 'yes')}\r\n   pela {shiptype}\r\n\r\n   {if event.iscommander:\r\n      Este é um piloto humano, de nível {event.rating}!\r\n   |else:\r\n      , {OneOf(\"um piloto\", \"uma nave\")} de nível {event.rating} \r\n   }\r\n\r\n   {if event.faction = null:\r\n      que {OneOf(\"não tem aliança\",\"não é aliado a ninguém\")}\r\n   |else:\r\n      {Occasionally(2,\"que é\")} aliado de {P(event.faction)},\r\n   }\r\n\r\n   {if event.power = \"Indpendent\":\r\n      {Occasionally(2,\"é um membro da Aliança\")}\r\n   |elif event.power = \"Pirate\":\r\n      e é um criminoso dos clãs piratas\r\n   |elif event.power = \"Empire\":\r\n      {Occasionally(2,\"e é um servidor do Império\")}\r\n   |elif event.power = \"Federation\":\r\n      {Occasionally(2,\"e é um recruta da Federação\")}\r\n   }\r\n}\r\n.\r\n",
       "default": false,
       "name": "Ship interdicted",
       "description": "Triggered when your ship is interdicted by another ship"
@@ -1869,7 +1869,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{Pause(1000)}\r\n\r\n{if !event.succeeded:\r\n   Interdiction {OneOf(\"unsuccessful\",\"evaded\",\"failed\")}.\r\n|else:\r\n   Interdiction {OneOf(\"successful\",\"completed\")}. Systems have been damaged.\r\n   Target is {event.interdictee}\r\n\r\n   {if event.iscommander:\r\n      . This is a human player, of {event.rating} rating!\r\n   |else:\r\n      , a {OneOf(\"pilot\", \"ship\", \"vessel\")}\r\n   }\r\n\r\n   {if event.faction = null:\r\n      who {OneOf(\"is unaligned\",\"has no allegiance\")}\r\n   |else:\r\n      {Occasionally(2,\"who is\")} aligned with {P(event.faction)}\r\n   }\r\n\r\n   {if event.power = \"Indpendent\":\r\n      {Occasionally(2,\"and is a member of the Alliance\")}\r\n   |elif event.power = \"Pirate\":\r\n      and is a free-booter of the Pirate Clans\r\n   |elif event.power = \"Empire\":\r\n      {Occasionally(2,\"and is a servitor of the Empire\")}\r\n   |elif event.power = \"Federation\":\r\n      {Occasionally(2,\"and is a recruit of the Federation\")}\r\n   }\r\n}\r\n.\r\n",
+      "script": "{Pause(1000)}\r\n\r\n{if !event.succeeded:\r\n   A interdição {OneOf(\"foi evitada\",\"falhou\")}.\r\n|else:\r\n   Interdição {OneOf(\"foi um sucesso\",\"finalizada\")}. Sistemas foram danificados.\r\n   O alvo é {event.interdictee}\r\n\r\n   {if event.iscommander:\r\n      . Este é o um piloto humano, de nível {event.rating}!\r\n   |else:\r\n      , {OneOf(\"um piloto\", \"uma nave\")}\r\n   }\r\n\r\n   {if event.faction = null:\r\n      que não tem alianças\r\n   |else:\r\n      {Occasionally(2,\"que é\")} aliado a {P(event.faction)}\r\n   }\r\n\r\n   {if event.power = \"Indpendent\":\r\n      {Occasionally(2,\"e é um membro da Aliança\")}\r\n   |elif event.power = \"Pirate\":\r\n      e é um criminoso dos clãs piratas\r\n   |elif event.power = \"Empire\":\r\n      {Occasionally(2,\"e é um servidor do Império\")}\r\n   |elif event.power = \"Federation\":\r\n      {Occasionally(2,\"e é um recruta da Federação\")}\r\n   }\r\n}\r\n.\r\n",
       "default": false,
       "name": "Ship interdiction",
       "description": "Triggered when you interdict another ship"
@@ -1887,7 +1887,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{P(event.ship)} purchased.\r\n",
+      "script": "{P(event.ship)} comprada.\r\n",
       "default": false,
       "name": "Ship purchased",
       "description": "Triggered when you purchase a ship"
@@ -1896,7 +1896,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "\r\n{Pause(5000)}\r\n\r\n{if len(event.modules) > 0:\r\n    Repairs complete {F(\"Honorific\")}.\r\n    The following modules have been repaired:\r\n\r\n    {set cur to 0}\r\n    {set length to len(event.modules) - 1}\r\n    {for mods in event.modules:\r\n        {if slice(mods,0,4) = \"Slot\":\r\n            {set mod to ord(slice(mods,4,1))-48}\r\n            {set mod1 to ord(slice(mods,5,1))-49}\r\n            {set mod to mod * 10 + mod1}\r\n            {ship.compartments[mod].module.name}\r\n        |else:\r\n            {mods}\r\n        }\r\n        {set cur to cur + 1}\r\n        {if cur = length: and\r\n        |elif cur < length:,\r\n        }\r\n    }\r\n|else:\r\n    {OneOf(\"No systems can be repaired\",\"Unable to fix any systems\")} with reboot repair\r\n}\r\n.\r\n",
+      "script": "\r\n{Pause(5000)}\r\n\r\n{if len(event.modules) > 0:\r\n    Reparos finalizados {F(\"Honorific\")}.\r\n    Os seguintes módulos foram consertados:\r\n\r\n    {set cur to 0}\r\n    {set length to len(event.modules) - 1}\r\n    {for mods in event.modules:\r\n        {if slice(mods,0,4) = \"Slot\":\r\n            {set mod to ord(slice(mods,4,1))-48}\r\n            {set mod1 to ord(slice(mods,5,1))-49}\r\n            {set mod to mod * 10 + mod1}\r\n            {ship.compartments[mod].module.name}\r\n        |else:\r\n            {mods}\r\n        }\r\n        {set cur to cur + 1}\r\n        {if cur = length: e\r\n        |elif cur < length:,\r\n        }\r\n    }\r\n|else:\r\n    {OneOf(\"Nenhum sistema pôde ser reparado\",\"Incapaz de consertar quaisquer sistemas\")} com o reparo de reinicialização.\r\n}\r\n.\r\n",
       "default": false,
       "name": "Ship rebooted",
       "description": "Triggered when you run reboot/repair on your ship"
@@ -1905,7 +1905,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{_ Context}\r\n{SetState('eddi_context_last_subject', 'refuelling')}\r\n{SetState('eddi_context_last_action', 'complete')}\r\n{SetState('eddi_context_fuel_remaining', event.total)}\r\n\r\n\r\n{set fuelscooped to state.eddi_fuel_scooped}\r\n{set fueltotal to ship.fueltanktotalcapacity}\r\n\r\n{if event.source = \"Market\":\r\n   {Occasionally(2,\"{OneOf('{ShipName()}','Ship')}\")}\r\n   {OneOf(\"re-fuelled\",\"fuel tanks topped up\",\"tanks re-filled\")}\r\n   {if event.total != ship.fueltanktotalcapacity: by {Humanise(event.amount)} tonnes\r\n   |else: {Occasionally(3,\"by {Humanise(event.amount)} tonnes\")} }.\r\n|else:\r\n   {SetState('eddi_fuel_scooped',(state.eddi_fuel_scooped + event.amount))}\r\n\r\n   {if event.amount <= 5.0000:\r\n      {set total to (100/fueltotal)*event.total}\r\n\r\n      {set percent to round((100/fueltotal)*state.eddi_fuel_scooped, 0)}\r\n      {set tonnes to round(state.eddi_fuel_scooped, 0)}\r\n\r\n      {SetState('eddi_fuel_scooped', 0)}\r\n      {Pause(3000)}\r\n\r\n      {if tonnes = 1:\r\n         {set tons to \"tonne\"}\r\n      |else:\r\n         {set tons to \"tonnes\"}\r\n      }\r\n\r\n      {OneOf(\"{percent}% refuelled\",\r\n             \"Refuelled by {OneOf('{percent}%','{tonnes} {tons}')}\",\r\n             \"{OneOf('{percent}%','{tonnes} {tons}')} taken on board\")},\r\n\r\n      {if total = 100:\r\n         {Occasionally(2,\"{OneOf('Main','Primary')}\")}\r\n         {Occasionally(2,\"Fuel\")}\r\n         tanks at {OneOf(\"Maximum\",\"100%\")}\r\n         {Occasionally(2,\"capacity\")}\r\n      |else:\r\n         {F(\"Fuel check\")}\r\n      }\r\n   }\r\n}\r\n",
+      "script": "{_ Context}\n{SetState('eddi_context_last_subject', 'refuelling')}\n{SetState('eddi_context_last_action', 'complete')}\n{SetState('eddi_context_fuel_remaining', event.total)}\n\n\n{set fuelscooped to state.eddi_fuel_scooped}\n{set fueltotal to ship.fueltanktotalcapacity}\n\n{if event.source = \"Market\":\n   {OneOf(\"tanques de combustível lotados\",\"tanques completados\")} {Occasionally(2,\"{OneOf(' da {ShipName()}','da Nave')}\")}\n   {if event.total != ship.fueltanktotalcapacity: com {Humanise(event.amount)} toneladas\n   |else: {Occasionally(3,\"com {Humanise(event.amount)} toneladas\")} }.\n|else:\n   {SetState('eddi_fuel_scooped',(state.eddi_fuel_scooped + event.amount))}\n\n   {if event.amount <= 5.0000:\n      {set total to (100/fueltotal)*event.total}\n\n      {set percent to round((100/fueltotal)*state.eddi_fuel_scooped, 0)}\n      {set tonnes to round(state.eddi_fuel_scooped, 0)}\n\n      {SetState('eddi_fuel_scooped', 0)}\n      {Pause(3000)}\n\n      {if tonnes = 1:\n         {set tons to \"tonelada\"}\n      |else:\n         {set tons to \"toneladas\"}\n      }\n\n      {OneOf(\"{percent}% reabastecidos\",\n             \"Reabastecido com {OneOf('{percent}%','{tonnes} {tons}')}\",\n             \"{OneOf('{percent}%','{tonnes} {tons}')} injetados a bordo\")},\n\n      {if total = 100:\n         Tanque\n         {Occasionally(2,\"{OneOf('Principal','Primário')}\")}\n         {Occasionally(2,\"de combustível \")}\n         {OneOf(\"no máximo\",\"a 100%\")}\n         {Occasionally(2,\"da capacidade\")}\n      |else:\n         {F(\"Fuel check\")}\n      }\n   }\n}\n\n",
       "default": false,
       "name": "Ship refuelled",
       "description": "Triggered when you refuel your ship"
@@ -1914,8 +1914,8 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{ShipName()} now registered with {P(system.faction)}. \r\n\r\n{set ICAO_ID to ICAO(event.ident)}\r\n{if len(ICAO_ID) > 0:\r\n    Identification is {ICAO_ID}.\r\n|else:\r\n    Advisory: you have chosen a ship ID that is not pronounceable in the standard radio alphabet.\r\n}\r\n",
-      "default": true,
+      "script": "{ShipName()} registrada agora com {P(system.faction)}. \r\n\r\n{set ICAO_ID to ICAO(event.ident)}\r\n{if len(ICAO_ID) > 0:\r\n    Identificação é {ICAO_ID}.\r\n|else:\r\n    Aviso: você escolheu uma identificação de anve que não é pronunciável no alfabeto padrão de radio.\r\n}\r\n",
+      "default": false,
       "name": "Ship renamed",
       "description": "Triggered when you rename a ship"
     },
@@ -1923,7 +1923,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "\r\n{if event.item = \"Wear\" || event.item = \"Ship Integrity\":\r\n   {OneOf(\"General\",\"Normal\")} {Occasionally(2,\"ship\")} {OneOf(\"maintenance {OneOf('Completed','Performed')}\",\"wear Repaired\")}\r\n|elif event.item = \"Hull\":\r\n   Hull {Occasionally(2,\"Armour\")} {Occasionally(2,\"Plateing\")}: {OneOf(\"repaired\",\"fixed\")}\r\n|elif event.item = \"Paint\":\r\n   {OneOf(\"Paint\",\"Paintjob\",\"Paint work\")} {OneOf(\"refreshed\",\"re-applied\")}\r\n|elif event.item = \"$modularcargobaydoor_name\":\r\n   Cargo {Occasionally(\"Bay\")} {OneOf(\"Hatch\",\"Door\")}\r\n   {OneOf(\"System\",\"Component\",\"Module\")}: {OneOf(\"repaired\",\"fixed\")}\r\n|elif event.item = null || event.item = \"All\":\r\n   {Occasionally(2,ShipName())} {OneOf(\"damage repaired\",\"repairs complete\")}\r\n|else:\r\n   {if find(event.item, \"Cockpit\") > -1:\r\n      {OneOf(\"Cockpit\",\"Canopy\")}\r\n   |else:\r\n      {event.item}\r\n      {OneOf(\"System\",\"Component\",\"Module\")}:\r\n   }\r\n   {OneOf(\"repaired\",\"fixed\")}\r\n}.\r\n",
+      "script": "\r\n{if event.item = \"Wear\" || event.item = \"Ship Integrity\":\r\n   {OneOf(\"General\",\"Normal\")} {Occasionally(2,\"ship\")} {OneOf(\"maintenance {OneOf('Completed','Performed')}\",\"wear Repaired\")}\r\n|elif event.item = \"Hull\":\r\n   {Occasionally(2,\"{OneOf('Blindagem do ','Revestimento do')}\")} Casco: {OneOf(\"reparado\",\"consertado\")}\r\n|elif event.item = \"Paint\":\r\n   {OneOf(\"Pintura {OneOf('reaplicada','renovada')}\",\"Trabalho de pintura {OneOf('reaplicado','renovado')}\")} \r\n|elif event.item = \"$modularcargobaydoor_name\":\r\n   {OneOf(\"Sistema\",\"Componente\",\"Módulo\")} da\r\n   {OneOf(\"Escotilha\",\"Porta\")} {Occasionally(\"do compartimento\")} de Carga: {OneOf(\"reparado\",\"consertado\")}\r\n|elif event.item = null || event.item = \"All\":\r\n   {OneOf(\"danos reparados na\",\"reparos finalizados na\")} {Occasionally(2,ShipName())}\r\n|else:\r\n   {if find(event.item, \"Cockpit\") > -1:\r\n      {OneOf(\"Cabine\",\"Canópla\")}: {OneOf(\"reparada\",\"consertada\")}\r\n   |else:\r\n      {event.item}\r\n      {OneOf(\"Sistema\",\"Componente\",\"Módulo\")}: {OneOf(\"reparado\",\"consertado\")}\r\n   }\r\n}.\r\n",
       "default": false,
       "name": "Ship repaired",
       "description": "Triggered when you repair your ship"
@@ -1941,7 +1941,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{Occasionally(2,ShipName())} {OneOf(\"amunition restocked\",\"re-armed\",\"amunition replenished\")}.\r\n",
+      "script": "{Occasionally(2,ShipName())} {OneOf(\"munição reestocada\",\"rearmada\",\"remuniciada\")}.",
       "default": false,
       "name": "Ship restocked",
       "description": "Triggered when you restock your ship's ammunition"
@@ -1959,7 +1959,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{set solds to ShipName(event.shipid, event.ship)}\r\n\r\n{OneOf(\"Retired {solds} from active duty\",\"Decommissioned {solds}\",\"Sold {solds}\")}\r\n\r\n{if event.system != system.name:\r\n   in {event.system}\r\n}.\r\n\r\n{_ Remove Fines & Bounties from sold ship _}\r\n{set tempshipid to state.eddi_context_currentshipid}\r\n{SetState('eddi_context_currentshipid', event.shipid)}\r\n{F(\"FinesBounties_ClearShip\")}\r\n{SetState('eddi_context_currentshipid', tempshipid)}\r\n",
+      "script": "{set solds to ShipName(event.shipid, event.ship)}\r\n\r\n{OneOf(\"{solds} aposentada do serviço ativo\",\"{solds} descomissionada\",\"{solds} vendida\")}\r\n\r\n{if event.system != system.name:\r\n   em {event.system}\r\n}.\r\n\r\n{_ Remove Fines & Bounties from sold ship _}\r\n{set tempshipid to state.eddi_context_currentshipid}\r\n{SetState('eddi_context_currentshipid', event.shipid)}\r\n{F(\"FinesBounties_ClearShip\")}\r\n{SetState('eddi_context_currentshipid', tempshipid)}\r\n",
       "default": false,
       "name": "Ship sold",
       "description": "Triggered when you sell a ship"
@@ -1968,7 +1968,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{event.ship}, identification {event.shipid}, sold in {event.system} for {Humanise(event.price)} credits.\r\n\r\n{_ Remove Fines & Bounties from sold ship _}\r\n{set tempshipid to state.eddi_context_currentshipid}\r\n{SetState('eddi_context_currentshipid', event.shipid)}\r\n{F(\"FinesBounties_ClearShip\")}\r\n{SetState('eddi_context_currentshipid', tempshipid)}",
+      "script": "{event.ship}, identificação {event.shipid}, vendida em {event.system} por {Humanise(event.price)} créditos.\r\n\r\n{_ Remove Fines & Bounties from sold ship _}\r\n{set tempshipid to state.eddi_context_currentshipid}\r\n{SetState('eddi_context_currentshipid', event.shipid)}\r\n{F(\"FinesBounties_ClearShip\")}\r\n{SetState('eddi_context_currentshipid', tempshipid)}",
       "default": false,
       "name": "Ship sold on rebuy",
       "description": "Triggered when you sell a ship to raise funds on the insurance / rebuy screen"
@@ -1977,7 +1977,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{if event.storedship:\r\n    {OneOf(\"Storing\", \"Mothballing\", \"Parking\")} {ShipName(event.storedshipid, event.storedship)} and\r\n|elif event.soldship:\r\n    {F(\"FinesBounties_ClearShip\")}\r\n    Selling {ShipName(event.soldshipid, event.soldship)} and\r\n}\r\n\r\n{OneOf(\"swapping\",\"moving\",\"transferring\")} to {ShipName(event.shipid, event.ship)}.\r\n{SetState('eddi_context_currentshipid', event.shipid)}\r\n\r\n{F(\"Limpet check\")}\r\n{F(\"List launchbays\")}\r\n\r\n{set fighterhangar to false}\r\n{for compartment in ship.compartments:\r\n    {if find(compartment.module.name, \"Fighter Hangar\") != -1:\r\n        {set fighterhangar to true}\r\n    }\r\n}\r\n{if fighterhangar = true:\r\n    Reminder: you need to assign a crew member to active duty.\r\n}\r\n\r\n{F(\"FinesBounties_CheckShip\")}",
+      "script": "{if event.storedship:\r\n    {OneOf(\"Guardando\", \"Estocando\", \"Estacionando\")} {ShipName(event.storedshipid, event.storedship)} e\r\n|elif event.soldship:\r\n    {F(\"FinesBounties_ClearShip\")}\r\n    Vendendo {ShipName(event.soldshipid, event.soldship)} e\r\n}\r\n\r\n{OneOf(\"trocando\",\"mudando\",\"transferindo\")} para {ShipName(event.shipid, event.ship)}.\r\n{SetState('eddi_context_currentshipid', event.shipid)}\r\n\r\n{F(\"Limpet check\")}\r\n{F(\"List launchbays\")}\r\n\r\n{set fighterhangar to false}\r\n{for compartment in ship.compartments:\r\n    {if find(compartment.module.name, \"Fighter Hangar\") != -1:\r\n        {set fighterhangar to true}\r\n    }\r\n}\r\n{if fighterhangar = true:\r\n    Lembrete: você precisa designar um membro da tripulação para entrar em serviço.\r\n}\r\n\r\n{F(\"FinesBounties_CheckShip\")}",
       "default": false,
       "name": "Ship swapped",
       "description": "Triggered when you swap a ship"
@@ -1986,7 +1986,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{_ Ship targeted }\r\n{_ Triggered when the player selects a target }\r\n\r\n{_ event Parameters:   targetlocked - bool (ie false when losing target) }\r\n{_ If target locked:   name (of ship), scanstage (ie 0, 1, 2, 3) }\r\n{_ If scan stage >= 1: name (of pilot), rank (of pilot) }\r\n{_ If scan stage >= 2: shieldhealth, hullhealth (both 0-100) }\r\n{_ If scan stage >= 3: faction, legalstatus (ie clean, wanted, etc), bounty (if appicable), }\r\n{_                     subsystem (ie FSD, power plant, etc), subsystemhealth (0-100) }\r\n\r\n{_ Context }\r\n{SetState('eddi_context_last_subject', 'ship')}\r\n{SetState('eddi_context_last_action', 'targeted')}\r\n\r\n{if event.targetlocked:\r\n    {if event.scanstage = 0:\r\n        {SetState('legal_status_reported', false)}\r\n    |elif event.scanstage = 1:\r\n        {OneOf(\"Scanning\", \"Analysing\")} {Occasionally(2, OneOf(\"ship\", \"vessel\", \"target\"))}\r\n    |elif event.scanstage = 3 && state.legal_status_reported = false && !event.subsystem:\r\n        {set legalstatus to event.legalstatus}\r\n        {if legalstatus = \"Wanted\" || legalstatus = \"Wanted Enemy\" || legalstatus = \"Warrant\":\r\n            {event.name}\r\n            {OneOf(\"has a bounty\", \"is fair game\", \"is a legitimate target\",\"has been assigned a bounty\")}.\r\n        |else:\r\n            {Occasionally(2,\"Your\")} target is \r\n            {if find(event.name, \"Authority\") = -1 && find(event.name, \"Security\") = -1 && find(event.name, \"Defence\") = -1:\r\n                clean.\r\n            |else:\r\n                {if StartsWithVowel(event.name): an |else: a } {event.name}\r\n                {if find(event.name, \"Vessel\") = -1: vessel}\r\n                .\r\n            }\r\n        }\r\n        {SetState('legal_status_reported', true)}\r\n    }\r\n}\r\n",
+      "script": "{_ Ship targeted }\n{_ Triggered when the player selects a target }\n\n{_ event Parameters:   targetlocked - bool (ie false when losing target) }\n{_ If target locked:   name (of ship), scanstage (ie 0, 1, 2, 3) }\n{_ If scan stage >= 1: name (of pilot), rank (of pilot) }\n{_ If scan stage >= 2: shieldhealth, hullhealth (both 0-100) }\n{_ If scan stage >= 3: faction, legalstatus (ie clean, wanted, etc), bounty (if appicable), }\n{_                     subsystem (ie FSD, power plant, etc), subsystemhealth (0-100) }\n\n{_ Context }\n{SetState('eddi_context_last_subject', 'ship')}\n{SetState('eddi_context_last_action', 'targeted')}\n\n{if event.targetlocked:\n    {if event.scanstage = 0:\n        {SetState('legal_status_reported', false)}\n    |elif event.scanstage = 1:\n        {OneOf(\"Escaneando\", \"Analisando\")} {Occasionally(2, OneOf(\"nave\", \"alvo\"))}\n    |elif event.scanstage = 3 && state.legal_status_reported = false && !event.subsystem:\n        {set legalstatus to event.legalstatus}\n        {if legalstatus = \"Procurado\" || legalstatus = \"Inimigo Procurado\" || legalstatus = \"Mandado\":\n            {event.name}\n            {OneOf(\"tem uma recompensa\", \"é jogo limpo\", \"é um alvo legítimo\",\"recebeu uma recompensa\")}.\n        |else:\n            {Occasionally(2,\"Seu\")} alvo está\n            {if find(event.name, \"Autoridade\") = -1 && find(event.name, \"Segurança\") = -1 && find(event.name, \"Defesa\") = -1:            \n                limpo.\n            |else:\n                um {event.name}                \n                {if find(event.name, \"Vessel\") = -1: vessel}\n                .\n            }\n        }\n        {SetState('legal_status_reported', true)}\n    }\n}\n\n",
       "default": false,
       "name": "Ship targeted",
       "description": "Triggered when the player selects a target"
@@ -1995,7 +1995,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{ShipName(event.shipid, event.ship)} {OneOf(\"on its way\",\"being transferred\", \"transfer initiated\", \"being transported\", \"being transferred\")} from {P(event.system)}\r\n\r\n{if event.transfercost: for a cost of {event.price} credits}.\r\n\r\n{set t_remaining to event.time}\r\n\r\n{if t_remaining:\r\n\r\n   Expected arrival in:\r\n\r\n   {if t_remaining > (60*60*24):\r\n      {set t_days to floor(t_remaining/(60*60*24))}\r\n      {t_days} days,\r\n      {set t_remaining to t_remaining-(t_days*(60*60*24))}\r\n   }\r\n\r\n   {if t_remaining > 3600:\r\n      {set t_hours to floor(t_remaining/3600)}\r\n      {t_hours} hours,\r\n      {set t_remaining to t_remaining-(t_hours*(60*60))}\r\n   }\r\n\r\n   {if t_remaining > 60:\r\n      {if t_days || t_hours: and}\r\n      {set t_minutes to round(t_remaining/(60),0)}\r\n      {t_minutes} minutes.\r\n   }\r\n}",
+      "script": "{ShipName(event.shipid, event.ship)} {OneOf(\"está a caminho\",\"está sendo transferida\", \"transferência iniicada\", \"está sendo transportada\")} de {P(event.system)}\r\n\r\n{if event.transfercost: por um custo de {event.price} créditos}.\r\n\r\n{set t_remaining to event.time}\r\n\r\n{if t_remaining:\r\n\r\n   Chegada esperada em:\r\n\r\n   {if t_remaining > (60*60*24):\r\n      {set t_days to floor(t_remaining/(60*60*24))}\r\n      {t_days} dias,\r\n      {set t_remaining to t_remaining-(t_days*(60*60*24))}\r\n   }\r\n\r\n   {if t_remaining > 3600:\r\n      {set t_hours to floor(t_remaining/3600)}\r\n      {t_hours} horas,\r\n      {set t_remaining to t_remaining-(t_hours*(60*60))}\r\n   }\r\n\r\n   {if t_remaining > 60:\r\n      {if t_days || t_hours: and}\r\n      {set t_minutes to round(t_remaining/(60),0)}\r\n      {t_minutes} minutos.\r\n   }\r\n}",
       "default": false,
       "name": "Ship transfer initiated",
       "description": "Triggered when you initiate a ship transfer"
@@ -2031,8 +2031,8 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{_ Squadron rank }\r\n{_ Triggered when your rank with a squadron has changed }\r\n\r\n\r\nYou have been\r\n{if event.newrank > event.oldrank:\r\n    promoted \r\n|else:\r\n    demoted\r\n}\r\nto {cmdr.squadronrank.name} in the {event.name} squadron.\r\n",
-      "default": true,
+      "script": "{_ Squadron rank }\r\n{_ Triggered when your rank with a squadron has changed }\r\n\r\n\r\nVocê foi\r\n{if event.newrank > event.oldrank:\r\n    promovido \r\n|else:\r\n    rebaixado\r\n}\r\na {cmdr.squadronrank.name} na esquadra {event.name}.\r\n",
+      "default": false,
       "name": "Squadron rank",
       "description": "Triggered when your rank with a squadron has changed"
     },
@@ -2040,8 +2040,8 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{_ Squadron status }\r\n{_ Triggered when your status with a squadron changes }\r\n\r\n\r\n{if event.status = \"applied\":\r\n    You have applied for admission into the {event.name} squadron.\r\n|elif event.status = \"created\":\r\n    You have created the {event.name} squadron.\r\n|elif event.status = \"disbanded\":\r\n    The {event.name} squadron has been disbanded.\r\n|elif event.status = \"invited\":\r\n    You have been invited into the {event.name} squadron.\r\n|elif event.status = \"joined\":\r\n    You have joined the {event.name} squadron.\r\n|elif event.status = \"kicked\":\r\n    You have been kicked from the {event.name} squadron.\r\n|elif event.status = \"left\":\r\n    You have left the {event.name} squadron.\r\n}\r\n",
-      "default": true,
+      "script": "{_ Squadron status }\r\n{_ Triggered when your status with a squadron changes }\r\n\r\n\r\n{if event.status = \"applied\":\r\n    Você se inscreveu para admissão na esquadra {event.name}.\r\n|elif event.status = \"created\":\r\n    Você criou a esquadra {event.name}.\r\n|elif event.status = \"disbanded\":\r\n    A esquadra {event.name} foi dissolvida.\r\n|elif event.status = \"invited\":\r\n    Você recebeu convite para se juntar à esquadra {event.name}.\r\n|elif event.status = \"joined\":\r\n    Você entrou na esquadra {event.name}.\r\n|elif event.status = \"kicked\":\r\n    Você foi sofreu expulsão da esquadra {event.name}.\r\n|elif event.status = \"left\":\r\n    Você deixou a esquadra {event.name}.\r\n}\r\n",
+      "default": false,
       "name": "Squadron status",
       "description": "Triggered when your status with a squadron has changed"
     },
@@ -2049,7 +2049,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{OneOf(\"Buggy\", \"S-R-V\")} {OneOf(\"docked\",\"secured {Occasionally(2,'on board')}\")}.\r\n",
+      "script": "{OneOf(\"Búgui\", \"V-R-S\")} {OneOf(\"atracado\",\"em segurança {Occasionally(2,'a bordo')}\")}.\r\n",
       "default": false,
       "name": "SRV docked",
       "description": "Triggered when you dock an SRV with your ship"
@@ -2058,7 +2058,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{OneOf(\"Buggy\", \"S-R-V\")} {OneOf(\"launched\",\"away\",\"deployed\")}.\r\n",
+      "script": "{OneOf(\"Búgui\", \"V-R-S\")} {OneOf(\"liberado\",\"lançado\",\"ativado\")}.\r\n",
       "default": false,
       "name": "SRV launched",
       "description": "Triggered when you launch an SRV from your ship"
@@ -2076,8 +2076,8 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{if !event.deployable:\r\n   {OneOf(\"Buggy\", \"SRV\")} standing by for recovery.\r\n}",
-      "default": true,
+      "script": "{if !event.deployable:\r\n   {OneOf(\"Búgui\", \"V-R-S\")} em espera para recuperação.\r\n}",
+      "default": false,
       "name": "SRV turret deployable",
       "description": "Triggered when your SRV enters or leaves the restriction zone around a ship."
     },
@@ -2085,8 +2085,8 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{OneOf(\"Buggy\", \"SRV\")} standing by for recovery.",
-      "default": true,
+      "script": "{OneOf(\"Búgui\", \"V-R-S\")} aguardando recuperação.",
+      "default": false,
       "name": "SRV under ship",
       "description": "Triggered when your SRV enters the recovery zone under your ship"
     },
@@ -2094,7 +2094,7 @@
       "enabled": true,
       "priority": 3,
       "responder": false,
-      "script": "{_ Fetch from context }\r\n{if event: {set reportbody to event} }\r\n{if !event: {set reportbody to BodyDetails(state.eddi_context_star_star, state.eddi_context_star_system)}}\r\n\r\n{if !reportbody.name || reportbody.name = \"\":\r\n    Não estou certo sobre qual estrela você está se referindo.\r\n|else:\r\n    {if reportbody.estimatedhabzoneinner && reportbody.estimatedhabzoneouter:\r\n        Zona habitável {Occasionally(2, OneOf(\"calculada a\", \"calculada a partir de\"))}\r\n\r\n        {if reportbody.estimatedhabzoneinner > 0 && reportbody.estimatedhabzoneouter > 0:\r\n            {Humanise(reportbody.estimatedhabzoneinner)} \r\n            {Humanise(reportbody.estimatedhabzoneouter)} \r\n            segundos luz.\r\n        |elif reportbody.estimatedhabzoneouter && reportbody.estimatedhabzoneouter > 0:\r\n            {Humanise(reportbody.estimatedhabzoneouter)} \r\n            segundos luz no máximo.\r\n        }\r\n    }\r\n}\r\n",
+      "script": "{_ Fetch from context }\r\n{if event: {set reportbody to event} }\r\n{if !event: {set reportbody to BodyDetails(state.eddi_context_star_star, state.eddi_context_star_system)}}\r\n\r\n{if !reportbody.name || reportbody.name = \"\":\r\n    Não estou certo sobre qual estrêla você está se referindo.\r\n|else:\r\n    {if reportbody.estimatedhabzoneinner && reportbody.estimatedhabzoneouter:\r\n        Zona habitável {Occasionally(2, OneOf(\"calculada a\", \"calculada a partir de\"))}\r\n\r\n        {if reportbody.estimatedhabzoneinner > 0 && reportbody.estimatedhabzoneouter > 0:\r\n            {Humanise(reportbody.estimatedhabzoneinner)} \r\n            {Humanise(reportbody.estimatedhabzoneouter)} \r\n            segundos luz.\r\n        |elif reportbody.estimatedhabzoneouter && reportbody.estimatedhabzoneouter > 0:\r\n            {Humanise(reportbody.estimatedhabzoneouter)} \r\n            segundos luz no máximo.\r\n        }\r\n    }\r\n}\r\n",
       "default": false,
       "name": "Star habitable zone",
       "description": "Report on the habitable zone around a star"
@@ -2112,7 +2112,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{_ Context }\r\n{SetState('eddi_context_last_subject', 'star')}\r\n{SetState('eddi_context_last_action', 'scan')}\r\n{SetState('eddi_context_star_system', system.name)}\r\n{SetState('eddi_context_star_star', event.name)}\r\n{SetState('eddi_context_last_scan_estimated_value', event.estimatedvalue)}\r\n\r\n\r\n{if state.lastscanbody != event.name:\r\n\r\n    {if event.estimatedvalue:\r\n        {SetState(\"eddi_context_system_value\", state.eddi_context_system_value + event.estimatedvalue)}\r\n        {SetState(\"eddi_context_session_scan_value\", state.eddi_context_session_scan_value + event.estimatedvalue)}\r\n    }\r\n\r\n    {if event.stellarclass = \"SuperMassiveBlackHole\":\r\n        {set class to \"Supermassive black hole\"}\r\n    |elif event.stellarclass = \"A_BlueWhiteSuperGiant\":\r\n        {set class to \"A-\"}\r\n    |elif event.stellarclass = \"F_WhiteSuperGiant\":\r\n        {set class to \"F-\"}\r\n    |elif event.stellarclass = \"M_RedSuperGiant\":\r\n        {set class to \"M-\"}\r\n    |elif event.stellarclass = \"M_RedGiant\":\r\n        {set class to \"M-\"}\r\n    |elif event.stellarclass = \"K_OrangeGiant\":\r\n        {set class to \"K-\"}\r\n    |elif event.stellarclass = \"RoguePlanet\":\r\n        {set class to \"Rogue planet-\"}\r\n    |elif event.stellarclass = \"Nebula\":\r\n        {set class to \"Nebula-\"}\r\n    |elif event.stellarclass = \"StellarRemnantNebula\":\r\n        {set class to \"Nebula remnant-\"}\r\n    |else:\r\n        {set class to join(split(Spacialise(event.stellarclass), \" \"), \"-\")}\r\n    }\r\n\r\n    {Pause(1000)}\r\n\r\n    Varredura da estrĂªla classe {class} {OneOf(\"concluída\", \"finalizada\")}.\r\n\r\n    {if ship.Role.edname = \"Exploration\" || ship.Role.edname = \"Multipurpose\":\r\n        {F(\"Star report\")}\r\n    }\r\n    {SetState('lastscanbody', event.name)}\r\n}\r\n",
+      "script": "{_ Context }\r\n{SetState('eddi_context_last_subject', 'star')}\r\n{SetState('eddi_context_last_action', 'scan')}\r\n{SetState('eddi_context_star_system', system.name)}\r\n{SetState('eddi_context_star_star', event.name)}\r\n{SetState('eddi_context_last_scan_estimated_value', event.estimatedvalue)}\r\n\r\n\r\n{if state.lastscanbody != event.name:\r\n\r\n    {if event.estimatedvalue:\r\n        {SetState(\"eddi_context_system_value\", state.eddi_context_system_value + event.estimatedvalue)}\r\n        {SetState(\"eddi_context_session_scan_value\", state.eddi_context_session_scan_value + event.estimatedvalue)}\r\n    }\r\n\r\n    {if event.stellarclass = \"SuperMassiveBlackHole\":\r\n        {set class to \"Supermassive black hole\"}\r\n    |elif event.stellarclass = \"A_BlueWhiteSuperGiant\":\r\n        {set class to \"A-\"}\r\n    |elif event.stellarclass = \"F_WhiteSuperGiant\":\r\n        {set class to \"F-\"}\r\n    |elif event.stellarclass = \"M_RedSuperGiant\":\r\n        {set class to \"M-\"}\r\n    |elif event.stellarclass = \"M_RedGiant\":\r\n        {set class to \"M-\"}\r\n    |elif event.stellarclass = \"K_OrangeGiant\":\r\n        {set class to \"K-\"}\r\n    |elif event.stellarclass = \"RoguePlanet\":\r\n        {set class to \"Rogue planet-\"}\r\n    |elif event.stellarclass = \"Nebula\":\r\n        {set class to \"Nebula-\"}\r\n    |elif event.stellarclass = \"StellarRemnantNebula\":\r\n        {set class to \"Nebula remnant-\"}\r\n    |else:\r\n        {set class to join(split(Spacialise(event.stellarclass), \" \"), \"-\")}\r\n    }\r\n\r\n    {Pause(1000)}\r\n\r\n    Varredura da estrêla classe {class} {OneOf(\"concluída\", \"finalizada\")}.\r\n\r\n    {if ship.Role.edname = \"Exploration\" || ship.Role.edname = \"Multipurpose\":\r\n        {F(\"Star report\")}\r\n    }\r\n    {SetState('lastscanbody', event.name)}\r\n}\r\n",
       "default": false,
       "name": "Star scanned",
       "description": "Triggered when you complete a scan of a stellar body"
@@ -2139,8 +2139,8 @@
       "enabled": true,
       "priority": 3,
       "responder": false,
-      "script": "Nothing of interest here.",
-      "default": true,
+      "script": "Nada de interessante aqui.",
+      "default": false,
       "name": "Station report",
       "description": "Function to report on the details of the current station"
     },
@@ -2148,8 +2148,8 @@
       "enabled": true,
       "priority": 3,
       "responder": false,
-      "script": "{_ Function to find a given module in outfitting}\r\n{set outfitting(module) to:\r\n    {for outfittingmodule in station.outfitting:\r\n        {if outfittingmodule.EDName = module.EDName:\r\n            {return outfittingmodule}\r\n        }\r\n    }\r\n}\r\n\r\n{_ Function to report if a module is cheaper in outfitting that on the ship}\r\n{set reportIfCheaper(shipmodule) to:\r\n    {_ Only consider if this has no modifications}\r\n    {if !shipmodule.modified:\r\n        {set outfittingmodule to outfitting(shipmodule)}\r\n        {if outfittingmodule:\r\n            {if outfittingmodule.price < shipmodule.price:\r\n                {set saving to shipmodule.price - outfittingmodule.price}\r\n                {_ Only bother if it's a relatively good saving}\r\n                {if saving / cmdr.credits > 0.001:\r\n                    You could save {Humanise(saving)} credits by swapping out your {shipmodule.name} here.\r\n                }\r\n            }\r\n        }\r\n    }\r\n}\r\n\r\n{reportIfCheaper(ship.powerplant)}\r\n{reportIfCheaper(ship.thrusters)}\r\n{reportIfCheaper(ship.frameshiftdrive)}\r\n{reportIfCheaper(ship.lifesupport)}\r\n{reportIfCheaper(ship.powerdistributor)}\r\n{reportIfCheaper(ship.sensors)}\r\n{for hardpoint in ship.hardpoints:\r\n    {if hardpoint.module:\r\n        {reportIfCheaper(hardpoint.module)}\r\n    }\r\n}\r\n{for compartment in ship.compartments:\r\n    {if compartment.module:\r\n        {reportIfCheaper(compartment.module)}\r\n    }\r\n}\r\n",
-      "default": true,
+      "script": "{_ Function to find a given module in outfitting}\r\n{set outfitting(module) to:\r\n    {for outfittingmodule in station.outfitting:\r\n        {if outfittingmodule.EDName = module.EDName:\r\n            {return outfittingmodule}\r\n        }\r\n    }\r\n}\r\n\r\n{_ Function to report if a module is cheaper in outfitting that on the ship}\r\n{set reportIfCheaper(shipmodule) to:\r\n    {_ Only consider if this has no modifications}\r\n    {if !shipmodule.modified:\r\n        {set outfittingmodule to outfitting(shipmodule)}\r\n        {if outfittingmodule:\r\n            {if outfittingmodule.price < shipmodule.price:\r\n                {set saving to shipmodule.price - outfittingmodule.price}\r\n                {_ Only bother if it's a relatively good saving}\r\n                {if saving / cmdr.credits > 0.001:\r\n                    Você pode economizar {Humanise(saving)} créditos trocando seu {shipmodule.name} aqui.\r\n                }\r\n            }\r\n        }\r\n    }\r\n}\r\n\r\n{reportIfCheaper(ship.powerplant)}\r\n{reportIfCheaper(ship.thrusters)}\r\n{reportIfCheaper(ship.frameshiftdrive)}\r\n{reportIfCheaper(ship.lifesupport)}\r\n{reportIfCheaper(ship.powerdistributor)}\r\n{reportIfCheaper(ship.sensors)}\r\n{for hardpoint in ship.hardpoints:\r\n    {if hardpoint.module:\r\n        {reportIfCheaper(hardpoint.module)}\r\n    }\r\n}\r\n{for compartment in ship.compartments:\r\n    {if compartment.module:\r\n        {reportIfCheaper(compartment.module)}\r\n    }\r\n}\r\n",
+      "default": false,
       "name": "Swapout check",
       "description": "Check to see if any fitted modules are available more cheaply here"
     },
@@ -2157,7 +2157,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{token(event.synthesis, \" \", 0)} synthesis complete.",
+      "script": "{set TOKEN to token(event.synthesis, \" \", 0)}\r\n\r\n{if TOKEN = \"Ammo\": Síntese de munição finalizada.}",
       "default": false,
       "name": "Synthesised",
       "description": "Triggered when you synthesise something from materials"
@@ -2166,8 +2166,8 @@
       "enabled": true,
       "priority": 3,
       "responder": false,
-      "script": "{_ Fetch from context }\r\n{set reportsystem to SystemDetails(state.eddi_context_system_system)}\r\n\r\n{if !reportsystem.name || reportbody.name = \"\":\r\n    I'm not sure which system you are asking about.\r\n|else:\r\n    Distance to {P(reportsystem.name)} is {Humanise(Distance(reportsystem.x, reportsystem.y, reportsystem.z, system.x, system.y, system.z))} light years.\r\n}\r\n\r\n\r\n\r\n",
-      "default": true,
+      "script": "{_ Fetch from context }\r\n{set reportsystem to SystemDetails(state.eddi_context_system_system)}\r\n\r\n{if !reportsystem.name || reportbody.name = \"\":\r\n    Não estou certo sobre qual sistema você está se referindo.\r\n|else:\r\n    A distância até {P(reportsystem.name)} é de {Humanise(Distance(reportsystem.x, reportsystem.y, reportsystem.z, system.x, system.y, system.z))} anos luz.\r\n}",
+      "default": false,
       "name": "System distance report",
       "description": "Function to report on the distance to the contextual system"
     },
@@ -2193,7 +2193,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{_ Context }\r\n{SetState('eddi_context_last_subject', 'system')}\r\n{SetState('eddi_context_last_action', 'change_state')}\r\n{SetState('eddi_context_system', event.system)}\r\n{SetState('eddi_context_system_system', event.system)}\r\n\r\n{_ Set up our system name}\r\n{if event.system = homesystem.name:\r\n  {set system to OneOf('{P(event.system)}',\r\n                       'your home system')}\r\n|elif event.system = system.name:\r\n  {set system to OneOf('{P{event.system)}',\r\n                       'this system')}\r\n|else:\r\n  {set system to OneOf('system {P(event.system)}'\r\n                       '{P(event.system)}'))}\r\n}\r\n\r\n{set system to join(split(system, \".\"), \" \")}\r\n\r\n{if event.newstate != 'None':\r\n  {_ System has entered a new state}\r\n  {OneOf('Local transmissions report that', 'Information: ', 'Transmission intercepted.  Contents state that ')}\r\n  {if event.newstate = 'Boom':\r\n    {OneOf('{system} is experiencing a commercial boom',\r\n           '{system} is entering a period of heightened commercial success')}\r\n  |elif event.newstate = 'Bust':\r\n    {system} is experiencing economic hardship\r\n  |elif event.newstate = 'Civil Unrest':\r\n    {OneOf('{system} is experiencing civil unrest',\r\n           'there is unrest in the {system} system')}\r\n  |elif event.newstate = 'Civil War':\r\n    {OneOf('{system} is at war with another faction in the same system',\r\n           'civil war has broken out in {system}',\r\n           '{system} has fallen in to civil war',\r\n           'hostilities have broken out in {system}')}\r\n  |elif event.newstate = 'Election':\r\n    {system} is undergoing elections\r\n  |elif event.newstate = 'Expansion':\r\n    {OneOf(\"a faction in {system}'s is attempting to expand in to a neighbouring system\",\r\n           \"a faction in {system}'s is preparing to expand in to a neighbouring system\")}\r\n  |elif event.newstate = 'Famine':\r\n    {system} is suffering from famine\r\n  |elif event.newstate = 'Investment':\r\n    {system}'s controlling faction are investing heavily in their local infrastructure\r\n  |elif event.newstate = 'Lockdown':\r\n    {system} has heightened security due to a lockdown by the controlling faction\r\n  |elif event.newstate = 'Outbreak':\r\n    {system} is suffering from an outbreak of contagious disease\r\n  |elif event.newstate = 'Retreat':\r\n    {system}'s controlling faction is retreating from a neighbouring system\r\n  |elif event.newstate = 'War':\r\n    {system} is now at war with a neighbouring system\r\n  |else:\r\n    {OneOf('{system} has entered {event.state}',\r\n           '{system} is now in a state of {event.state}')}\r\n  }.\r\n}\r\n\r\n",
+      "script": "{_ Context }\r\n{SetState('eddi_context_last_subject', 'system')}\r\n{SetState('eddi_context_last_action', 'change_state')}\r\n{SetState('eddi_context_system', event.system)}\r\n{SetState('eddi_context_system_system', event.system)}\r\n\r\n{_ Set up our system name}\r\n{if event.system = homesystem.name:\r\n  {set system to OneOf('{P(event.system)}',\r\n                       'seu sistema natal')}\r\n|elif event.system = system.name:\r\n  {set system to OneOf('{P{event.system)}',\r\n                       'este sistema')}\r\n|else:\r\n  {set system to OneOf('sistema {P(event.system)}'\r\n                       '{P(event.system)}'))}\r\n}\r\n\r\n{set system to join(split(system, \".\"), \" \")}\r\n\r\n{if event.newstate != 'None':\r\n  {_ System has entered a new state}\r\n  {OneOf('Transmissões locais relatam que ', 'Informação: ', 'Transmissão interceptada.  O conteúdo diz que ')}\r\n  {if event.newstate = 'Auge':\r\n    {OneOf('{system} está experimentando um auge econômico',\r\n           '{system} está entrando em um período de elevado sucesso comercial')}\r\n  |elif event.newstate = 'Recessão':\r\n    {system} está passando por um momento econômico muito ruim\r\n  |elif event.newstate = 'Revolta Civil':\r\n    {OneOf('{system} está passando por uma revolta civil',\r\n           'há uma revolta no sistema {system}')}\r\n  |elif event.newstate = 'Guerra Civil':\r\n    {OneOf('{system} está em guerra contra outra facção no mesmo sistema',\r\n           'uma guerra civil foi iniciada em {system}',\r\n           '{system} entrou em guerra civil',\r\n           'hostilidades começaram em {system}')}\r\n  |elif event.newstate = 'Eleição':\r\n    {system} está passando por eleições\r\n  |elif event.newstate = 'Expansão':\r\n    {OneOf(\"uma facção em {system} está tentando expandir para um sistema vizinho\",\r\n           \"uma facção em {system} está se preparando para expandir para um sistema vizinho\")}\r\n  |elif event.newstate = 'Fome':\r\n    {system} está sofrendo por causa da fome\r\n  |elif event.newstate = 'Investmento':\r\n    A facção que controla {system} está investindo pesado na infraestrutura local\r\n  |elif event.newstate = 'Lei Marcial':\r\n    {system} aumentou a segurança devido à lei marcial estabelecida pela facção controladora\r\n  |elif event.newstate = 'Epidemia':\r\n    {system} está sofrendo com uma epidemia de uma doença contagiosa\r\n  |elif event.newstate = 'Retirada':\r\n    A facção que controla {system} está se retirando de um sistema vizinho\r\n  |elif event.newstate = 'Guerra':\r\n    {system} está em guerra com um sistema vizinho\r\n  |else:\r\n    {OneOf('{system} entrou em {event.state}',\r\n           '{system} está agora em um estado de {event.state}')}\r\n  }.\r\n}",
       "default": false,
       "name": "System state changed",
       "description": "Triggered when there is a change in the state of a watched system"
@@ -2211,7 +2211,7 @@
       "enabled": true,
       "priority": 3,
       "responder": false,
-      "script": "{_ Get real target name}\r\n{_ to use this function, set a variable to shiptype in the calling event}\r\n\r\n{if shiptype = \"Cobra Mk. III\":\r\n   {set shiptype to \"Cobra Mark 3\"}\r\n\r\n|elif shiptype = \"Cobra Mk. IV\":\r\n   {set shiptype to \"Cobra Mark 4\"} {_ this works}\r\n\r\n|elif shiptype = \"Krait Mk. II\":\r\n   {set shiptype to \"Krait Mark 2\"}\r\n\r\n|elif shiptype = \"Viper Mk. III\":\r\n   {set shiptype to \"Viper Mark 3\"}\r\n\r\n|elif shiptype = \"Viper Mk. IV\":\r\n   {set shiptype to \"Viper Mark 4\"} {_ this works}\r\n\r\n|elif shiptype = \"$ShipName_Military_Alliance;\":\r\n   {set shiptype to \"the Alliance Defence Force\"}\r\n\r\n|elif shiptype = \"$ShipName_Military_Empire;\":\r\n   {set shiptype to \"the Imperial Navy\"}\r\n\r\n|elif shiptype = \"$ShipName_Military_Federation;\":\r\n   {set shiptype to \"the Federal Navy\"}\r\n\r\n|elif shiptype = \"$ShipName_Military_Independent;\":\r\n   {set shiptype to \"the System Defence Force\"}\r\n\r\n}\r\n",
+      "script": "{_ Get real target name}\r\n{_ to use this function, set a variable to shiptype in the calling event}\r\n\r\n{if shiptype = \"Cobra Mk. III\":\r\n   {set shiptype to \"Cobra Mark 3\"}\r\n\r\n|elif shiptype = \"Cobra Mk. IV\":\r\n   {set shiptype to \"Cobra Mark 4\"} {_ this works}\r\n\r\n|elif shiptype = \"Krait Mk. II\":\r\n   {set shiptype to \"Krait Mark 2\"}\r\n\r\n|elif shiptype = \"Viper Mk. III\":\r\n   {set shiptype to \"Viper Mark 3\"}\r\n\r\n|elif shiptype = \"Viper Mk. IV\":\r\n   {set shiptype to \"Viper Mark 4\"} {_ this works}\r\n\r\n|elif shiptype = \"$ShipName_Military_Alliance;\":\r\n   {set shiptype to \"a Força de Defesa da Aliança\"}\r\n\r\n|elif shiptype = \"$ShipName_Military_Empire;\":\r\n   {set shiptype to \"a Marinha Imperial\"}\r\n\r\n|elif shiptype = \"$ShipName_Military_Federation;\":\r\n   {set shiptype to \"a Marinha Federal\"}\r\n\r\n|elif shiptype = \"$ShipName_Military_Independent;\":\r\n   {set shiptype to \"a Força de Defesa do Sistema\"}\r\n\r\n}\r\n",
       "default": false,
       "name": "TargetType",
       "description": "Get real target name"
@@ -2229,7 +2229,7 @@
       "enabled": true,
       "priority": 3,
       "responder": false,
-      "script": "{_ TextWisdom}\r\n{_ Random wisdom of the day}\r\n{_ Choose a random option until all are used, then reset}\r\n{_ From an idea put to me by Brigetiol1. Thanks!}\r\n\r\nDaily wisdom, on radio {ShipName()}:\r\n\r\n{Pause(300)}\r\n\r\n{_ check Wisdom string is long, else run string setup (just in case it hasn't already been setup)}\r\n{if len(state.wisdomstring) < 10:\r\n\r\n    {set wisdomstring to [\"The best way to find yourself is to lose yourself in the service of others\",\r\n         \"You must be the change you wish to see in the world\",\r\n         \"Live as if you were to die tomorrow. Learn as if you were to live forever\",\r\n         \"First they ignore you, then they laugh at you, then they fight you, then you win\",\r\n         \"The weak can never forgive. Forgiveness is the attribute of the strong\",\r\n         \"Happiness is when what you think, what you say, and what you do are in harmony\",\r\n         \"In prayer it is better to have a heart without words than words without a heart\",\r\n         \"Truth stands, even if there be no public support. It is self-sustained\",\r\n         \"Satisfaction lies in the effort, not in the attainment, full effort is full victory\",\r\n         \"Truth never damages a cause that is just\",\r\n         \"Fear has its use but cowardice has none\",\r\n         \"Nobody can hurt me without my permission\",\r\n         \"My life is my message\",\r\n         \"Train yourself to let go of everything you fear to lose\",\r\n         \"Insanity: doing the same thing over and over again and expecting different results\",\r\n         \"The difference between stupidity and genius is that genius has its limits\",\r\n         \"Learn from yesterday, live for today, hope for tomorrow\",\r\n         \"A person who never made a mistake never tried anything new\",\r\n         \"If you can't explain it simply, you don't understand it well enough\",\r\n         \"It is no use walking anywhere to preach unless our walking is our preaching\",\r\n         \"The mystery of life isn't a problem to solve, but a reality to experience\",\r\n         \"The mind commands the body and it obeys. The mind orders itself and meets resistance\",\r\n         \"Try looking into that place where you dare not look! You'll find me there, staring out at you\",\r\n         \"Fear is the mind-killer\",\r\n         \"Don't Panic\",\r\n         \"The willow submits to the wind and prospers until one day it is many willows - a wall against the wind\",\r\n         \"You can't make anything idiot proof because idiots are so ingenious\",\r\n         \"Well, the past is gone, I know that. The future, isn't here yet, whatever it's going to be. So, all there is, is, is this. The present. That's it\",\r\n         \"See first, think later, then test. But always see first. Otherwise, you will only see what you were expecting\",\r\n         \"Much can be learned in play, that will afterwards be of use when the circumstances demand it\",\r\n         \"I'm for truth, no matter who tells it. I'm for justice, no matter who it's for or against\",\r\n         \"A well-developed sense of humor is the pole that adds balance to your step as you walk the tightrope of life\",\r\n         \"Knowledge which is divorced from justice, may be called cunning rather than wisdom\"]\r\n    }\r\n    {SetState('wisdomstring', join(wisdomstring, \"+=\"))}\r\n}\r\n\r\n{set textstring to state.wisdomstring}\r\n\r\n{_ create array from the string, using += as the split marker}\r\n{set textarray to split(textstring, \"+=\")}\r\n\r\n{_ create array of unused quotes}\r\n{set temparray to []}\r\n{for check in textarray:\r\n   {set index to len(check)-5}\r\n   {set chk to slice(check, index, 5)}\r\n   {if chk != \" used\":\r\n       {set temparray to cat(temparray, [check])}\r\n   }\r\n}\r\n\r\n{_ if unused array is empty then rebuild and reset all items}\r\n{if len(temparray) = 0:\r\n   {set temparray to []}\r\n   {for check in textarray:\r\n      {set index to len(check)-5}\r\n      {set chk to slice(check, 0, index)}\r\n      {set temparray to cat(temparray, [chk])}\r\n   }\r\n   {set textstring to join(temparray, \"+=\")}\r\n   {set textarray to split(textstring, \"+=\")}\r\n}\r\n\r\n{_ get a random unused item and say it}\r\n{set random to rand(len(temparray))}\r\n{set used to temparray[random]}\r\n{used}\r\n\r\n{_ find position of used item in text array}\r\n{set position to find(textarray, used)}\r\n\r\n{_ mark item as used}\r\n{set useditem to cat(used, \" used\")}\r\n\r\n{_ rebuild text array with marked item}\r\n{set temparray to []}\r\n{set cur to 0}\r\n{while cur < len(textarray):\r\n  {if cur = position:\r\n     {set temparray to cat(temparray, [useditem])}\r\n  |else:\r\n     {set temparray to cat(temparray, [textarray[cur]])}\r\n  }\r\n  {set cur to cur + 1}\r\n}\r\n\r\n{_ rebuild text string ready for next use}\r\n{SetState('wisdomstring', join(temparray, \"+=\"))}\r\n",
+      "script": "{_ TextWisdom}\r\n{_ Random wisdom of the day}\r\n{_ Choose a random option until all are used, then reset}\r\n{_ From an idea put to me by Brigetiol1. Thanks!}\r\n\r\nSabedoria diária, na rádio {ShipName()}:\r\n\r\n{Pause(300)}\r\n\r\n{_ check Wisdom string is long, else run string setup (just in case it hasn't already been setup)}\r\n{if len(state.wisdomstring) < 10:\r\n\r\n    {set wisdomstring to [\"A melhor maneira de se encontrar é se perder no serviço a outros\",\r\n         \"Você precisa ser a mudança que quer ver no mundo\",\r\n         \"Viva como se você fosse morrer amanhã. Aprenda como se fosse viver para sempre\",\r\n         \"Primeiro eles te ignoram, então eles riem de você, aí eles te enfrentam, então você vence\",\r\n         \"Os fracos nunca perdoam. Perdão é o atributo dos fortes\",\r\n         \"Felicidade é quando aquilo que você pensa, o que você diz e o que você faz estão em harmonia\",\r\n         \"Em orações, é melhor ter um coração sem palavras, do que palavras sem um coração\",\r\n         \"A verdade perdura, mesmo sem apoio público. Ela se auto sustenta\",\r\n         \"Satisfação reside no esforço, não na realização, o esforço total é a vitória completa\",\r\n         \"A verdade nunca afeta uma causa justa\",\r\n         \"O medo tem utilidade, a covardia não\",\r\n         \"Ninguém pode me ferir sem minha permissão\",\r\n         \"Minha vida é minha mensagem\",\r\n         \"Treine a si mesmo para livrar-se de tudo que você teme perder\",\r\n         \"Insanidade: fazer a mesma coisa repetidas vezes e esperar obter resultados diferentes\",\r\n         \"A diferença entre estupidez e genialidade é que a genialidade tem limites\",\r\n         \"Aprenda com ontem, viva para hoje, espere por amanhã\",\r\n         \"A pessoa que nunca cometeu um erro, nunca tentou algo novo\",\r\n         \"Se você não consegue dar uma explicação simples, você não o suficiente do assunto\",\r\n         \"Não adianta andar em qualquer lugar para pregar, a menos que nosso andar seja nossa pregação\",\r\n         \"O mistério da vida não é um problema para resolver, mas uma realidade para experimentar\",\r\n         \"A mente comanda o corpo e obedece. A mente ordena a si mesma e encontra resistência\",\r\n         \"Tente olhar para aquele lugar onde você não ousa olhar! Você vai me encontrar lá, olhando para você\",\r\n         \"Medo é o assassino da mente\",\r\n         \"Não entre em pânico\",\r\n         \"O salgueiro se submete ao vento e prospera até que um dia são muitos salgueiros - um muro contra o vento\",\r\n         \"Você não pode fazer nada a prova de idiotas porque os idiotas são muito engenhosos\",\r\n         \"Bem, o passado se foi, eu sei disso. O futuro ainda não está aqui, seja lá o que for. Então, tudo o que existe é isso. O presente. É isso aí\",\r\n         \"Veja primeiro, pense depois, depois teste. Mas sempre veja primeiro. Caso contrário, você só verá o que estava esperando\",\r\n         \"Muito pode ser aprendido no jogo, que depois será útil quando as circunstâncias o exigirem.\",\r\n         \"Sou a favor da verdade, não importa quem a diz. Sou a favor da justiça, não importa quem é a favor ou contra\",\r\n         \"Um senso de humor bem desenvolvido é o pólo que adiciona equilíbrio ao seu passo enquanto você anda na corda bamba da vida\",\r\n         \"Conhecimento que é divorciado da justiça, pode ser chamado de astúcia ao invés de sabedoria\"]\r\n    }\r\n    {SetState('wisdomstring', join(wisdomstring, \"+=\"))}\r\n}\r\n\r\n{set textstring to state.wisdomstring}\r\n\r\n{_ create array from the string, using += as the split marker}\r\n{set textarray to split(textstring, \"+=\")}\r\n\r\n{_ create array of unused quotes}\r\n{set temparray to []}\r\n{for check in textarray:\r\n   {set index to len(check)-5}\r\n   {set chk to slice(check, index, 5)}\r\n   {if chk != \" used\":\r\n       {set temparray to cat(temparray, [check])}\r\n   }\r\n}\r\n\r\n{_ if unused array is empty then rebuild and reset all items}\r\n{if len(temparray) = 0:\r\n   {set temparray to []}\r\n   {for check in textarray:\r\n      {set index to len(check)-5}\r\n      {set chk to slice(check, 0, index)}\r\n      {set temparray to cat(temparray, [chk])}\r\n   }\r\n   {set textstring to join(temparray, \"+=\")}\r\n   {set textarray to split(textstring, \"+=\")}\r\n}\r\n\r\n{_ get a random unused item and say it}\r\n{set random to rand(len(temparray))}\r\n{set used to temparray[random]}\r\n{used}\r\n\r\n{_ find position of used item in text array}\r\n{set position to find(textarray, used)}\r\n\r\n{_ mark item as used}\r\n{set useditem to cat(used, \" used\")}\r\n\r\n{_ rebuild text array with marked item}\r\n{set temparray to []}\r\n{set cur to 0}\r\n{while cur < len(textarray):\r\n  {if cur = position:\r\n     {set temparray to cat(temparray, [useditem])}\r\n  |else:\r\n     {set temparray to cat(temparray, [textarray[cur]])}\r\n  }\r\n  {set cur to cur + 1}\r\n}\r\n\r\n{_ rebuild text string ready for next use}\r\n{SetState('wisdomstring', join(temparray, \"+=\"))}\r\n",
       "default": false,
       "name": "TextWisdom",
       "description": "Random wisdom of the day"
@@ -2238,7 +2238,7 @@
       "enabled": true,
       "priority": 3,
       "responder": false,
-      "script": "{_ Reports time between executions of this script. _}\r\n{_ Currently set to report time spent in a system _}\r\n{_ when called from FSD Engaged event. _}\r\n\r\n{_ Get and format timer }\r\n{set rawtime to abs(SecondsSince(state.timer))}\r\n{set timer to split(format(rawtime, \"dl:dd:HH:mm:ss\"), \":\")}\r\n\r\n{set days to cast(timer[0], \"n\") - 1}\r\n{set hours to cast(timer[1], \"n\")}\r\n{set minutes to cast(timer[2], \"n\")}\r\n{set seconds to cast(timer[3], \"n\")}\r\n\r\n{set timer_array to []}\r\n\r\n{if days > 0:\r\n    {set time to cat(days, \" day\")}\r\n    {if days > 1:{set time to cat(time, \"s\")}}\r\n    {set timer_array to cat(timer_array, [time])}\r\n}\r\n\r\n{if hours > 0:\r\n    {set time to cat(hours, \" hour\")}\r\n    {if hours > 1:{set time to cat(time, \"s\")}}\r\n    {set timer_array to cat(timer_array, [time])}\r\n}\r\n\r\n{if minutes > 0:\r\n    {set time to cat(minutes, \" minute\")}\r\n    {if minutes > 1:{set time to cat(time, \"s\")}}\r\n    {set timer_array to cat(timer_array, [time])}\r\n}\r\n\r\n{if seconds > 0:\r\n    {set time to cat(seconds, \" second\")}\r\n    {if seconds > 1:{set time to cat(time, \"s\")}}\r\n    {set timer_array to cat(timer_array, [time])}\r\n}\r\n\r\nYou spent {List(timer_array)} in this system.\r\n\r\n{SetState('timer', SecondsSince(0))}\r\n",
+      "script": "{_ Reports time between executions of this script. _}\r\n{_ Currently set to report time spent in a system _}\r\n{_ when called from FSD Engaged event. _}\r\n\r\n{_ Get and format timer }\r\n{set rawtime to abs(SecondsSince(state.timer))}\r\n{set timer to split(format(rawtime, \"dl:dd:HH:mm:ss\"), \":\")}\r\n\r\n{set days to cast(timer[0], \"n\") - 1}\r\n{set hours to cast(timer[1], \"n\")}\r\n{set minutes to cast(timer[2], \"n\")}\r\n{set seconds to cast(timer[3], \"n\")}\r\n\r\n{set timer_array to []}\r\n\r\n{if days > 0:\r\n    {set time to cat(days, \" dia\")}\r\n    {if days > 1:{set time to cat(time, \"s\")}}\r\n    {set timer_array to cat(timer_array, [time])}\r\n}\r\n\r\n{if hours > 0:\r\n    {set time to cat(hours, \" hora\")}\r\n    {if hours > 1:{set time to cat(time, \"s\")}}\r\n    {set timer_array to cat(timer_array, [time])}\r\n}\r\n\r\n{if minutes > 0:\r\n    {set time to cat(minutes, \" minuto\")}\r\n    {if minutes > 1:{set time to cat(time, \"s\")}}\r\n    {set timer_array to cat(timer_array, [time])}\r\n}\r\n\r\n{if seconds > 0:\r\n    {set time to cat(seconds, \" segundo\")}\r\n    {if seconds > 1:{set time to cat(time, \"s\")}}\r\n    {set timer_array to cat(timer_array, [time])}\r\n}\r\n\r\nVocê gastou {List(timer_array)} neste sistema.\r\n\r\n{SetState('timer', SecondsSince(0))}\r\n",
       "default": false,
       "name": "Timer",
       "description": "Reports time between executions of this script"
@@ -2247,7 +2247,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{set body to BodyDetails(state.eddi_context_body_name, state.eddi_context_system_name)}\r\n\r\n{F(\"Body Name Tidy\")}\r\n\r\n{if state.loading = false:\r\n    {if event.playercontrolled = true:\r\n        Touchdown {if body: on {body} }.\r\n        {OneOf(\"Drives\",\"Engines\",\"Thrusters\")} {OneOf(\"Offline\",\"Disengaged\",\"Powered Down\")}.\r\n    |else:\r\n        {ShipName()} has touched down\r\n        {if body: on {body} }.\r\n    }\r\n    {Pause(2000)}\r\n|else:\r\n    {SetState('loading', false)}\r\n}\r\n\r\n{if type(event.latitude) != \"void\" && type(event.longitude) != \"void\" && event.playercontrolled:\r\n    {Occasionally(2,\"Current\")}\r\n    {Occasionally(2,\"Planitary\")}\r\n    {Occasionally(2,\"Location\")}\r\n\r\n    coordinates {Occasionally(2,\"are\")}\r\n    {round(event.longitude,4)} degrees longitude,\r\n    {round(event.latitude,4)} degrees latitude.\r\n}\r\n",
+      "script": "{set body to BodyDetails(state.eddi_context_body_name, state.eddi_context_system_name)}\r\n\r\n{F(\"Body Name Tidy\")}\r\n\r\n{if state.loading = false:\r\n    {if event.playercontrolled = true:\r\n        Pousamos {if body: em {body} }.\r\n        {OneOf(\"Motores\",\"Propulsores\")} {OneOf(\"desligados\",\"desativados\")}.\r\n    |else:\r\n        {ShipName()} pousou\r\n        {if body: em {body} }.\r\n    }\r\n    {Pause(2000)}\r\n|else:\r\n    {SetState('loading', false)}\r\n}\r\n\r\n{if type(event.latitude) != \"void\" && type(event.longitude) != \"void\" && event.playercontrolled:\r\n    {Occasionally(2,\"Localização\")}\r\n    {Occasionally(2,\"Planetária\")}\r\n    {Occasionally(2,\"Atual\")}, \r\n\r\n    coordenadas {Occasionally(2,\"são\")}\r\n    {round(event.longitude,4)} graus de longitude,\r\n    {round(event.latitude,4)} graus de latitude.\r\n}\r\n",
       "default": false,
       "name": "Touchdown",
       "description": "Triggered when your ship touches down on a planet's surface"
@@ -2256,8 +2256,8 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{_ Context }\r\n{SetState('eddi_context_last_subject', 'tradedata')}\r\n{SetState('eddi_context_last_action', 'buy')}\r\n{SetState('eddi_context_tradedata_name', event.system)}\r\n\r\n{OneOf(\"Purchased trade data for {P(event.system)}\",\r\n            \"Trade data for {P(event.system)} now available\",\r\n            \"Received trade data for {P(event.system)} from station services\",\r\n            \"Receipt of {P(event.system)} trade data confirmed\")}.",
-      "default": true,
+      "script": "{_ Context }\r\n{SetState('eddi_context_last_subject', 'tradedata')}\r\n{SetState('eddi_context_last_action', 'buy')}\r\n{SetState('eddi_context_tradedata_name', event.system)}\r\n\r\n{OneOf(\"Dados de comércio comprados para {P(event.system)}\",\r\n            \"Dados de comércio de {P(event.system)} disponíveis agora\",\r\n            \"Recebemos dados de comércio de {P(event.system)} dos serviços da estação\",\r\n            \"Recibo de dados de comércio de {P(event.system)} confirmado\")}.",
+      "default": false,
       "name": "Trade data purchased",
       "description": "Triggered when you purchase trade data"
     },
@@ -2265,7 +2265,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "You have been recognised for your trading ability {F(\"Honorific\")}.\r\n\r\nYou {OneOf(\"are now at\",\"have achieved\",\"have attained\")} the rank of {cmdr.traderating.name}.\r\n",
+      "script": "Você teve sua habilidade de comércio reconhecida  {F(\"Honorific\")}.\r\n\r\nVocê {OneOf(\"está agora no\",\"alcançou o\",\"adquiriu o\")} rank de {cmdr.traderating.name}.\r\n",
       "default": false,
       "name": "Trade promotion",
       "description": "Triggered when your trade rank increases"
@@ -2274,7 +2274,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{_ Context }\r\n{SetState('eddi_context_last_subject', 'trade_voucher')}\r\n{SetState('eddi_context_last_action', 'redeem')}\r\n{SetState('eddi_context_trade_voucher_amount', event.amount)}\r\n\r\nTrade vouchers for {Humanise(event.amount)} credits redeemed\r\n{Occasionally(2, \"\r\n    by\r\n    {set cur to 0}\r\n    {set length to len(event.rewards) - 1}\r\n    {while cur < len(event.rewards):\r\n        {P(event.rewards[cur].faction)}\r\n        {set cur to cur + 1}\r\n        {if cur = length: and\r\n        |elif cur < length:,\r\n        }\r\n    }\r\n\")}.\r\n\r\n{if event.brokerpercentage:\r\n  {Pause(1000)}\r\n  The Broker has taken {event.brokerpercentage} credits.\r\n}\r\n",
+      "script": "{_ Context }\r\n{SetState('eddi_context_last_subject', 'trade_voucher')}\r\n{SetState('eddi_context_last_action', 'redeem')}\r\n{SetState('eddi_context_trade_voucher_amount', event.amount)}\r\n\r\nRecibos de comércio trocados por {Humanise(event.amount)} créditos\r\n\r\n\r\n{Occasionally(2, \"\r\n    pela\r\n    {set cur to 0}\r\n    {set length to len(event.rewards) - 1}\r\n    {while cur < len(event.rewards):\r\n  {set FACCAO to: {P(event.rewards[cur].faction)}}\r\n  {if FACCAO = ' The Pilots Federation': {set FACCAO to: Federação de Pilotos}}\r\n  {FACCAO}\r\n        {set cur to cur + 1}\r\n        {if cur = length: e\r\n        |elif cur < length:,\r\n        }\r\n    }\r\n\")}.\r\n\r\n{if event.brokerpercentage:\r\n  {Pause(1000)}\r\n  O intermediário ficou com {event.brokerpercentage} créditos.\r\n}\r\n",
       "default": false,
       "name": "Trade voucher redeemed",
       "description": "Triggered when you redeem a trade voucher"
@@ -2292,7 +2292,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{SetState('eddi_context_docked',\"no\")}\r\n{SetState('eddi_context_mission_accepted', \"no\")}\r\n\r\n{set station to token(StationDetails(event.station).model,\" \",1)}\r\n\r\n{if station = \"Outpost\":\r\n   {Pause(2750)}\r\n   {OneOf(\"Full control re-established\", \"Docking clamps free\", \"Disengaged from local networks\")}\r\n}\r\n\r\n{set limpetcheck to F(\"Limpet check\")}\r\n{set contactscheck to F(\"FinesBounties_ContactsCheck\")}\r\n\r\n{if limpetcheck || contactscheck:\r\n    {Pause(400)}\r\n    {limpetcheck}\r\n    {contactscheck}\r\n}\r\n\r\n{if state.eddi_context_mission_route_useauto = \"no\":\r\n    {_ Report first system in route if not using auto Galaxy Map plotter _}\r\n    {set route to split(state.missionsroute, \"_\")}\r\n    {if len(route) > 0:\r\n        {Occasionally(2, \"Auto route\")} {OneOf(\"suggested\", \"recommended\")} first\r\n        {OneOf(\"destination\", \"stop\")} is the\r\n        {route[0]} system.\r\n    }\r\n}\r\n",
+      "script": "{SetState('eddi_context_docked',\"no\")}\r\n{SetState('eddi_context_mission_accepted', \"no\")}\r\n\r\n{set station to token(StationDetails(event.station).model,\" \",1)}\r\n\r\n{if station = \"Posto avançado\":\r\n   {Pause(2750)}\r\n   {OneOf(\"Controle total restabelecido\", \"Travas de pouso liberadas\", \"Desconectado das redes locais\")}\r\n}\r\n\r\n{set limpetcheck to F(\"Limpet check\")}\r\n{set contactscheck to F(\"FinesBounties_ContactsCheck\")}\r\n\r\n{if limpetcheck || contactscheck:\r\n    {Pause(400)}\r\n    {limpetcheck}\r\n    {contactscheck}\r\n}\r\n\r\n{if state.eddi_context_mission_route_useauto = \"no\":\r\n    {_ Report first system in route if not using auto Galaxy Map plotter _}\r\n    {set route to split(state.missionsroute, \"_\")}\r\n    {if len(route) > 0:\r\n        {Occasionally(2, \"Rota automática\")} {OneOf(\"sugerida\", \"recomendada\")},\r\n        {OneOf(\"primeiro destino\", \"primeira parada\")} é o \r\n        sistema {route[0]}.\r\n    }\r\n}\r\n",
       "default": false,
       "name": "Undocked",
       "description": "Triggered when your ship undocks from a station or outpost"
@@ -2301,7 +2301,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{_ VAStartup}\r\n{_ Sets some variables for use in VA, if VA started after E:D}\r\n\r\n{SetState('eddi_context_system_system', system.name)}\r\n{SetState('eddi_context_body_name', body.name)}\r\n{SetState('eddi_context_station_name', station.name)}\r\n\r\n{_ Set up Mission Route from saved data _}\r\n{set missionsdata to split(state.missionsdata, \"+=\")}\r\n{SetState('missionsrouteuseeddi', missionsdata[0])}\r\n{SetState('missionsroutetype', missionsdata[1])}\r\n{SetState('missionsdestination', missionsdata[2])}\r\n{SetState('missionsroutedistance', missionsdata[3])}\r\n{SetState('missionsroute', missionsdata[4])}\r\n\r\n{if missionsCount > 0 && state.missionsdestination != system.name:\r\n    {SetState('to_system', state.missionsdestination)}\r\n    {SetState('from_system', system.name)}\r\n\r\n    {if missionsCount > 1: {OneOf(\"Primary\", \"First\", \"Initial\")} }\r\n    {Occasionally(2,\"Mission\")} destination {state.to_system},\r\n    {Occasionally(2, \"{OneOf('has been', 'is')}\")} {OneOf(\"locked\", \"set\")}.\r\n    {F(\"Mission Route Get Distance\")}\r\n    {if state.distance > 0:\r\n        Distance {Occasionally(2,\"to {OneOf('system','target','{state.to_system}')}\")}\r\n        is {state.distance)} light years.\r\n        {SetState('eddi_context_mission_destination_locked', \"no\")}\r\n    }\r\n}\r\n",
+      "script": "{_ VAStartup}\r\n{_ Sets some variables for use in VA, if VA started after E:D}\r\n\r\n{SetState('eddi_context_system_system', system.name)}\r\n{SetState('eddi_context_body_name', body.name)}\r\n{SetState('eddi_context_station_name', station.name)}\r\n\r\n{_ Set up Mission Route from saved data _}\r\n{set missionsdata to split(state.missionsdata, \"+=\")}\r\n{SetState('missionsrouteuseeddi', missionsdata[0])}\r\n{SetState('missionsroutetype', missionsdata[1])}\r\n{SetState('missionsdestination', missionsdata[2])}\r\n{SetState('missionsroutedistance', missionsdata[3])}\r\n{SetState('missionsroute', missionsdata[4])}\r\n\r\n{if missionsCount > 0 && state.missionsdestination != system.name:\r\n    {SetState('to_system', state.missionsdestination)}\r\n    {SetState('from_system', system.name)}\r\n\r\n    {if missionsCount > 1: {OneOf(\"Destino primário\", \"Primeiro destino\", \"Destino inicial\")} }\r\n    {Occasionally(2,\"de missão\")} {state.to_system},\r\n    {Occasionally(2, \"{OneOf('foi', 'está')}\")} {OneOf(\"travado\", \"ajustado\")}.\r\n    {F(\"Mission Route Get Distance\")}\r\n    {if state.distance > 0:\r\n        Distância {Occasionally(2,\"até {OneOf('o sistema','o alvo','{state.to_system}')}\")}\r\n        é de {state.distance)} anos luz.\r\n        {SetState('eddi_context_mission_destination_locked', \"no\")}\r\n    }\r\n}\r\n",
       "default": false,
       "name": "VA initialized",
       "description": "Triggered when the VoiceAttack plugin is initialized"
@@ -2310,8 +2310,8 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{Pause(2000)}\r\n{OneOf(\"Neural link\", \"Link\", \"Uplink\")} {OneOf(\"terminated\", \"disengaged\")}.",
-      "default": true,
+      "script": "{Pause(2000)}\r\n{set LINK to:{OneOf(\"Link neural\", \"Link\", \"Conecsão\")}}\r\n{LINK}\r\n{OneOf(\" terminad\", \" desativad\")}{if LINK = \"Conecsão\":a |else:o}",
+      "default": false,
       "name": "Vehicle destroyed",
       "description": "Triggered when your vehicle is destroyed"
     }

@@ -1,0 +1,3 @@
+{set TOKEN to token(event.synthesis, " ", 0)}
+
+{if TOKEN = "Ammo": Síntese de munição finalizada.}

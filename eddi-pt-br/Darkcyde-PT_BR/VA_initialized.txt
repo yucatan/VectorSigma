@@ -1,0 +1,29 @@
+{_ VAStartup}
+{_ Sets some variables for use in VA, if VA started after E:D}
+
+{SetState('eddi_context_system_system', system.name)}
+{SetState('eddi_context_body_name', body.name)}
+{SetState('eddi_context_station_name', station.name)}
+
+{_ Set up Mission Route from saved data _}
+{set missionsdata to split(state.missionsdata, "+=")}
+{SetState('missionsrouteuseeddi', missionsdata[0])}
+{SetState('missionsroutetype', missionsdata[1])}
+{SetState('missionsdestination', missionsdata[2])}
+{SetState('missionsroutedistance', missionsdata[3])}
+{SetState('missionsroute', missionsdata[4])}
+
+{if missionsCount > 0 && state.missionsdestination != system.name:
+    {SetState('to_system', state.missionsdestination)}
+    {SetState('from_system', system.name)}
+
+    {if missionsCount > 1: {OneOf("Destino primário", "Primeiro destino", "Destino inicial")} }
+    {Occasionally(2,"de missão")} {state.to_system},
+    {Occasionally(2, "{OneOf('foi', 'está')}")} {OneOf("travado", "ajustado")}.
+    {F("Mission Route Get Distance")}
+    {if state.distance > 0:
+        Distância {Occasionally(2,"até {OneOf('o sistema','o alvo','{state.to_system}')}")}
+        é de {state.distance)} anos luz.
+        {SetState('eddi_context_mission_destination_locked', "no")}
+    }
+}

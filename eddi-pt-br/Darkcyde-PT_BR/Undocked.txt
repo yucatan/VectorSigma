@@ -1,0 +1,28 @@
+{SetState('eddi_context_docked',"no")}
+{SetState('eddi_context_mission_accepted', "no")}
+
+{set station to token(StationDetails(event.station).model," ",1)}
+
+{if station = "Posto avançado":
+   {Pause(2750)}
+   {OneOf("Controle total restabelecido", "Travas de pouso liberadas", "Desconectado das redes locais")}
+}
+
+{set limpetcheck to F("Limpet check")}
+{set contactscheck to F("FinesBounties_ContactsCheck")}
+
+{if limpetcheck || contactscheck:
+    {Pause(400)}
+    {limpetcheck}
+    {contactscheck}
+}
+
+{if state.eddi_context_mission_route_useauto = "no":
+    {_ Report first system in route if not using auto Galaxy Map plotter _}
+    {set route to split(state.missionsroute, "_")}
+    {if len(route) > 0:
+        {Occasionally(2, "Rota automática")} {OneOf("sugerida", "recomendada")},
+        {OneOf("primeiro destino", "primeira parada")} é o 
+        sistema {route[0]}.
+    }
+}

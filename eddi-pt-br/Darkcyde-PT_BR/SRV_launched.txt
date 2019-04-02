@@ -1,0 +1,1 @@
+{OneOf("Búgui", "V-R-S")} {OneOf("liberado","lançado","ativado")}.

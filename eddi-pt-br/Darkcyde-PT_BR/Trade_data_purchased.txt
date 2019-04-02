@@ -1,0 +1,9 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'tradedata')}
+{SetState('eddi_context_last_action', 'buy')}
+{SetState('eddi_context_tradedata_name', event.system)}
+
+{OneOf("Dados de comércio comprados para {P(event.system)}",
+            "Dados de comércio de {P(event.system)} disponíveis agora",
+            "Recebemos dados de comércio de {P(event.system)} dos serviços da estação",
+            "Recibo de dados de comércio de {P(event.system)} confirmado")}.

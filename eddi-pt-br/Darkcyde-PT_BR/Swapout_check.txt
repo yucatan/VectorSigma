@@ -1,0 +1,42 @@
+{_ Function to find a given module in outfitting}
+{set outfitting(module) to:
+    {for outfittingmodule in station.outfitting:
+        {if outfittingmodule.EDName = module.EDName:
+            {return outfittingmodule}
+        }
+    }
+}
+
+{_ Function to report if a module is cheaper in outfitting that on the ship}
+{set reportIfCheaper(shipmodule) to:
+    {_ Only consider if this has no modifications}
+    {if !shipmodule.modified:
+        {set outfittingmodule to outfitting(shipmodule)}
+        {if outfittingmodule:
+            {if outfittingmodule.price < shipmodule.price:
+                {set saving to shipmodule.price - outfittingmodule.price}
+                {_ Only bother if it's a relatively good saving}
+                {if saving / cmdr.credits > 0.001:
+                    Você pode economizar {Humanise(saving)} créditos trocando seu {shipmodule.name} aqui.
+                }
+            }
+        }
+    }
+}
+
+{reportIfCheaper(ship.powerplant)}
+{reportIfCheaper(ship.thrusters)}
+{reportIfCheaper(ship.frameshiftdrive)}
+{reportIfCheaper(ship.lifesupport)}
+{reportIfCheaper(ship.powerdistributor)}
+{reportIfCheaper(ship.sensors)}
+{for hardpoint in ship.hardpoints:
+    {if hardpoint.module:
+        {reportIfCheaper(hardpoint.module)}
+    }
+}
+{for compartment in ship.compartments:
+    {if compartment.module:
+        {reportIfCheaper(compartment.module)}
+    }
+}

@@ -1,0 +1,3 @@
+Você teve sua habilidade de comércio reconhecida  {F("Honorific")}.
+
+Você {OneOf("está agora no","alcançou o","adquiriu o")} rank de {cmdr.traderating.name}.

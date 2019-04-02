@@ -1,0 +1,42 @@
+{_ Reports time between executions of this script. _}
+{_ Currently set to report time spent in a system _}
+{_ when called from FSD Engaged event. _}
+
+{_ Get and format timer }
+{set rawtime to abs(SecondsSince(state.timer))}
+{set timer to split(format(rawtime, "dl:dd:HH:mm:ss"), ":")}
+
+{set days to cast(timer[0], "n") - 1}
+{set hours to cast(timer[1], "n")}
+{set minutes to cast(timer[2], "n")}
+{set seconds to cast(timer[3], "n")}
+
+{set timer_array to []}
+
+{if days > 0:
+    {set time to cat(days, " dia")}
+    {if days > 1:{set time to cat(time, "s")}}
+    {set timer_array to cat(timer_array, [time])}
+}
+
+{if hours > 0:
+    {set time to cat(hours, " hora")}
+    {if hours > 1:{set time to cat(time, "s")}}
+    {set timer_array to cat(timer_array, [time])}
+}
+
+{if minutes > 0:
+    {set time to cat(minutes, " minuto")}
+    {if minutes > 1:{set time to cat(time, "s")}}
+    {set timer_array to cat(timer_array, [time])}
+}
+
+{if seconds > 0:
+    {set time to cat(seconds, " segundo")}
+    {if seconds > 1:{set time to cat(time, "s")}}
+    {set timer_array to cat(timer_array, [time])}
+}
+
+Você gastou {List(timer_array)} neste sistema.
+
+{SetState('timer', SecondsSince(0))}

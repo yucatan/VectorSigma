@@ -1,0 +1,27 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'trade_voucher')}
+{SetState('eddi_context_last_action', 'redeem')}
+{SetState('eddi_context_trade_voucher_amount', event.amount)}
+
+Recibos de comércio trocados por {Humanise(event.amount)} créditos
+
+
+{Occasionally(2, "
+    pela
+    {set cur to 0}
+    {set length to len(event.rewards) - 1}
+    {while cur < len(event.rewards):
+  {set FACCAO to: {P(event.rewards[cur].faction)}}
+  {if FACCAO = ' The Pilots Federation': {set FACCAO to: Federação de Pilotos}}
+  {FACCAO}
+        {set cur to cur + 1}
+        {if cur = length: e
+        |elif cur < length:,
+        }
+    }
+")}.
+
+{if event.brokerpercentage:
+  {Pause(1000)}
+  O intermediário ficou com {event.brokerpercentage} créditos.
+}

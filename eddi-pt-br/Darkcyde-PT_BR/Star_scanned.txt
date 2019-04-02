@@ -37,7 +37,7 @@
 
     {Pause(1000)}
 
-    Varredura da estrÃªla classe {class} {OneOf("concluída", "finalizada")}.
+    Varredura da estrêla classe {class} {OneOf("concluída", "finalizada")}.
 
     {if ship.Role.edname = "Exploration" || ship.Role.edname = "Multipurpose":
         {F("Star report")}
