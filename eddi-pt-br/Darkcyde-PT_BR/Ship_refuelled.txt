@@ -8,8 +8,7 @@
 {set fueltotal to ship.fueltanktotalcapacity}
 
 {if event.source = "Market":
-   {Occasionally(2,"{OneOf('{ShipName()}','Nave')}")}
-   {OneOf("reabastecida","tanques de combustível lotados","tanques completados")}
+   {OneOf("tanques de combustível lotados","tanques completados")} {Occasionally(2,"{OneOf(' da {ShipName()}','da Nave')}")}
    {if event.total != ship.fueltanktotalcapacity: com {Humanise(event.amount)} toneladas
    |else: {Occasionally(3,"com {Humanise(event.amount)} toneladas")} }.
 |else:

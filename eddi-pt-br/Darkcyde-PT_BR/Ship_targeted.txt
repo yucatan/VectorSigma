@@ -23,9 +23,9 @@
             {event.name}
             {OneOf("tem uma recompensa", "é jogo limpo", "é um alvo legítimo","recebeu uma recompensa")}.
         |else:
-            {Occasionally(2,"Seu")} alvo é
+            {Occasionally(2,"Seu")} alvo está
             {if find(event.name, "Autoridade") = -1 && find(event.name, "Segurança") = -1 && find(event.name, "Defesa") = -1:            
-                limpa.
+                limpo.
             |else:
                 um {event.name}                
                 {if find(event.name, "Vessel") = -1: vessel}
