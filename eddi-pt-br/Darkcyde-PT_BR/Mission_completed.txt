@@ -1,8 +1,8 @@
-{_ Mission completed }
-{_ Triggered when you complete a mission }
-
-{_ Context }
-{SetState('eddi_context_last_subject', 'mission')}
+{_ Mission completed }                                                                                                                                               
+{_ Triggered when you complete a mission }                                                                                                                           
+                                                                                                                                                                     
+{_ Context }                                                                                                                                                         
+{SetState('eddi_context_last_subject', 'mission')}                                                                                                                   
 {SetState('eddi_context_last_action', 'complete')}
 
 {set mission to MissionDetails(event.missionid)}
@@ -17,9 +17,27 @@
 {set type to cat("missão ",type)}
 {set ranktype to token(mission.name,"_",2)}
 
+{_ TESTE DE AJUSTE DE RECOMPENSA _}
+
+{set AMOUNT to split(Humanise(event.reward), " ")}
+{set POSITION to find(AMOUNT, "milhões")}
+{if POSITION > -1:
+    {set AMOUNT to union(AMOUNT, [POSITION:"milhões de"])}
+    {set POSITION to POSITION - 1}
+    {set NUM to format(AMOUNT[POSITION], "n")}
+    {if NUM = "1":
+        {set POSITION to POSITION + 1}
+        {set AMOUNT to union(AMOUNT, [POSITION:"milhão de"])}
+    }
+}
+
+{set AMOUNT to join(AMOUNT, " ")}
+
+{_                               _}
+
 {if mission.type = "Donation":
-    {if mission.typeEDName = "Altruism": {set donate to cat(event.amount, " tonnes of ",event.commodity)}
-    |else: {set donate to cat(Humanise(event.donation)," credits")}
+    {if mission.typeEDName = "Altruism": {set donate to cat(event.amount, " toneladas de ",event.commodity)}
+    |else: {set donate to cat(Humanise(event.donation)," créditos")}
     }
     {OneOf("Doou {Occasionally(2, '{donate}')} para {P(event.faction)}",
            "{P(lcase(event.faction))} {Occasionally(2, 'agredecidamente')} recebeu sua doação {Occasionally(2, 'de {donate}')}",
@@ -34,8 +52,8 @@
 |else:
     {if event.reward > 0:
         {OneOf(
-         "{type} concluída. Você {OneOf('recebeu','foi agraciado com')} {Humanise(event.reward)} créditos",
-         "Você {OneOf('recebeu','foi agraciado com')} {Humanise(event.reward)} créditos por {OneOf('concluir {type} com sucesso','concluir a {type}','ter concluído a {type}')}"
+         "{type} concluída. Você {OneOf('recebeu','foi agraciado com')} {AMOUNT} créditos",
+         "Você {OneOf('recebeu','foi agraciado com')} {AMOUNT)} créditos por {OneOf('concluir {type} com sucesso','concluir a {type}','ter concluído a {type}')}"
       )}
    |else:
       {OneOf("{type} concoluída","Você completou a {type} com sucesso","Você completou a {type}")}
