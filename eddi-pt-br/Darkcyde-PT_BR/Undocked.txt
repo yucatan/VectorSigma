@@ -21,8 +21,8 @@
     {_ Report first system in route if not using auto Galaxy Map plotter _}
     {set route to split(state.missionsroute, "_")}
     {if len(route) > 0:
-        {Occasionally(2, "Rota automática")} {OneOf("sugerida", "recomendada")},
-        {OneOf("primeiro destino", "primeira parada")} é o 
+        {Occasionally(2, "Rota automática")} ,
+        {OneOf("primeiro destino {OneOf('sugerido', 'recomendado')}", "primeira parada {OneOf('sugerida', 'recomendada')}")} é o 
         sistema {route[0]}.
     }
 }
