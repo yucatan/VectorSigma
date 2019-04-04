@@ -21,15 +21,14 @@
         {set legalstatus to event.legalstatus}
         {if legalstatus = "Procurado" || legalstatus = "Inimigo Procurado" || legalstatus = "Mandado":
             {event.name}
-            {OneOf("tem uma recompensa", "é jogo limpo", "é um alvo legítimo","recebeu uma recompensa")}.
+            {OneOf("tem uma recompensa", "é jogo limpo", "é um alvo legítimo","recebeu uma recompensa","é procurado")}.
         |else:
-            {Occasionally(2,"Seu")} alvo está
+            {Occasionally(2,"Seu")} alvo
             {if find(event.name, "Autoridade") = -1 && find(event.name, "Segurança") = -1 && find(event.name, "Defesa") = -1:            
-                limpo.
+                 está limpo.
             |else:
-                um {event.name}                
-                {if find(event.name, "Vessel") = -1: vessel}
-                .
+                é uma nave do {event.name}                
+            .
             }
         }
         {SetState('legal_status_reported', true)}
