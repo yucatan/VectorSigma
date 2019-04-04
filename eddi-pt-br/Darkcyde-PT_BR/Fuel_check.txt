@@ -20,7 +20,7 @@
    {Occasionally(2, "estão")} {Occasionally(2, "agora")}
 }
 {set currentpercent to: 
-   em {currentfuel} porcento da {Occasionally(2, "capacidade")}
+   em {currentfuel} porcento {Occasionally(2, "da capacidade")}
 }
 {set title to Occasionally(3,"{F('Honorific')}")}
 
