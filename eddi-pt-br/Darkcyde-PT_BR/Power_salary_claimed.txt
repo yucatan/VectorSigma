@@ -1,1 +1,18 @@
-Salário de {Humanise(event.amount)}  créditos recebido {Occasionally(2, "de {P(event.power)}")}.
+{_ TESTE DE AJUSTE DE SALÁRIO _}
+
+{set AMOUNT to split(Humanise(event.amount), " ")}
+{set POSITION to find(AMOUNT, "milhões")}
+{if POSITION > -1:
+    {set AMOUNT to union(AMOUNT, [POSITION:"milhões de"])}
+    {set POSITION to POSITION - 1}
+    {set NUM to cast(AMOUNT[POSITION], "n")}
+    {if NUM = 1:
+        {set POSITION to POSITION + 1}
+        {set AMOUNT to union(AMOUNT, [POSITION:"milhão de"])}
+    }
+}
+
+{set AMOUNT to join(AMOUNT, " ")}
+
+{_                               _}
+Salário de {AMOUNT} créditos recebido {Occasionally(2, "de {P(event.power)}")}.
