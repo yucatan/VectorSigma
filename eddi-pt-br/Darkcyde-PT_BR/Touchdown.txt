@@ -16,9 +16,7 @@
 }
 
 {if type(event.latitude) != "void" && type(event.longitude) != "void" && event.playercontrolled:
-    {Occasionally(2,"Localização")}
-    {Occasionally(2,"Planetária")}
-    {Occasionally(2,"Atual")}, 
+    {Occasionally(2,"Localização {OneOf('Planetária','Atual')}")}, 
 
     coordenadas {Occasionally(2,"são")}
     {round(event.longitude,4)} graus de longitude,
