@@ -42,7 +42,7 @@
     Por favor, complete algumas para poder aceitar outras.
 |else:
    {OneOf("{Occasionally(2,'Agora')} Você tem {missionsCount} miss{if missionsCount > 1:ões|else:ão}",
-        "Está é sua
+        "Esta é sua
     {if missionsCount = 1: 1ª
     |elif missionsCount = 2: 2ª
     |elif missionsCount = 3: 3ª
