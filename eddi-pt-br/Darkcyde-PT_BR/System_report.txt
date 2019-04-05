@@ -39,9 +39,9 @@
                     Há {len(reportsystem.planetarystations)} estações planetárias
                 }
             |elif len(reportsystem.orbitalstations) = 1:
-                Há {OneOf("somente","apenas")} estação orbital
+                Há {OneOf("somente","apenas")} uma estação orbital
                 {if len(reportsystem.planetarystations) = 1:
-                    e {OneOf("somente","apenas")} estação planetária
+                    e {OneOf("somente","apenas")} uma estação planetária
                 |elif len(reportsystem.planetarystations) > 1:
                     e {len(reportsystem.planetarystations)} estações planetárias
                 }
