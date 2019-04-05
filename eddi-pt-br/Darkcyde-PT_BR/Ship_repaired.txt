@@ -18,4 +18,3 @@
       {OneOf("Sistema","Componente","Módulo")}: {OneOf("reparado","consertado")}
    }
 }.
-
