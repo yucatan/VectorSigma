@@ -50,9 +50,11 @@ Bo{GREETING}
 {if missionsCount > 0:
     {SetState('to_system', state.missionsdestination)}
 
-    {if missionsCount > 1: Destino {OneOf("primário", "inicial")} }
-    {Occasionally(2,"de missão")} {state.to_system},
-    {Occasionally(2, "{OneOf('foi', 'está')}")} {OneOf("travado", "configurado")}.
+    {if missionsCount > 1:
+		Destino {OneOf("primário", "inicial")}
+		{Occasionally(2,"de missão")} {state.to_system},
+		{Occasionally(2, "{OneOf('foi', 'está')}")} {OneOf("travado", "configurado")}.
+	}
 
     {SetState('from_system', state.eddi_context_system_name)}
     {F("Mission Route Get Distance")}
