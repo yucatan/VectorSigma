@@ -27,7 +27,7 @@
         {if missions[0].destinationsystem && missions[0].destinationsystem != "":
             no sistema {Occasionally(2,"estelar")} {join(split(missions[0].destinationsystem, "."), " ")}.
         |else:
-            em um sistema {Occasionally(2,"star")} desconhecido.
+            em um sistema {Occasionally(2,"estelar")} desconhecido.
         }
 
     |else:

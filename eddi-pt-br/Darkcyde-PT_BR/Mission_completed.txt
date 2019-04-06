@@ -25,7 +25,7 @@
     {set AMOUNT to union(AMOUNT, [POSITION:"milhões de"])}
     {set POSITION to POSITION - 1}
     {set NUM to cast(AMOUNT[POSITION], "n")}
-    {if NUM = "1":
+    {if NUM = 1:
         {set POSITION to POSITION + 1}
         {set AMOUNT to union(AMOUNT, [POSITION:"milhão de"])}
     }
