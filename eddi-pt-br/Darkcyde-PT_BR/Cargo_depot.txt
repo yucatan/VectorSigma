@@ -1,11 +1,14 @@
 {_ Cargo depot }
 {_ Triggered when engaging with a mission depot }
 
-
+{set AMOUNT to event.amount}
+{if AMOUNT = 1: set AMOUNT to "uma"
+	|elif AMOUNT = 2: set AMOUNT to "duas"
+}
 {if event.updatetype = "Collect":
-    Você coletou {event.amount} tonelada{if event.amount != 1:s} de {event.commodity} do depósito da missão.
+    Você coletou {AMOUNT} tonelada{if event.amount != 1:s} de {event.commodity} do depósito da missão.
 |elif event.updatetype = "Deliver":
-    Você entregou {event.amount} tonelada{if event.amount != 1:s} de {event.commodity} ao depósito da missão.
+    Você entregou {AMOUNT} tonelada{if event.amount != 1:s} de {event.commodity} ao depósito da missão.
 
     {Pause(200)}
     {set remaining to event.totaltodeliver - event.delivered}
@@ -26,5 +29,3 @@
         está agora {round(event.delivered / event.totaltodeliver * 100, 0)} porcento concluída.
     }
 }
-
-
