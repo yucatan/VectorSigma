@@ -1,7 +1,9 @@
 Alerta: ataque 
+{set ENEMY to event.by}
 {if event.by:
-   por {event.by} 
+ {if ENEMY = "Pirat"e: {set ENEMY to "Pirata"}
+ |elif ENEMY = "Bounty hunter": {set ENEMY to "Caçador de Recompensas"}
+ }
+ por {ENEMY} 
 }
 detectado.
-
-
