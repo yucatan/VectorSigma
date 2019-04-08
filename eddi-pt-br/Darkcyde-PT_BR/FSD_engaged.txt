@@ -24,7 +24,7 @@
     {set sys_val to cast(state.eddi_context_system_value, "n")}
     {if sys_val > 0 && sys_val != null:
         {set last to OneOf("anterior", "passado")}
-        {OneOf("Valor estimado do scan do sistema {last} é",
+        {OneOf("Valor estimado do scan do sistema {last} é de",
                "scans do sistema {last} valem uma estimativa de",
                "o valor do scan do sistema {last} está estimado em")}
 
