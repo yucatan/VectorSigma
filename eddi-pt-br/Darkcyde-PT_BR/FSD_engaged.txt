@@ -5,6 +5,9 @@
 {SetState('eddi_context_system_system', event.system)}
 {SetState('eddi_context_fsd_target', event.target)}
 
+{if reportsystem.visits = 0: enablespeechresponder}
+
+
 {if event.target = 'Hyperspace':
     {_ Rewrite context to represent a jump }
     {SetState('eddi_context_last_subject', 'jump')}
@@ -91,3 +94,5 @@
         }
     }
 }
+
+{disablespeechresponder}
