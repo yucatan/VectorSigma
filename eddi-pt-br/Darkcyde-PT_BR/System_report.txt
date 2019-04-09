@@ -18,7 +18,7 @@
         {if reportsystem.government:
             {reportsystem.government}
         |else:
-          system
+          sistema
         }, 
         {OneOf("com", "com uma população de", "lar de", "suportando")} {Humanise(reportsystem.population)} {OneOf("pessoas", "almas")}
         {if reportsystem.power:
