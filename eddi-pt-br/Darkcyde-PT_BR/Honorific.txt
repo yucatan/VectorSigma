@@ -2,10 +2,10 @@
     {F("Empire honorific")}
 |elif system.allegiance = "Federação":
     {if cmdr.federationrating.rank = 0:
-        Commander {Occasionally(3,"{cmdr.name}")}
+        Comandante {Occasionally(3,"{cmdr.name}")}
     |else:
         {cmdr.federationrating.name} {Occasionally(2,"{cmdr.name}")}
     }
 |else:
-    Commander {Occasionally(4,"{cmdr.name}")}
+    Comandante {Occasionally(4,"{cmdr.name}")}
 }
