@@ -8,7 +8,7 @@
 
     {if reportsystem.population && reportsystem.population > 0:
         um sistema 
-		{if reportsystem.allegiance = "Federation":
+  {if reportsystem.allegiance = "Federation":
             Federal
         |elif reportsystem.allegiance = "Empire":
             Imperial
@@ -18,9 +18,26 @@
         {if reportsystem.government:
             {reportsystem.government}
         |else:
-          sistema
+          system
         }, 
-        {OneOf("com", "com uma população de", "lar de", "suportando")} {Humanise(reportsystem.population)} {OneOf("pessoas", "almas")}
+		
+{_ TESTE DE AJUSTE DE POPULAÇÃO _}
+		{set AMOUNT to split(Humanise(reportsystem.population), " ")}
+		{set POSITION to find(AMOUNT, "milhões")}
+		{if POSITION > -1:
+			{set AMOUNT to union(AMOUNT, [POSITION:"milhões de"])}
+			{set POSITION to POSITION - 1}
+			{set NUM to cast(AMOUNT[POSITION], "n")}
+			{if NUM = 1:
+				{set POSITION to POSITION + 1}
+				{set AMOUNT to union(AMOUNT, [POSITION:"milhão de"])}
+			}
+		}
+
+		{set AMOUNT to join(AMOUNT, " ")}
+{_                               _}
+		
+        {OneOf("com", "com uma população de", "lar de", "suportando")} {AMOUNT} {OneOf("pessoas", "almas")}
         {if reportsystem.power:
             , {OneOf("aliado a", "aliado com", "controlado por")} {P(reportsystem.power)}
         }.
@@ -32,25 +49,28 @@
         {if len(reportsystem.stations) = 0:
           Não há estações presentes
         |else:
+			{set ORBITAL to len(reportsystem.orbitalstations)}
+			{set PLANETARY to len(reportsystem.planetarystations)}
+			
             {if len(reportsystem.orbitalstations) = 0:
                 {if len(reportsystem.planetarystations) = 1:
                     Há {OneOf("somente","apenas")} uma estação planetária 
                 |else:
-                    Há {len(reportsystem.planetarystations)} estações planetárias
+                    Há {if PLANETARY = 2:duas|else: PLANETARY} estações planetárias
                 }
             |elif len(reportsystem.orbitalstations) = 1:
                 Há {OneOf("somente","apenas")} uma estação orbital
                 {if len(reportsystem.planetarystations) = 1:
                     e {OneOf("somente","apenas")} uma estação planetária
                 |elif len(reportsystem.planetarystations) > 1:
-                    e {len(reportsystem.planetarystations)} estações planetárias
+                    e {if PLANETARY = 2:duas|else: PLANETARY} estações planetárias
                 }
             |else:
-                Há {len(reportsystem.orbitalstations)} estações orbitais
+                Há {if ORBITAL = 2:duas|else: {ORBITAL}} estações orbitais
                 {if len(reportsystem.planetarystations) = 1:
-                    e {OneOf("somente","apenas")} estação planetária
+                    e {OneOf("somente","apenas")} uma estação planetária
                 |elif len(reportsystem.planetarystations) > 1:
-                    e {len(reportsystem.planetarystations)} estações planetárias
+                    e {if PLANETARY = 2:duas|else: {PLANETARY}} estações planetárias
                 }
             }
         }
