@@ -8,9 +8,17 @@
 {set fueltotal to ship.fueltanktotalcapacity}
 
 {if event.source = "Market":
-	{set AMMOUNT to Humanise(event.amount)}
+	
+	{set tonnes to Humanise(event.amount)}
+	{if tonnes = 1:
+         {set tonnes to "uma"}
+		 {set tons to "tonelada"}
+      |else:
+         {set tons to "toneladas"}
+      }
+	
    {OneOf("tanques de combustível","tanques")} {Occasionally(2,"{OneOf(' da {ShipName()}','da Nave')}")} {OneOf("completados","lotados")}
-   {if event.total != ship.fueltanktotalcapacity: com  {AMMOUNT} tonelada{if AMMOUNT > 1:s}
+   {if event.total != ship.fueltanktotalcapacity: com  {tonnes} {tons}
    |else: {Occasionally(3,"com {Humanise(event.amount)} toneladas")} }.
 |else:
    {SetState('eddi_fuel_scooped',(state.eddi_fuel_scooped + event.amount))}
@@ -24,8 +32,9 @@
       {SetState('eddi_fuel_scooped', 0)}
       {Pause(3000)}
 
-      {if tonnes = 1:
-         {set tons to "tonelada"}
+	{if tonnes = 1:
+         {set tonnes to "uma"}
+		 {set tons to "tonelada"}
       |else:
          {set tons to "toneladas"}
       }
