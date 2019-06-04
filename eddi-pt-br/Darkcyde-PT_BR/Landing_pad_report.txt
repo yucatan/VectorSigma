@@ -1,5 +1,5 @@
 {set landingpad to state.eddi_context_landing_pad_pad}
-Plataforma de pouso {landingpad} está 
+Platafórma de pouso {landingpad} está 
 {if landingpad = 1:
     às seis horas perto
 |elif landingpad = 2:

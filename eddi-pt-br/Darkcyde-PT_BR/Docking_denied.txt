@@ -13,5 +13,5 @@ Nosso pedido de pouso foi negado
 |elif event.reason = "Offences":
     porque recentemente nós os ofendemos
 |elif event.reason = "TooLarge":
-    porque não há uma plataforma que possa acomodar o tamanho da nossa nave
+    porque não há uma platafórma que possa acomodar o tamanho da nossa nave
 }.

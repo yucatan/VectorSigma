@@ -14,7 +14,7 @@
 |else:
     {if station_type != "Outpost": {Pause(9000)} }
     {Pause(2000)}
-    Platafórma {Occasionally(2,"de pouso")} 
+    Platafórma 
     {event.landingpad}
     {OneOf("ficou", "está")}
     {OneOf("disponível", "livre")}
