@@ -1,1 +1,3 @@
-Distribuidores de Ìons: eles s„o usados para controlar os fluxos de Ìons dentro de um dispositivo. Estes podem ser encontrados em Stevens Orbital no sistema HIP 18327.
+Distribuidores de √çons:
+
+eles s√£o usados para controlar os fluxos de √≠ons dentro de um dispositivo. Estes podem ser encontrados em Stevens Orbital no sistema HIP 18327.
