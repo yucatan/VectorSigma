@@ -55,7 +55,7 @@
 
     {_ Report info}
 
-    {if ship_bounties_count > 0: Cuidado: {vehicle} está procurado!}
+    {if ship_bounties_count > 0: Cuidado: {vehicle} está procurada!}
 
     {if ship_fines_count = 1: {set N to:uma}
     |else: {set N to ship_fines_count}
@@ -73,7 +73,7 @@
 
     {if ship_bounties_count > 0:
         {if ship_fines_count > 0: Ela também |else: Ela}
-        tem {N} recompensa{if ship_fines_count > 1:s |else:y} a pagar,
+        tem {N} recompensa{if ship_fines_count > 1:s} a pagar,
         num total de {ship_bounties_total} créditos.
     }
 
