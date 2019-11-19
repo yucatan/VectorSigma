@@ -1,0 +1,1 @@
+Commander, we are in the {TXT:System name} system,

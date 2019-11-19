@@ -1,0 +1,1 @@
+Commander, I can't [show;open] that panel because one of the maps is [open;loaded].

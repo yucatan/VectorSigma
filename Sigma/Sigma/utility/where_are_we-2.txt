@@ -1,0 +1,1 @@
+ which current state is {TXT:System state}.

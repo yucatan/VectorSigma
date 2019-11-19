@@ -1,1 +1,1 @@
-Commander, we are in the {TXT:System name} system, which current state is {TXT:System state}. You have visited this system {INT:VISITS} times.
+Commander, we are in the {TXT:System name} system, which current state is {TXT:System state}. You have visited this system {DEC:VISITS} times.
