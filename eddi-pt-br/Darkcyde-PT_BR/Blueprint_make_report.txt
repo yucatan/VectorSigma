@@ -42,7 +42,7 @@
     }
 
     {if canbemade = 0:
-        Você não pode faze um {blueprintname}
+        Você não pode fazer um {blueprintname}
     |elif canbemade = 1:
         Você pode fazer um {blueprintname}
     |else:

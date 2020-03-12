@@ -1,0 +1,46 @@
+{_ Preferences _}
+{set reportGreenSystems to true}  {_ if true, reports systems containing all fsd synthesis elements. _}
+{set reportGoldSystems to true}   {_ if true, reports systems containing all surface prospectable elements. _}
+{set reportBodiesToMap to true}   {_ If true, recommends bodies to map using the `Bodies to map` script. _}
+
+{if ship.Role.edname = "Exploration" || ship.Role.edname = "Multipurpose":
+    {for compartment in ship.compartments:
+        {if compartment.module.invariantName = "Planetary Vehicle Hangar":
+            {set hasSRV to true}
+        }
+    }
+    {if hasSRV:
+        {if system.isgold:
+            {if reportGoldSystems:
+                Este sistema {Occasionally(2, "estelar")}  
+                {OneOf("contém", "tem")}
+                todos os elementos 
+                {OneOf("que podem ser encontrados", "disponíveis")}
+                {OneOf("em superfícies planetárias.", "em prospecção de superfície.")}
+                Classe de exploração: Ouro.
+            }
+        |elif system.isgreen:
+            {if reportGreenSystems:
+                Este sistema {Occasionally(2, "estelar")} 
+                {OneOf("contém", "tem")}
+                todos os elementos 
+                {Occasionally(2, "que podem ser ")} 
+                requeridos para 
+                {OneOf("aumentar", "melhorar")} 
+                {OneOf("o alcance {Occasionally(2, \"de salto\")} desta nave.", 
+                       "o alcance {Occasionally(2, \"de salto\")} de um explroador.", 
+                       "o alcance {Occasionally(2, \"de salto\")} da {ShipName()}."
+                )}
+                Classe de exploração: Verde.
+            }
+        }
+    }
+
+    {if reportBodiesToMap:
+        {set bodiesToMap to F("Bodies to map")}
+        {if bodiesToMap:
+            {Pause(2000)}
+            {bodiesToMap}
+        }
+    }
+}

@@ -15,14 +15,23 @@
 }
 
 {if blueprint:
-    {blueprintname} requires
-    {set cur to 0}
-    {set length to len(blueprint.materials) - 1}
-    {while cur < len(blueprint.materials):
-        {blueprint.materials[cur].material}
-        {set cur to cur + 1}
-        {if cur = length: and
-        |elif cur < length:,
+    {set materials to len(blueprint.materials)}
+    {blueprintname} requer 
+    {if materials = 1:
+        {blueprint.materials[0].material}
+    |elif materials = 2:
+        {blueprint.materials[0].material} e {blueprint.materials[1].material}
+    |else:
+        {set cur to 0}
+        {while cur < len(blueprint.materials):
+            {if cur = 0:
+                {blueprint.materials[cur].material}
+            |elif cur < len(blueprint.materials) - 1:
+                , {blueprint.materials[cur].material}
+            |else:
+                , e {blueprint.materials[cur].material}
+            }
+            {set cur to cur + 1}
         }
     }
 |else:

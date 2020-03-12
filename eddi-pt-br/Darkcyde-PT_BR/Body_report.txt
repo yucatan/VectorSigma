@@ -36,7 +36,7 @@
         |elif stat > 1:
             {Humanise(stat)} vezes
         |elif stat < 1:
-            {if stat > 0.89: {OneOf("fractionally","just")}}
+            {if stat > 0.89: {OneOf("fracionariamente","apenas")}}
             menos que
         }
 

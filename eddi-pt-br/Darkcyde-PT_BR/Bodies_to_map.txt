@@ -1,0 +1,92 @@
+{_ Preferences: _}
+
+{set reportTerraformables to true}   {_ Reports all terraformable and terraformed bodies _}
+{set highValueThreshold to 80000}   {_ The minimum threshold for estimated exploration value worth mapping _}
+{set reportPlanetTypes to [
+    "Ammonia world": true,
+    "Earth-like world": true,
+    "Gas giant with ammonia based life": false,
+    "Gas giant with water based life": false,
+    "Helium gas giant": false,
+    "Helium-rich gas giant": false,
+    "High metal content world": false,
+    "Icy body": false,
+    "Metal-rich body": false,
+    "Rocky body": false,
+    "Rocky ice world": false,
+    "Class I gas giant": false,
+    "Class II gas giant": false,
+    "Class III gas giant": false,
+    "Class IV gas giant": false,
+    "Class V gas giant": false,
+    "Water giant": false,
+    "Water giant with life": false,
+    "Water world": true,
+]}
+
+{_ Fetch from Context _}
+{set reportSystem to SystemDetails(state.eddi_context_system_name)}
+
+{_ Identify bodies worth mapping _}
+
+{set toMapList to []}
+{set mappedBodies to 0}
+{set totalBodies to 0}
+
+{for body in reportSystem.bodies:
+    {set totalBodies to totalBodies + 1}
+    {if body.mapped:
+        {set mappedBodies to mappedBodies + 1}
+    |else:
+        {if body.bodyType.invariantName != "Star":
+            {if body.terraformState.invariantName = "Candidate for terraforming" 
+             || body.terraformState.invariantName = "Terraformed":
+                {if reportTerraformables:
+                    {if !toMapList[body.shortname]: 
+                        {set toMapList to cat(toMapList, [body.shortname])}
+                    } 
+                }
+            |elif reportPlanetTypes[body.planetClass.invariantName]:
+                {if !toMapList[body.shortname]: 
+                    {set toMapList to cat(toMapList, [body.shortname])}
+                }
+            |elif body.estimatedvalue > highValueThreshold:
+                {if !toMapList[body.shortname]: 
+                    {set toMapList to cat(toMapList, [body.shortname])}
+                } 
+            }
+        }
+    }
+}
+
+{_ Begin speaking _}
+
+{if len(toMapList) > 0:
+
+    {if len(toMapList) = 1: Body |else: Bodies}
+
+    {set cur to 0}
+    {while cur < len(toMapList):
+        {P(toMapList[cur])}
+        {set cur to cur + 1}
+        {if cur = len(toMapList) - 1: and
+        |elif cur < len(toMapList) - 1:,
+        }
+    }
+
+    {if len(toMapList) = 1: is |else: are }
+    {if event.type = "Body mapped": {OneOf("also")} }
+    {if len(toMapList) = 1: a }
+    {OneOf("recommended", "good")}
+    {set candidates to:
+        {if len(toMapList) > 1: candidates |else: candidate}
+    }
+    {OneOf('{candidates} for mapping', '{candidates} to map', 'mapping {candidates}')}.
+
+|elif mappedBodies > 0:
+
+    {OneOf(
+        "You have mapped all {if mappedBodies < totalBodies: {OneOf(\"worthwhile\", \"interesting\")}} bodies.",
+        "All {OneOf( \"{if mappedBodies < totalBodies: worthwhile} bodies\", \"bodies of interest\" )} {OneOf( \"have been mapped.\", \"are now mapped.\" )}"
+    )}
+}
