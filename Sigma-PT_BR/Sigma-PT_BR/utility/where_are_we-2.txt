@@ -1,1 +1,1 @@
-cujo estado atual é {TXT:System state}
+cujo estado atual é {TXT:System state}.

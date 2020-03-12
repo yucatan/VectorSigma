@@ -1,1 +1,1 @@
-Comandante, estamos no sistema {TXT:System name}, cujo estado atual é {TXT:System state}.
+Comandante, estamos no sistema {TXT:System name}, 
