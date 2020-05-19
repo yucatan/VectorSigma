@@ -37,7 +37,7 @@
 		{set AMOUNT to join(AMOUNT, " ")}
 {_                               _}
 		
-        {OneOf("com", "com uma população de", "lar de", "suportando")} {AMOUNT} {OneOf("pessoas", "almas")}
+        {OneOf("com", "com uma população de", "lar de", "suportando")} {AMOUNT} {OneOf("pessoas", "habitantes")}
         {if reportsystem.power:
             , {OneOf("aliado a", "aliado com", "controlado por")} {P(reportsystem.power)}
         }.
