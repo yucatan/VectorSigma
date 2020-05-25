@@ -6,7 +6,7 @@
 {if mission.type = "Donation":
     Missão de doação {Occasionally(2,"generosa")} foi {OneOf("escolhida","aceita")}
     {if mission.typeEDName = "Altruism": {mission.commodity} |else: créditos} para
-    {OneOf("{P(lcase(mission.faction))} com o intúito de {OneOf('aumentar','melhorar','crescer')} sua {OneOf('reputação','moral')} com esta facção",
+    {OneOf("{P(lcase(mission.faction))} com o intúito de {OneOf('aumentar','melhorar','crescer')} sua {OneOf('reputação','moral')} com Ésta facção",
           "{OneOf('aumentar','melhorar','crescer')} your {OneOf('reputação','moral')} com a {P(lcase(mission.faction))}")}
 |elif event.communal:
     Você aceitou o objetivo da comunidade: {mission.localisedname}
@@ -18,9 +18,9 @@
         {set type to mission.type}
     }
     {set type to cat("missão de ", type)}
-    {OneOf("{type} {if mission.faction: da {mission.faction}} aceita",
-        "{type} aceita {if mission.faction: da {mission.faction}}",
-        "Você aceitou uma {type} {if mission.faction: da {mission.faction}}")
+    {OneOf("{type} {if mission.faction: da {mission.faction}} aceita.",
+        "{type} aceita {if mission.faction: da {mission.faction}}.",
+        "Você aceitou uma {type} {if mission.faction: da {mission.faction}}.")
     }
 }
 
@@ -32,9 +32,9 @@
  
  Você pode ser atacado por {OneOf("autoridades","policiais")} {Occasionally(2,"do sistema")}. Aconselho cuidado. Evite ser scaneado.
 |elif token(mission.name,"_",2)  = "Skimmer":
-   Esta é uma {OneOf("missão","operação")} de superfície.
+   Ésta é uma {OneOf("missão","operação")} de superfície.
 |elif token(mission.name,"_",2)  = "Surface":
-   Esta é uma {OneOf("missão","operação")} de superfície, você vai precisar de um V R S.
+   Ésta é uma {OneOf("missão","operação")} de superfície, você vai precisar de um V R S.
 }
 
 {if missionsCount = 20:
@@ -42,7 +42,7 @@
     Por favor, complete algumas para poder aceitar outras.
 |else:
    {OneOf("{Occasionally(2,'Agora')} Você tem {missionsCount} miss{if missionsCount > 1:ões|else:ão}",
-        "Esta é sua
+        "Ésta é sua
     {if missionsCount = 1: 1ª
     |elif missionsCount = 2: 2ª
     |elif missionsCount = 3: 3ª

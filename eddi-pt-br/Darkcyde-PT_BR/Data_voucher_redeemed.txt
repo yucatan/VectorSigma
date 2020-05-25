@@ -3,7 +3,7 @@
 {SetState('eddi_context_last_action', 'redeem')}
 {SetState('eddi_context_data_voucher_amount', event.amount)}
 
-Comprovantes de dados no valor de {Humanise(event.amount)} créditos descontados
+Comprovantes de dados no valor de {Humanise(event.amount)} {if event.amount > 999999: de} créditos descontados
 
 {Occasionally(2, "
    {if len(event.rewards) > 0:

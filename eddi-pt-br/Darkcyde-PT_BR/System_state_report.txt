@@ -16,7 +16,7 @@
     |elif reportsystem.state = "Eleição":
         elegendo novos líderes
     |elif reportsystem.state = "Expansão":
-        {OneOf("se preparando para expandir","preparinguma expansão")} para outro sistema
+        {OneOf("se preparando para expandir","preparando uma expansão")} para outro sistema
     |elif reportsystem.state = "Fome":
         em um estado de fomo; recomendo cautela
     |elif reportsystem.state = "Investimento":

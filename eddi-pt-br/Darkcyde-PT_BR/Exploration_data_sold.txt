@@ -1,4 +1,4 @@
-Dados de exploração de {len(event.systems)} sistema{if len(event.systems) > 1:s} vendido{if len(event.systems) > 1:s} por {Humanise(event.reward)} créditos
+Dados de exploração de {len(event.systems)} sistema{if len(event.systems) > 1:s} vendido{if len(event.systems) > 1:s} por {Humanise(event.reward)} {if event.reward > 999999: de} créditos
 
 {if len(event.firsts) > 0:
     , com um bônus de {Humanise(event.bonus)} créditos por

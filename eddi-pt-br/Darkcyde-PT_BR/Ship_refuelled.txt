@@ -36,6 +36,7 @@
          {set tonnes to "uma"}
 		 {set tons to "tonelada"}
       |else:
+         {if tonnes = 2: {set tonnes to "duas"}}      
          {set tons to "toneladas"}
       }
 

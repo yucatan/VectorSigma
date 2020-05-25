@@ -6,7 +6,7 @@
 {_ Update Fines & Bounties}
 {F("FinesBounties_Delete")}
 
-Vales recompensas no valor de {Humanise(event.amount)} créditos recolhidos
+Vales recompensas no valor de {Humanise(event.amount)} {if event.amount > 999999: de} créditos recolhidos
 
 {if len(event.rewards[0].faction) > 0:
     {Occasionally(2, "pela 

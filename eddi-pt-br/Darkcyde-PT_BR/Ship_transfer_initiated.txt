@@ -1,4 +1,4 @@
-{ShipName(event.shipid, event.ship)} {OneOf("está a caminho","está sendo transferida", "transferência iniicada", "está sendo transportada")} de {P(event.system)}
+{ShipName(event.shipid, event.ship)} {OneOf("está a caminho","está sendo transferida", "teve a transferência iniciada", "está sendo transportada")} de {P(event.system)}
 
 {if event.transfercost: por um custo de {event.price} créditos}.
 

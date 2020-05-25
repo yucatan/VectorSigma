@@ -39,7 +39,7 @@
    {if bountyawd = 1 || bond = 1:
       Você também
    |else:
-      Lembrete: Vocẽ
+      Lembrete: Você
    }
    tem
    {if fine = 1: multas}

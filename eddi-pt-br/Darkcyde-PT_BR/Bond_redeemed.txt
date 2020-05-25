@@ -7,7 +7,7 @@
 {F("FinesBounties_Delete")}
 
 
-Pagamentos de combate de {Humanise(event.amount)} créditos 
+Pagamentos de combate de {Humanise(event.amount)} {if event.amount > 999999: de} créditos 
 foram 
 {OneOf("resgatados", "recebidos")}
 
@@ -19,7 +19,7 @@ foram
       {set cur to 0}
       {set length to len(event.rewards) - 1}
       {while cur < len(event.rewards):
-         {Humanise(event.rewards[cur].amount)} créditos da
+         {Humanise(event.rewards[cur].amount)} {if event.amount > 999999: de} créditos da
          {event.rewards[cur].faction}
          {set cur to cur + 1}
          {if cur = length: e

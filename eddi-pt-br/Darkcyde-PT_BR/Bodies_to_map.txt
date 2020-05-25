@@ -63,30 +63,28 @@
 
 {if len(toMapList) > 0:
 
-    {if len(toMapList) = 1: Body |else: Bodies}
+    {if len(toMapList) = 1: Corpo celeste |else: Corpo celeste}
 
     {set cur to 0}
     {while cur < len(toMapList):
         {P(toMapList[cur])}
         {set cur to cur + 1}
-        {if cur = len(toMapList) - 1: and
+        {if cur = len(toMapList) - 1: e
         |elif cur < len(toMapList) - 1:,
         }
     }
 
-    {if len(toMapList) = 1: is |else: are }
-    {if event.type = "Body mapped": {OneOf("also")} }
-    {if len(toMapList) = 1: a }
-    {OneOf("recommended", "good")}
+    {if len(toMapList) = 1: é |else: são }
+    {if event.type = "Body mapped": {OneOf("Além disso")} }
+    {if len(toMapList) = 1:  }
+    {if len(toMapList) = 1: {OneOf("um excelente", "um bom")} |else: {OneOf("excelentes", "bons")} }
     {set candidates to:
-        {if len(toMapList) > 1: candidates |else: candidate}
+        {if len(toMapList) > 1: candidatos |else: candidato}
     }
-    {OneOf('{candidates} for mapping', '{candidates} to map', 'mapping {candidates}')}.
+    {OneOf("{candidates} para mapeamento", "{candidates} para análise")}.
 
 |elif mappedBodies > 0:
 
     {OneOf(
-        "You have mapped all {if mappedBodies < totalBodies: {OneOf(\"worthwhile\", \"interesting\")}} bodies.",
-        "All {OneOf( \"{if mappedBodies < totalBodies: worthwhile} bodies\", \"bodies of interest\" )} {OneOf( \"have been mapped.\", \"are now mapped.\" )}"
-    )}
-}
+        "Você mapeou todos {if mappedBodies < totalBodies: {OneOf(\"worthwhile\", \"interesting\")}} corpos estelares de grande interece neste sistema.")}.
+    }

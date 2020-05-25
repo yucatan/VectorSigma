@@ -50,7 +50,7 @@
            Sua recompensa esperada é
            {Occasionally(2, "atualmente")}
            {Occasionally(2, "calculada em")}
-           {Humanise(event.tierreward[cur])} créditos
+           {Humanise(event.tierreward[cur])} {if event.tierreward > 999999: de} créditos
            {Occasionally(2, "nos {event.percentileband[cur]}º percentual")}
        }
    }.

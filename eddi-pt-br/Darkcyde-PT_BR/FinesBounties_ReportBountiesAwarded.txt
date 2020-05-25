@@ -31,7 +31,7 @@
    {if len(temparray_faction) > 1:
       {OneOf("Você tem {len(temparray_faction)} recompens{if len(temparray_faction) = 1:a |else:as} para recolher,",
              "{len(temparray_faction)} facç{if len(temparray_faction) = 1:ão |else:ões} estão lhe devendo")} 
-      num total de {Humanise(total_amount)} créditos.
+      num total de {Humanise(total_amount)} {if total_amount > 999999: de} créditos.
    }
 
    Recolha

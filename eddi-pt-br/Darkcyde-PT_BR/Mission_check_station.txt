@@ -27,7 +27,7 @@
 
     {set total to active_missions + complete_missions + depot_missions}
     {if total > 0:
-        Vocẽ tem
+        Você tem
         {if depot_missions > 0:
             {depot_missions} miss{if depot_missions > 1:ões|else:ão} do depósito
             {if active_missions > 0 && complete_missions > 0: ,

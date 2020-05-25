@@ -10,7 +10,7 @@
 {OneOf("Alvo","Inimigo combatente","Adversário","Contendor","Inimigo","Alvo da {event.victimfaction}","piloto da {event.victimfaction}")}
 {OneOf("destruído","eliminado","destroçado","abatido")},
 
-{OneOf("Aqui estão {event.reward} créditos","{event.reward} créditos recebidos","{event.reward} créditos a mais pra conta","{event.reward} créditos coletados")}
+{OneOf("Aqui estão {event.reward} {if event.reward > 999999: de} créditos","{event.reward} {if event.reward > 999999: de} créditos recebidos","{event.reward} {if event.reward > 999999: de} créditos a mais pra conta","{event.reward} {if event.reward > 999999: de} créditos coletados")}
 
 {Occasionally(3,"da {event.awardingfaction}")}.
 

@@ -5,9 +5,9 @@
 {SetState('eddi_context_commodity_amount', event.amount)}
 
 {if event.amount = 1:
-   Você acabou de comprar uma tonelada de {event.commodity} por {event.price} créditos.
+   Você acabou de comprar uma tonelada de {event.commodity} por {event.price} {if event.price > 999999: de} créditos.
 |elif event.amount > 1:
-    Você acabou de comprar {event.amount} toneladas de {event.commodity} a {event.price} créditos por tonelada.  O custo total foi de {Humanise(event.amount * event.price)} créditos.
+    Você acabou de comprar {event.amount} toneladas de {event.commodity} a {event.price} {if event.price > 999999: de} créditos por tonelada.  O custo total foi de {Humanise(event.amount * event.price)} {if (event.amount * event.price) > 999999: de} créditos.
 }
 
 {set total_required to 0}

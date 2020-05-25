@@ -22,10 +22,7 @@
 
 {if !reportbody.name || reportbody.name = "":
     {_ If it's still not possible to get the body name...  _}
-    Não 
-    {OneOf("estou certo","tenho certeza")}
-    sobre qual corpo você 
-    {OneOf("perguntando","se referindo")}.
+    Não {OneOf("estou certo","tenho certeza")} sobre qual corpo você {OneOf("está perguntando","está se referindo")}.
 
 |else:
     {_ Define a function to obtain a material from inventory}

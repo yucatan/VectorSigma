@@ -71,7 +71,7 @@
             }
         }
     }
-    aqui com um lucro de {totalprofit} créditos.
+    aqui com um lucro de {totalprofit} {if totalprofit > 999999: de} créditos.
 }
 
 {_ Let the user know about any commodities about which we are unsure if they can sell for a profit}

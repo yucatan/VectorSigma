@@ -1,1 +1,1 @@
-{OneOf("Link neural", "Link", "Uplink")} {OneOf("terminado", "desativado")}.
+{OneOf("Link neural", "Link", "aplink")} {OneOf("terminado", "desativado")}.

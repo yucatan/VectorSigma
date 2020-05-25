@@ -13,7 +13,7 @@ Sabedoria diária, na rádio {ShipName()}:
     {set wisdomstring to ["A melhor maneira de se encontrar é se perder no serviço a outros",
          "Você precisa ser a mudança que quer ver no mundo",
          "Viva como se você fosse morrer amanhã. Aprenda como se fosse viver para sempre",
-         "Primeiro eles te ignoram, então eles riem de você, aí eles te enfrentam, então você vence",
+         "Primeiro eles te ignóram, então eles riem de você, aí eles te enfrentam, então você vence",
          "Os fracos nunca perdoam. Perdão é o atributo dos fortes",
          "Felicidade é quando aquilo que você pensa, o que você diz e o que você faz estão em harmonia",
          "Em orações, é melhor ter um coração sem palavras, do que palavras sem um coração",

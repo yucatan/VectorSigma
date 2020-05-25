@@ -13,7 +13,7 @@ Vendeu
     {event.amount} toneladas de {event.commodity}
     {Occasionally(2,"a {event.price} créditos por tonelada.")}
     {OneOf("No valor total de","Por")}
-    {event.amount * event.price} créditos
+    {event.amount * event.price} {if (event.amount * event.price) > 999999: de} créditos
 }
 {if event.profit < 0:
     com uma perda de {-1 * event.profit * event.amount} créditos
@@ -22,6 +22,6 @@ Vendeu
 |elif event.profit = event.price:
     lucro puro
 |else:
-    com um luco de {event.profit * event.amount} créditos
+    com um lucro de {event.profit * event.amount} {if (event.amount * event.price) > 999999: de} créditos
 }.
 

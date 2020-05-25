@@ -6,15 +6,15 @@
 {set mission to MissionDetails(event.missionid)}
 
 {if find(mission.typeEDName, "Passenger") > -1:
-    {set type to "Transport "}
+    {set type to "Transporte"}
     {set type to cat(type, mission.passengertype)}
 |else:
     {set type to mission.type}
 }
-{set type to cat(type, " missão")}
+{set type to cat("missão de ", type)}
 
 {OneOf("{type} {if mission.faction: para {mission.faction}} falhou", 
-    "Você falhou na missão {type} {if mission.faction: para {mission.faction}}")}.
+    "Você falhou na {type} {if mission.faction: para {mission.faction}}")}.
 
 {set type to "Failed"}
 {F("Mission Route Update")}

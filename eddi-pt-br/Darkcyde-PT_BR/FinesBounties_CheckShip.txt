@@ -64,7 +64,7 @@
     {if ship_fines_count > 0:
         {if ship_bounties_count > 0: Ela |else: {v_type}}
         tem {N} multa{if ship_fines_count > 1:s} a pagar,
-        num total de {ship_fines_total} créditos.
+        num total de {ship_fines_total} {if ship_fines_total > 999999: de} créditos.
     }
 
     {if ship_bounties_count = 1: {set N to:uma}
@@ -74,7 +74,7 @@
     {if ship_bounties_count > 0:
         {if ship_fines_count > 0: Ela também |else: Ela}
         tem {N} recompensa{if ship_fines_count > 1:s} a pagar,
-        num total de {ship_bounties_total} créditos.
+        num total de {ship_bounties_total} {if ship_bounties_total > 999999: de} créditos.
     }
 
     {if len(crime_array) > 0:
@@ -93,7 +93,7 @@
         {set cur to 0}
         {set length to len(crime_array) - 1}
         {for id, amount in crime_array:
-            {amount} créditos na 
+            {amount} {if amount > 999999: de} créditos na 
             {if ShipName(id) != "your ship": {ShipName(id)}
             |else: {ShipCallsign(id)}
             }

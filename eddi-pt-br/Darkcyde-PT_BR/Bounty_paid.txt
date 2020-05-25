@@ -4,13 +4,13 @@
 {SetState('eddi_context_fine_amount', event.amount)}
 
 
-Recompensa de {Humanise(event.amount)} créditos paga.
+Recompensa de {Humanise(event.amount)} {if event.amount > 999999: de} créditos paga.
 
 {_ Update Fines & Bounties}
 {F("FinesBounties_Delete")}
 
 {if event.brokerpercentage:
   {Pause(1000)}
-  O agente ficou comhe
-  {floor((event.amount / (100 - event.brokerpercentage)) * event.brokerpercentage)} créeditos.
+  O agente ficou com
+  {floor((event.amount / (100 - event.brokerpercentage)) * event.brokerpercentage)} créditos.
 }

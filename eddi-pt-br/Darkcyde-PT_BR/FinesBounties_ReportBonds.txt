@@ -34,7 +34,7 @@
          {OneOf("Você tem {len(temparray_faction)} pagamento{if len(temparray_faction) != 1:s} de combate para recolher, num",
                 "{len(temparray_faction)} facç{if len(temparray_faction) != 1: ão deve|else: ões devem} a você um")} 
 
-         total de {Humanise(total_amount)} créditos.
+         total de {Humanise(total_amount)} {if total_amount > 999999: de} créditos.
       }
 
       Recolha

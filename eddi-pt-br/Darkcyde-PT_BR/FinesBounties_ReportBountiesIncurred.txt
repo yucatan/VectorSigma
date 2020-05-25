@@ -59,7 +59,7 @@
       {if len(temparray_faction) > 1:
          {OneOf("Você tem {len(temparray_faction)} recompensa para pagar. Você deve",
                 "{len(temparray_faction)} facções colocaram sua cabeça a prêmio por")} 
-         um total de {total_amount} créditos.
+         um total de {total_amount} {if total_amount > 999999: de} créditos.
       }
 
       Você tem de pagar
@@ -94,7 +94,7 @@
       {set cur to 0}
       {set length to len(crime_array) - 1}
       {for id, amount in crime_array:
-         {amount} créditos na 
+         {amount} {if amount > 999999: de} créditos na 
          {if ShipName(id) != "your ship": {ShipName(id)}
          |else: {ShipCallsign(id)}
          }

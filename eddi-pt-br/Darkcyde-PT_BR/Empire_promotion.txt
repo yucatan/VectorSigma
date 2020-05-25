@@ -12,7 +12,7 @@
        "Você {OneOf(\"{OneOf('elevou sua posição','foi promovid{A}')} a\",
                         \"{OneOf('recebeu','foi agraciad{A} com')} um rank mais alto de\")} {rank} na Marinha Imperial")}
 
-{Occasionally(2, "for your service to the Empire")}.
+{Occasionally(2, "por seus serviços ao Império")}.
 
 {if event.rank = "Outsider":
    Você recebeu acesso à compra da Impírial Ígôl.

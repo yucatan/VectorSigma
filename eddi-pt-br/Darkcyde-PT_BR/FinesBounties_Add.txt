@@ -142,9 +142,9 @@
 
         {if (system.power = "Arissa Lavigny-Duval" || system.power = "Pranav Antal")
            && system.powerstate = "Control":
-            {type} doubled in {system.power} controlled space.
+            {type} duplicado em espaço controlado por {system.power}.
         |elif system.power = "Pranav Antal":
-            {type} increased by 50% in Pranav Antal exploited space.
+            {type} aumentado em 50% em espaço explorado por Pranav Antal.
         |elif system.power = "Archon Delaine":
 
             {_ if joined power & personal rank is 2 or more, get -20% on fines & bounties incurred }

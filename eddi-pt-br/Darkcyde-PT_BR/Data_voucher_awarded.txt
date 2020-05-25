@@ -13,4 +13,4 @@ Comprovante de dados concedido
 |elif faction = "Alliance": {set faction to:pela Aliança}
 |else: por }
 
-{faction} no valor de {event.reward} créditos.
+{faction} no valor de {event.reward} {if event.reward > 999999: de} créditos.
