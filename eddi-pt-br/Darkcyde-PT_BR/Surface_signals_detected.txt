@@ -1,0 +1,9 @@
+{set surfacesignals to []}
+{for signal in event.surfacesignals: 
+    {set surfacesignals_desc to: 
+        {signal.amount} {signal.source}{if signal.amount > 1:s}
+    }
+    {set surfacesignals to cat(surfacesignals, [surfacesignals_desc])}
+}
+
+{List(surfacesignals)} detectado.

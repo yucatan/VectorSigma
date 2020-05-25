@@ -1,0 +1,41 @@
+{_ Fetch from Context _}
+{set reportSystem to SystemDetails(state.eddi_context_system_name)}
+
+{if !reportSystem.name || reportSystem.name = "":
+
+      Não tenho certeza sobre qual sistema você está {OneOf("perguntando","se referindo")}.
+
+|else:
+
+    {if ship.Role.edname = "Exploration" || ship.Role.edname = "Multipurpose":
+        {if reportSystem:
+            {if len(reportSystem.bodies) > 0 && len(reportSystem.bodies) < event.totalbodies:
+
+                {Pause(1000)}
+
+                {set scannedBodies to 0}
+                {for body in reportSystem.bodies:
+                    {if body.scanned:
+                        {set scannedBodies to scannedBodies + 1}
+                    }
+                }
+                {set bodiesToScan to (event.totalbodies- scannedBodies)}
+
+                {if scannedBodies < event.totalbodies:
+                    {OneOf(
+                        "Foram escaneados {scannedBodies} de {event.totalbodies} corpos celestes", 
+                        "{bodiesToScan} {if bodiesToScan > 1: corpos celestes restantes |else: corpo celeste restante} para escanear"
+                    )}
+                    {Occasionally(3, OneOf("aqui", "neste sistema"))}.
+                }
+
+            |else:
+
+                {set bodiesToMap to F("Bodies to map")}
+                {if bodiesToMap:
+                    {bodiesToMap}
+                }
+            }
+        }
+    }
+}

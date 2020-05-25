@@ -1,0 +1,5 @@
+{_ Crew promotion }
+{_ Triggered when crewmember combat rank increases }
+
+
+{event.name}, membro da tripulação, subiu no posto de combate a {event.combatrating}.

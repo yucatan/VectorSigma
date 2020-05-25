@@ -1,0 +1,165 @@
+{_ Crime check system }
+{_ Check claims, fines & bounties related to the current system }
+
+
+{set CheckPad(station) to:
+    {set largest_pad to lcase(station.largestpad)}
+    {if largest_pad != "none":
+        {if largest_pad = "large": {return true} }
+        |elif largest_pad = "medium:
+            {if lcase(ship.size) = "large": {return false}
+            |else: {return true}
+        }
+        {if lcase(ship.size) = "small": {return true}
+    }
+    {return false}
+}
+
+{set NearestStation(service) to:
+    {set distance to 0}
+    {set station_count to 0}
+    {set orbital_count to 0}
+
+    {_ If preferred & available, use orbital stations }
+    {if orbitalpriority:
+        {for station in system.orbitalstations:
+            {if find(station.stationservices, service) > -1:
+                {set orbital_count to orbital_count + 1}
+            }
+        }
+    }
+
+    {_ Force orbital stations when game version is not 'Horizons' }
+    {if orbital_count > 0 || !horizons:
+        {set stations to system.orbitalstations}
+    |else:
+        {set stations to system.stations}
+    }
+
+    {_ Get the total count and nearest station }
+    {for station in stations:
+        {if CheckPad(station):
+            {if find(station.stationservices, service) > -1:
+                {set station_count to station_count + 1}
+                {if distance = 0 || station.distancefromstar < distance:
+                    {set distance to station.distancefromstar}
+                    {set nearest_station to station.name}
+                }
+            }
+        }
+    }
+}
+
+{set factions_claims to []}
+{set factions_fines to []}
+{set factions_bounties to []}
+{set station_report to false}
+{set system_claims to 0}
+{set system_fines to 0}
+{set system_bounties to 0}
+{set wanted_count to 0}
+
+{for record in criminalrecord:
+    {for faction in system.factions:
+        {if record.faction = faction.name:
+
+            {if record.claims > 0:
+                {set factions_claims to cat(factions_claims, [record.faction])}
+                {set system_claims to system_claims + record.claims}
+            }
+
+            {set reports to record.finesIncurred}
+            {if len(reports) > 0:
+                {for report in reports:
+                    {if report.shipId = ship.LocalId:
+                        {set system_fines to system_fines + report.amount}
+                        {if find(factions_fines, record.faction) < 0:
+                            {set factions_fines to cat(factions_fines, [record.faction])}
+                            {if find(factions_bounties, record.faction) < 0:
+                                {set wanted_count to wanted_count + 1}
+                            }
+                        }
+                    }
+                }
+            }
+
+            {set reports to record.bountiesIncurred}
+            {if len(reports) > 0:
+                {for report in reports:
+                    {if report.shipId = ship.LocalId:
+                        {set system_bounties to system_bounties + report.amount}
+                        {if find(factions_bounties, record.faction) < 0:
+                            {set factions_bounties to cat(factions_bounties, [record.faction])}
+                            {if find(factions_fines, record.faction) < 0:
+                                {set wanted_count to wanted_count + 1}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+{set claim_count to len(factions_claims)}
+{set fine_count to len(factions_fines)}
+{set bounty_count to len(factions_bounties)}
+
+{if wanted_count > 0:
+    Atenção: {ShipName()} é procurada neste sistema por {wanted_count}
+    {if wanted_count = 1: facção |else: facções}, 
+    pelo total de multas e recompensas de {Humanise(system_fines + system_bounties)} {if fines_bounties > 999999: de} créditos.
+}
+
+{_ Report nearest station to clear bounties }
+{if system_bounties > 0:
+    {NearestStation("Interstellar Factors Contact")}
+    {if station_count > 0:
+        Existem instalações legais em {station_count} 
+        {if station_count = 1: estação
+            {if orbitalpriority: orbital}
+            |else: estações
+                {if orbitalpriority: orbitais}
+        } para limpar 
+        {if bounty_count = 1: sua recompensa pendente |else: suas recompensas pendentes}.
+        {if station_count = 1: Ela |else: A mais próxima } é {nearest_station},
+        {round(distance, 1)} segundos-luz da estrela principal.
+        {set station_report to true}
+    }
+}
+
+{if system_fines > 0 && !station_report:
+    {NearestStation("Contacts")}
+    {if station_count > 0:
+        Há {station_count} 
+        {if station_count = 1: estação
+            {if orbitalpriority: orbital}
+            |else: estações
+                {if orbitalpriority: orbitais}
+        } para limpar 
+        {if fine_count = 1: sua multa pendente |else: suas multas pendentes}.
+        {if station_count = 1: Nesta |else: A mais próxima} é {nearest_station},
+        {round(distance, 1)} segundos-luz da estrela principal.
+        {set station_report to true}
+    }
+}
+
+{_ Report nearest station for pending claims }
+{if system_claims > 0:
+    Você possui reivindicações de bônus e recompensas neste sistema de {claim_count}
+    {if claim_count = 1: facção |else: facções}, num total de {Humanise(system_claims)} {if system_claims > 999999: de} créditos.
+
+    {if !station_report:
+        {if system_fines = 0: {NearestStation("Contacts")}}
+        {if station_count > 0:
+            Há {station_count} 
+            {if station_count = 1: estação 
+                {if orbitalpriority: orbital}
+                |else: estações 
+                    {if orbitalpriority: orbitais}
+            } para reivindicar sua {if claim_count = 1:  recompensa |else:s recompensas}.
+            {if station_count = 1: Ela |else: A mais próxima} é {nearest_station},
+            {round(distance, 1)} segundos-luz da estrela principal.
+        }
+    }
+}

@@ -1,0 +1,287 @@
+{_ Preferences _}
+
+{set reportTerraformables to 1}         {_ Reports terraformable and terraformed bodies _}
+{set reportPlanetTypes to 1}            {_ Reports Earth-like and water worlds _}
+{set reportMass to 1}                   {_ Reports notable masses (relative to Earth's) _}
+{set reportRadius to 1}                 {_ Reports notable radii (in kilometers) _}
+{set reportDensity to 1}                {_ Reports notable densities (in kilograms per cubic meter) _}
+{set reportGravity to 1}                {_ Reports notable gravity (in G's) for landable bodies _}
+{set reportTemperature to 1}            {_ Reports notable temperatures (in Kelvin) _}
+{set reportMaterials to 1}              {_ Reports materials per preferences in the `Body materials` script. _}
+{set reportLandableVolcanism to 1}      {_ Reports volcanism on landable worlds _}
+{set reportRings to 1}                  {_ Reports ring details _}
+{set reportInterestingOrbits to 1}      {_ Reports notable orbital characteristics _}
+{set reportRapidRotation to 1}          {_ Reports very fast rotating bodies _}
+
+{_ Fetch from context _}
+{set reportbody to BodyDetails(state.eddi_context_body_name, state.eddi_context_body_system)}
+{if !reportbody: 
+    {set reportbody to BodyDetails(state.eddi_context_body_name)}
+}
+
+{_ Begin processing _}
+
+{if !reportbody.name || reportbody.name = "":
+    {_ If it's still not possible to get the body name...  _}
+      Não {OneOf("tenho certeza","estou certo")} sobre qual corpo celeste você está {OneOf("perguntando","se referindo")}.
+|else:
+    {set notables to []}
+    {if reportInterestingOrbits:
+
+        {set orbitNotables to []}
+
+        {if reportbody.eccentricityprobability:
+            {if reportbody.eccentricityprobability > 99.9:
+                {set orbitNotables to cat(orbitNotables, [cat("incrivelmente ", OneOf("elíptico", "oblongo", "alongado"))])}
+            |elif reportbody.eccentricityprobability > 99:
+                {set orbitNotables to cat(orbitNotables, [cat("extremamente ", OneOf("elíptico", "oblongo", "alongado"))])}
+            |elif reportbody.eccentricityprobability > 97:
+                {set orbitNotables to cat(orbitNotables, [cat("incomumente ", OneOf("elíptico", "oblongo", "alongado"))])}
+            }
+        }
+
+        {if reportbody.inclinationprobability:
+            {if reportbody.inclinationprobability > 99.9:
+                {set orbitNotables to cat(orbitNotables, [cat("incrivelmente inclinado")])}
+            |elif reportbody.inclinationprobability > 99:
+                {set orbitNotables to cat(orbitNotables, [cat("extremamente inclinado")])}
+            |elif reportbody.inclinationprobability > 97:
+                {set orbitNotables to cat(orbitNotables, [cat("incomumente inclinado")])}
+            }
+        }
+
+        {if reportbody.orbitalperiodprobability:
+            {if reportbody.orbitalperiod < 0: {set retrograde to cat(" ", "retrograde", " ")} }
+            {if reportbody.orbitalperiodprobability < 0.1:
+                {set orbitNotables to cat(orbitNotables, [cat("incrivelmente rápido", retrograde)])}
+            |elif reportbody.orbitalperiodprobability < 1:
+                {set orbitNotables to cat(orbitNotables, [cat("Extremamente rápido", retrograde)])}
+            |elif reportbody.orbitalperiodprobability < 3:
+                {set orbitNotables to cat(orbitNotables, [cat("Incomumente rápido", retrograde)])}
+            }
+        }
+
+        {if len(orbitNotables) > 0:
+            {if StartsWithVowel(orbitNotables[0]): {set a to "an"} |else: {set a to "a"} }
+            {set cur to 0}
+            {set length to len(orbitNotables) - 1}
+            {while cur < len(orbitNotables):
+                {set orbitdescription to cat(orbitdescription, orbitNotables[cur])}
+                {set cur to cur + 1}
+                {if cur = length: 
+                    {set orbitdescription to cat(orbitdescription, " and ")}
+                |elif cur < length:
+                    {set orbitdescription to cat(orbitdescription, ", ")}
+                }
+            }
+            {set notables to cat(notables, [cat(a, " ", orbitdescription, " ", "orbit")])}
+        }
+    }
+
+    {if reportbody.rotationalperiod < 0: {set retrograde to cat(" ", "retrograde", " ")} }
+    {if reportRapidRotation && reportbody.rotationalperiodprobability:
+        {if !retrograde && reportbody.rotationalperiodprobability < 0.1:
+            {set notables to cat(notables, [cat("um período rotacional incrivelmente curto de ", Humanise(reportbody.rotationalperiod), " dias")])}
+        |elif !retrograde && reportbody.rotationalperiodprobability < 1:
+            {set notables to cat(notables, [cat("um período rotacional extremamente curto de ", Humanise(reportbody.rotationalperiod), " dias")])}
+        |elif !retrograde && reportbody.rotationalperiodprobability < 3:
+            {set notables to cat(notables, [cat("um período rotacional invulgarmente curto de ", Humanise(reportbody.rotationalperiod), " dias")])}
+        }
+    }
+
+    {if reportMass && reportbody.massprobability:
+        {if reportbody.massprobability < 0.1:
+            {set notables to cat(notables, [cat("uma massa incrivelmente baixa de ", Humanise(reportbody.earthmass), " vezes que a terra")])}
+        |elif reportbody.massprobability < 1:
+            {set notables to cat(notables, [cat("uma massa extremamente baixa de ", Humanise(reportbody.earthmass), " vezes que a terra")])}
+        |elif reportbody.massprobability < 3:
+            {set notables to cat(notables, [cat("uma massa extraordinariamente baixa de ", Humanise(reportbody.earthmass), " vezes que a terra ")])}
+        |elif reportbody.massprobability > 99.9:
+            {set notables to cat(notables, [cat("uma massa incrivelmente alta de ", Humanise(reportbody.earthmass), " vezes que a terra")])}
+        |elif reportbody.massprobability > 99:
+            {set notables to cat(notables, [cat("uma massa extremamente alta de ", Humanise(reportbody.earthmass), " vezes que a terra")])}
+        |elif reportbody.massprobability > 97:
+            {set notables to cat(notables, [cat("uma massa extraordinariamente alta de ", Humanise(reportbody.earthmass), " vezes que a terra")])}
+        }
+    }
+
+    {if reportRadius && reportbody.radiusprobability:
+        {if reportbody.radiusprobability < 0.1:
+            {set notables to cat(notables, [cat("um raio incrivelmente baixo de ", Humanise(reportbody.radius), " quilômetros")])}
+        |elif reportbody.radiusprobability < 1:
+            {set notables to cat(notables, [cat("um raio extremamente baixo de ", Humanise(reportbody.radius), " quilômetros")])}
+        |elif reportbody.radiusprobability < 3:
+            {set notables to cat(notables, [cat("um raio invulgarmente baixo de ", Humanise(reportbody.radius), " quilômetros")])}
+        |elif reportbody.radiusprobability > 99.9:
+            {set notables to cat(notables, [cat("um raio extremamente alto de ", Humanise(reportbody.radius), " quilômetros")])}
+        |elif reportbody.radiusprobability > 99:
+            {set notables to cat(notables, [cat("um raio incrivelmente grande de ", Humanise(reportbody.radius), " quilômetros")])}
+        |elif reportbody.radiusprobability > 97:
+            {set notables to cat(notables, [cat("um raio excepcionalmente grande de ", Humanise(reportbody.radius), " quilômetros")])}
+        }
+    }
+
+    {if reportTemperature && reportbody.tempprobability:
+        {if reportbody.tempprobability < 0.1:
+            {set notables to cat(notables, [cat("uma temperatura superficial incrivelmente baixa de ", Humanise(reportbody.temperature), " Kelvin")])}
+        |elif reportbody.tempprobability < 1:
+            {set notables to cat(notables, [cat("uma temperatura superficial extremamente baixa de ", Humanise(reportbody.temperature), " Kelvin")])}
+        |elif reportbody.tempprobability < 3:
+            {set notables to cat(notables, [cat("uma temperatura superficial incomumente baixa de ", Humanise(reportbody.temperature), " Kelvin")])}
+        |elif reportbody.tempprobability > 99.9:
+            {set notables to cat(notables, [cat("uma temperatura superficial extremamente alta de ", Humanise(reportbody.temperature), " Kelvin")])}
+        |elif reportbody.tempprobability > 99:
+            {set notables to cat(notables, [cat("uma temperatura de superfície incrivelmente alta de ", Humanise(reportbody.temperature), " Kelvin")])}
+        |elif reportbody.tempprobability > 97:
+            {set notables to cat(notables, [cat("uma temperatura superficial incomumente alta de ", Humanise(reportbody.temperature), " Kelvin")])}
+        }
+    }
+
+    {if reportGravity && reportbody.landable && reportbody.gravityprobability:
+        {if reportbody.gravityprobability < 0.1:
+            {set notables to cat(notables, [cat("uma gravidade incrivelmente baixa de ", Humanise(reportbody.gravity), " vezes da terra")])}
+        |elif reportbody.gravityprobability < 1:
+            {set notables to cat(notables, [cat("uma gravidade extremamente baixa de ", Humanise(reportbody.gravity), " vezes da terra")])}
+        |elif reportbody.gravityprobability < 3:
+            {set notables to cat(notables, [cat("uma gravidade invulgarmente baixa de ", Humanise(reportbody.gravity), " vezes da terra")])}
+        |elif reportbody.gravityprobability > 99.9:
+            {set notables to cat(notables, [cat("uma gravidade incrivelmente alta de ", Humanise(reportbody.gravity), " vezes da terra")])}
+        |elif reportbody.gravityprobability > 99:
+            {set notables to cat(notables, [cat("uma gravidade extremamente alta de ", Humanise(reportbody.gravity), " vezes da terra")])}
+        |elif reportbody.gravityprobability > 97:
+            {set notables to cat(notables, [cat("uma gravidade extraordinariamente alta de ", Humanise(reportbody.gravity), " vezes da terra")])}
+        }
+    }
+
+    {if reportDensity && reportbody.densityprobability:
+        {if reportbody.densityprobability < 0.1:
+            {set notables to cat(notables, [cat("uma densidade incrivelmente baixa de ", Humanise(reportbody.density), " quilogramas por metro cúbico")])}
+        |elif reportbody.densityprobability < 1:
+            {set notables to cat(notables, [cat("uma densidade extremamente baixa de ", Humanise(reportbody.density), " quilogramas por metro cúbico")])}
+        |elif reportbody.densityprobability < 3:
+            {set notables to cat(notables, [cat("uma densidade invulgarmente baixa de ", Humanise(reportbody.density), " quilogramas por metro cúbico")])}
+        |elif reportbody.densityprobability > 99.9:
+            {set notables to cat(notables, [cat("uma densidade incrivelmente alta de ", Humanise(reportbody.density), " quilogramas por metro cúbico")])}
+        |elif reportbody.densityprobability > 99:
+            {set notables to cat(notables, [cat("uma densidade extremamente alta de ", Humanise(reportbody.density), " quilogramas por metro cúbico")])}
+        |elif reportbody.densityprobability > 97:
+            {set notables to cat(notables, [cat("uma densidade extraordinariamente alta de ", Humanise(reportbody.density), " quilogramas por metro cúbico")])}
+        }
+    }
+
+    {if reportVolcanism:
+        {if reportbody.volcanism && reportbody.landable:
+            {set notables to cat(notables, [cat(OneOf("vulcânica", "tectônica"), " atividade")])}
+        }
+    }
+
+    {if reportRings:
+        {if reportbody.rings:
+            {set ringcompositions to []}
+            {set cur to 0}
+            {for ring in reportbody.rings:
+                {if find(ring.name, "Ring") > -1:
+                    {if find(ringcompositions, ring.composition) = -1:
+                        {set ringcompositions to cat(ringcompositions, [cat(ring.composition)])}
+                    }
+                }
+                {set cur to cur + 1}
+            }
+            {set cur to 0}
+            {set length to len(ringcompositions) - 1}
+            {while cur < len(ringcompositions):
+                {set ringsdescription to cat(ringsdescription, ringcompositions[cur])}
+                {set cur to cur + 1}
+                {if cur = length: 
+                    {set ringsdescription to cat(ringsdescription, " e ")}
+                |elif cur < length:
+                    {set ringsdecription to cat(ringsdescription, ", ")}
+                }
+            }
+            {if ringsdescription:
+                {if len(ringcompositions) = 1:
+                    {if StartsWithVowel(reportbody.reserves): 
+                        {set a to "a "} 
+                    |else: 
+                        {set a to "uma "}
+                    }
+                    {set rings to "anel"}
+                |else:
+                    {set rings to "aneis"} 
+                }
+                {if reportbody.reserveLevel.invariantName != "None": 
+                    {set reserves to reportbody.reserves}
+                }
+                {set notables to cat(notables, [cat(a, " ", reserves, " ", ringsdescription, " ", rings)])}
+            }
+        }
+    }
+
+    {if reportTerraformables:
+        {if reportbody.terraformState.invariantName = "Candidate for terraforming":
+            {set notables to cat(notables, [OneOf("potencial para terraformação", "condições terraformáveis")])}
+        |elif reportbody.terraformState.invariantName = "Terraformed":
+            {set notables to cat(notables, ["condições terraformáveis"])}
+        }
+    }
+
+    {if reportPlanetTypes:
+        {if reportbody.planetClass.invariantName = "Earth-like world":
+            {set notables to cat(notables, ["Condições semelhantes à Terra"])}
+        |elif reportbody.planetClass.invariantName = "Water world":
+            {set notables to cat(notables, [OneOf("água líquida abundante", "água líquida abundante na superfície")])}
+        }
+    }
+
+    {_ Begin speaking _}
+
+    {if !reportbody.name || reportbody.name = "":
+
+        Não tenho certeza sobre qual corpo você está perguntando.
+
+    |else:
+
+        {if len(notables) > 0:
+            {if reportbody.shortname != reportbody.bodyname:
+                {if reportbody.bodytype:
+                    {reportbody.bodytype}
+                |else:
+                    Body
+                }
+                {P(reportbody.shortname)}
+            |else:
+                {P(reportbody.bodyname)}
+            }
+            is
+
+            {if len(notables) = 1:
+                {set desc to "notável"}
+            |elif len(notables) = 2:
+                {set desc to OneOf('interessante', 'notável', 'excepcional')}
+            |elif len(notables) = 3:
+                {set desc to OneOf('exceptional', 'excepcional')}
+            |elif len(notables) = 4:
+                {set desc to OneOf('extraordinário')}
+            |elif len(notables) >= 5:
+                {set desc to OneOf('único de seu tipo', 'único')}
+            }
+            {OneOf("{desc},", "{if StartsWithVowel(desc): an |else: a } {desc} {P(reportbody.planettype)}")}
+
+            {if len(notables) = 1:
+                with {notables[0]}.
+            |elif len(notables) = 2:
+                with {notables[0]} and {notables[1]}.
+            |elif len(notables) = 3:
+                with {notables[0]}, {notables[1]} and {notables[2]}.
+            |elif len(notables) = 4:
+                with {notables[0]}, {notables[1]}, {notables[2]}, and {notables[3]}.
+            |elif len(notables) >= 5:
+                with {notables[0]}, {notables[1]}, {notables[2]}, {notables[3]}, and {notables[4]}.
+            }
+        }
+
+        {if reportMaterials:
+            {F("Body materials report")}
+        }
+    }
+}

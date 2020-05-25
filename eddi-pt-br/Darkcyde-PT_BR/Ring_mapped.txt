@@ -1,0 +1,17 @@
+{_ Context}
+{SetState('eddi_context_last_action', 'scan')}
+{SetState('eddi_context_last_subject', 'ring')}
+{SetState('eddi_context_body_system', system.name)}
+{SetState('eddi_context_ring_name', event.ringname)}
+
+{_ Process the event _}
+
+{if ship.Role.edname = "Exploration" || ship.Role.edname = "Multipurpose":
+
+    {Pause(3000)}
+
+    {OneOf("Mapeamento", "Sondagem", "Escaneamento")}
+    do {event.reserves} {event.composition} anel
+    {OneOf("está", "foi")}
+    {OneOf("completado", "finalizado")}.
+}

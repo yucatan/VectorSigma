@@ -1,0 +1,162 @@
+{_ Route details }
+{_ Triggered when a route has been generated or updated }
+
+
+{if event.routetype = "expiring":
+     {if event.distance > 0:
+         {set mission to MissionDetails(event.missionids[0])}
+
+         {if find(mission.typeEDName, "Passenger") > -1:
+             {set type to "Transporte "}
+             {set type to cat(type, mission.passengertype)}
+         |else:
+             {set type to mission.type}
+         }
+         {set type to cat("missão de ",type)}
+
+         {type} {if mission.faction: da {mission.faction}}
+         {if mission.destinationsystem: no sistema
+             {if mission.destinationsystem = system.name:
+                 atual
+             |else:
+                 {mission.destinationsystem}
+             } 
+         } está para expirar.
+     |else:
+         Nenhuma missão ativa encontrada.
+     }
+|elif event.routetype = "facilitator":
+    {if event.distance > 0:
+        O agente interestelar mais próximo está na estação 
+        {destinationstation.name}, no sistema
+        {if event.system = system.name:
+            atual
+        |else:
+            {event.system}, a {round(event.distance, 1)} anos luz
+        }.
+     |else:
+         Agentee interestelares não foram encontrados no alcance do sensor.
+     }
+|elif event.routetype = "farthest":
+     {if event.distance > 0:
+         Seu {if missionsCount = 1: único objetivo de missão|else: objetivo de missão mais distante}
+         está no sistema 
+         {if event.system = system.name:
+             atual
+         |else:
+             {event.system}, a {round(event.distance, 1)} anos luz
+         }.
+     |else:
+         Nenhuma missão encontrada com um sistema designado como objetivo.
+     }
+|elif event.routetype = "most":
+     {if missionsCount = 1:
+         Seu único objetivo de missão está {Occasionally(2,"localizado")} em
+         {if missions[0].destinationsystem = "":
+             um sistema {Occasionally(2,"estelar")} desconhecido
+         |elif missions[0].destinationsystem = system.name:
+             no sistema {Occasionally(2,"estelar")} atual
+         |else:
+             no sistema {Occasionally(2,"estelar")} {missions[0].destinationsystem}
+         }.
+     |else:
+         {set systems to split(event.systems, "_")}
+         {set system_most to event.system}
+         {set systems_count to len(systems)}
+
+         {if systems_count = 1:
+             {if system_most = system.name:
+                 {set system_most to "sistema atual"}
+             |else:
+                 {set system_most to cat("sistema ", system_most)}
+             }
+             {OneOf("A maioria das suas missões está {Occasionally(2,'localizada')} no {system_most}",
+                 "no {system_most} está {OneOf('a maioria das','a maioria das suas')} missões",
+                 "no {system_most} está a maioria das suas missões a serem completadas")}.
+         |elif systems_count > 1:
+             Você tem {event.count} objetivo{if event.count > 1:s} de missão, em 
+
+             {set cur to 0}
+             {while cur < len(equal):
+                 {systems[cur]}
+                 {set cur to cur + 1}
+                 {if cur = systems_count-1: e |elif cur < systems_count: ,}
+             } sistemas.
+         }
+     }
+|elif event.routetype = "nearest":
+     {if event.distance > 0:
+         Seu {if missionsCount = 1: único objetivo de missão|else: objetivo de missão mais próximo}
+         está no sistema 
+         {if event.system = system.name:
+             atual
+         |else:
+             {event.system}, a {round(event.distance, 1)} anos luz
+         }.
+     |else:
+         Não encontrei um objetivo de missão com sistema de destino designado.
+     }
+|elif event.routetype = "route":
+     {if event.routedistance > 0:
+         Rota de missões calculadas para {event.count} sistemas.
+         A distância total da rota é {round(event.routedistance, 1)} anos luz.
+         O destino da primeira missão é {event.system}, a {round(event.distance, 1)} anos luz.
+     |else:
+         Não foi possível calcular a rota das missões.
+     }
+|elif event.routetype = "source":
+     {if event.count > 0:
+         {set systems to split(event.route, "_")}
+
+         {set pos to 0}
+         {while pos < event.count:
+
+             {set source_cargo to []}
+             {for missionid in event.missionids:
+                 {set haulage to HaulageDetails(missionid)}
+                 {if haulage.sourcesystem = systems[pos]:
+                     {set cargo to CargoDetails(missionid)}
+                     {if find(source_cargo, cargo.name) = -1:
+                         {set source_cargo to cat(source_cargo, [cargo.name])}
+                     }
+                 }
+             }
+
+             {if pos = 0:
+                 Sua {if event.count = 1: única missão de busca de carga |else: missão de busca de carga mais próxima }
+             |elif pos = 1:
+                 Adicionalmente, sua missão de busca de carga 
+             |elif pos = event.count - 1:
+                 Por último, sua missão de busca de carga 
+             |else:
+                 Sua missão de busca de carga 
+             }
+
+             de
+             {set cur to 0}
+             {while cur < len(source_cargo):
+                 {source_cargo[cur]}
+                 {set cur to cur + 1}
+                 {if cur = len(source_cargo) - 1: e |elif cur < len(source_cargo): ,}
+             }
+
+             está no sistema 
+             {if systems[pos] = system.name:
+                 atual
+             |else:
+                 {systems[pos]},
+                 {set distance to Distance(system.name, systems[pos])}
+                 a {round(distance, 1)} anos luz
+             }.
+             {set pos to pos + 1}
+         }
+         {SetState('eddi_context_cargo_source', event.route)}
+     |else:
+         Missão de busca de carga não encontrada com um sistema de destino designado.
+     }
+|elif event.routetype = "update":
+     {if event.system && event.system != "":
+         Próximo destino de missão é {event.system}, a {round(event.distance, 1)} anos luz.
+     }
+}
+

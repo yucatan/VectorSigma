@@ -1,0 +1,79 @@
+{_ Crime check station }
+{_ Check claims, fines & bounties related to the current station }
+
+
+{set CheckPad(current_station) to:
+    {set largest_pad to lcase(current_station.largestpad)}
+    {if largest_pad != "none":
+        {if largest_pad = "large": {return true} }
+        |elif largest_pad = "medium:
+            {if lcase(ship.size) = "large": {return false}
+            |else: {return true}
+        }
+        {if lcase(ship.size) = "small": {return true}
+    }
+    {return false}
+}
+
+{set HasService(service) to:
+    {if CheckPad(current_station):
+        {if find(current_station.stationservices, service) > -1:
+            {return true}
+        |else:
+            {return false}
+        }
+    |else: {return false}
+    }
+}
+
+{set current_station to StationDetails(state.eddi_context_body_name)}
+
+{set factions_claims to []}
+{set system_claims to 0}
+{set factions_fines to []}
+{set system_fines to 0}
+{set factions_bounties to []}
+{set station_report to false}
+
+{for record in criminalrecord:
+    {if record.bounties > 0:
+        {set factions_bounties to cat(factions_bounties, [record.faction])}
+    }
+    {for faction in system.factions:
+        {if record.faction = faction.name:
+            {if record.claims > 0:
+                {set factions_claims to cat(factions_claims, [record.faction])}
+                {set system_claims to system_claims + record.claims}
+            }
+            {if record.fines > 0:
+                {set factions_fines to cat(factions_fines, [record.faction])}
+                {set system_fines to system_fines + record.fines}
+            }
+        }
+    }
+}
+
+{set claim_count to len(factions_claims)}
+{set fine_count to len(factions_fines)}
+{set bounty_count to len(factions_bounties)}
+
+{if bounties > 0 && HasService("Interstellar Factors Contact"):
+    Informação: Existem instalações legais nesta estação para limpar 
+    {if bounty_count = 1: sua recompensa pendente |else: suas recompensas pendentes}.
+    {set station_report to true}
+}
+
+{if (system_fines > 0 || system_claims > 0) && !station_report:
+    {if HasService("Contacts"):
+        Informações: você pode limpar 
+         {if fine_count = 1: sua multa pendente |else: suas multas pendentes} nesta estação.
+        {set station_report to true}
+    }
+}
+
+{if system_claims > 0 && !station_report:
+    {if HasService("Contacts"):
+        Informações: você pode reivindicar 
+        {if claim_count = 1: sua recompensa pendente|else: suas recompensas pendentes} nesta estação.
+    }
+}

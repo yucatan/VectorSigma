@@ -1,0 +1,62 @@
+{_ Crime report}
+{_ Report on all pending claims, fines, and bounties }
+
+
+{set factions_claims to []}
+{set claims_count to 0}
+{set factions_fines to []}
+{set fines_count to 0}
+{set factions_bounties to []}
+{set systems_bounties to []}
+
+{for record in criminalrecord:
+    {set faction to FactionDetails(record.faction)}
+    {if faction:
+        {if record.bounties > 0:
+            {set factions_bounties to cat(factions_bounties, [record.faction])}
+            {for presence in faction.presences:
+                {if find(presence.systemName, systems_bounties) = -1:
+                    {set systems_bounties to cat(systems_bounties, [presence.systemName])}
+                }
+            }
+        }
+        {if record.fines > 0:
+            {set factions_fines to cat(factions_fines, [record.faction])}
+        }
+        {if record.claims > 0:
+            {set factions_claims to cat(factions_claims, [record.faction])}
+        }
+
+        {for report in record.factionReports:
+            {if !report.bounty && report.crimeEDName != "none":
+                {set fines_count to fines_count + 1}
+            }
+            {if report.crimeEDName = "none":
+                {set claims_count to claims_count + 1}
+            }
+        }
+    }
+}
+
+{set factions_count to len(factions_bounties)}
+{set systems_count to len(factions_bounties)}
+
+{if factions_count > 0:
+    Você é procurado por {factions_count} {if factions_count = 1: facção |else: facções}
+    em {systems_count} {if systems_count = 1: sistema |else: sistemas} por um total de
+    {Humanise(bounties)} {if bounties > 999999: de} créditos.
+}
+
+{set factions_count to len(factions_fines)}
+{if factions_count > 0:
+    Você tem {fines_count} pendentes {if fines_count = 1: multa |else: multas} de
+    {factions_count} {if factions_count = 1: facção |else: facções},
+    por um total de {Humanise(fines)} {if bounties > 999999: de} créditos.
+}
+
+{set factions_count to len(factions_claims)}
+{if factions_count > 0:
+    Você tem {claims_count} {if claims_count = 1: reivindicação não recolhida |else: reivindicações não recolhidas} de
+    {factions_count} {if factions_count = 1: facção |else: facções},
+    por um total de {Humanise(claims)} {if bounties > 999999: de} créditos.
+}

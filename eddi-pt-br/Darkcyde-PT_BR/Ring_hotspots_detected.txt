@@ -1,0 +1,12 @@
+{if ship.Role.invariantName = "Miner" || ship.Role.invariantName = "Multipurpose":
+    {set hotspots to []}
+    {for hotspot in event.hotspots: 
+        {set hotspot_desc to: 
+            {hotspot.amount} {if hotspot.amount = 1: ponto crucial |else: pontos cruciais} de {hotspot.commodity}
+        }
+        {set hotspots to cat(hotspots, [hotspot_desc])}
+    }
+
+    detectado{if hotspot.amount > 1:s}.
+    {List(hotspots)}
+}

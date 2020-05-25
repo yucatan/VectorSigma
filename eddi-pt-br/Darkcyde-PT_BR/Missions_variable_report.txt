@@ -1,0 +1,7 @@
+ Use Eddi -   {state.missionsrouteuseeddi}.
+ Tipo de rota -   {state.missionsroutetype}.
+ Destino -   {state.missionsdestination}.
+ Atual -   {system.name}.
+ Travado -    {state.eddi_context_mission_destination_locked}.
+ Rota -    {state.missionsroute}.
+ Distância: - {state.missionsroutedistance}

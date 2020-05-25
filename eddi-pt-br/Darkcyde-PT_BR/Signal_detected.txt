@@ -1,0 +1,45 @@
+{_ Edit the true/false values of `spokenSources` to identify signal types that should be announced whenever they are first detected within a system (otherwise, only signal sources detected while in fss or saa mode will be taken into account. _}
+
+{set spokenSources to [
+    "Anomaly": true,
+    "AX Conflict Zone": true,
+    "Capitol Ship": false,
+    "Ceremonial Comms": false,
+    "Combat Aftermath": false,
+    "Compromised Nav Beacon": false,
+    "Convoy Dispersal Pattern Detected": false,
+    "Degraded Emissions": false,
+    "Distress Call": true,
+    "Encoded Emissions": false,
+    "Hazardous Resource Extraction Site": false,
+    "High Grade Emissions": false,
+    "High Intensity Combat Zone": false,
+    "High Intensity Resource Extraction Site": false,
+    "Listening Post": true,
+    "Low Intensity Combat Zone": false,
+    "Low Intensity Resource Extraction Site": false,
+    "Medium Intensity Combat Zone": false,
+    "Mission Target": true,
+    "Nav Beacon": false,
+    "Non-Human Signal Source": false,
+    "Notable Stellar Phenomena": true,
+    "Resource Extraction Site": false,
+    "Trading Beacon": false,
+    "Unidentified Signal Source": false,
+    "Unregistered Comms Beacon": true,
+    "Weapons Fire": false,
+]}
+
+{if status.guifocus = "fss mode" || status.gui_focus = "saa mode" || 
+(spokenSources[event.source] = true && find(system.signalsources, event.source) = -1):
+    {if event.source && !event.stationsignal:
+        {if event.threatlevel > 0:
+            Class {event.threatlevel} 
+        }
+        {event.source} 
+        {if event.faction != "None":
+            for {event.faction}
+        }
+        detectado.
+    }
+}

@@ -1,0 +1,20 @@
+Você jurou lealdade a {P(event.power)}. 
+Você serviu por 
+{if event.timepledgedweeks > 1:
+    {Humanise(event.timepledgedweeks)} semanas 
+|elif event.timepledgedweeks = 1:
+    uma semana 
+|elif event.timepledgeddays > 1:
+    {Humanise(event.timepledgeddays)} dias
+|elif event.timepledgeddays = 1:
+    um dia
+|else:
+    menos de um dia
+}
+e está no ranque {event.rank} 
+{if event.merits > 0:
+    com {Humanise(event.merits)}
+|else:
+    sem
+}
+méritos acumulados.
