@@ -1,0 +1,7 @@
+O salto do Porta Frótas foi agendado. Curso traçado para o sistema {Occasionally(2, "estelar")} {P(event.systemname)}
+{if len(event.shortname) > 0:
+    {set reportBody to BodyDetails(event.bodyname, event.systemname)} 
+    , chegando próximo 
+    {if len(reportBody.bodytype) > 0: a {reportBody.bodytype} |else: ao corpo}
+    {P(event.shortname)}
+}.

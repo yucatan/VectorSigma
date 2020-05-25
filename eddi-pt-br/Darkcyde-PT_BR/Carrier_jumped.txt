@@ -1,0 +1,46 @@
+{_ Carrier jumped }
+{_ Triggered when you are docked at a fleet carrier as it completes a jump }
+
+{_ Context }
+{SetState('eddi_context_last_subject', 'carrier jump')}
+{SetState('eddi_context_last_action', 'complete')}
+{SetState('eddi_context_system_name', event.systemname)}
+{SetState('eddi_context_system_system', event.systemname)}
+{SetState('eddi_context_wanted_list', "")}
+
+O Porta Frótas {P(event.carriername)} chegou no sistema {P(event.systemname)}
+{if event.bodyname && len(event.bodyname) > 0:
+    , próximo a {event.bodytype} {P(event.bodyname)}
+}.
+{Pause(1000)}
+
+{_ Update mission data if we have arrived at our mission destination. _}
+{if destinationsystem && destinationsystem.name != "":
+    {RouteDetails("update")}
+}
+
+{_ Report faction states only if it's been more than an hour (3600 seconds) since our last visit. _}
+{if SecondsSince(state.eddi_context_system_lastvisit) / 3600 > 1:
+    {set state_report to F("System state report")}
+}
+
+{set system_missions to F("Mission check system")}
+{set system_crimes to F("Crime check system")}
+
+{if state_report || system_missions || (system_crimes && find(system_crimes, "Warning") < 0):
+    {Pause(500)}
+    Informação:
+}
+
+{if state_report:
+    {Pause(500)}
+    {state_report}
+}
+{if system_missions:
+    {Pause(500)}
+    {system_missions}
+}
+{if system_crimes:
+    {Pause(500)}
+    {system_crimes}
+}

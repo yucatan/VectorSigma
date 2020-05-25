@@ -1,0 +1,78 @@
+{_ Context }
+{SetState('eddi_context_last_subject', 'carrier jump')}
+{SetState('eddi_context_last_action', 'start')}
+{SetState('eddi_context_system_name', event.system)}
+{SetState('eddi_context_system_system', event.system)}
+{SetState('eddi_context_system_lastvisit', system.lastVisitSeconds)}
+
+{if environment = "Docked":
+
+    {_ Zero the 'remaining jump' context to only use values following this event _}
+    {SetState('eddi_context_remaining_jumps', 0)}
+
+    {set reportsystem to SystemDetails(event.systemname)}
+
+    {OneOf("Salto em andamento","Entrando no portal")} para o sistema {P(reportsystem.systemname)} 
+        {if len(event.shortname) > 0:
+        {set reportBody to BodyDetails(event.bodyname, event.systemname)} 
+        Próximo
+        {if len(reportBody.bodytype) > 0: de {reportBody.bodytype} |else: ao corpo}
+        {P(event.shortname)}
+    }.
+
+    {if reportsystem.systemname = homesystem.systemname:
+        Bem vindo ao lar, {F("Honorific")}
+    |else:       
+        {if lastsystem.allegiance && lastsystem.allegiance != "None" && lastsystem.allegiance != "Independent" && (!reportsystem.allegiance || reportsystem.allegiance = "None" || reportsystem.allegiance = "Independent"):
+            Você {OneOf("está deixando", "deixou", "não está mais em")} espaço {lastsystem.allegiance}.
+        |elif lastsystem.allegiance && lastsystem.allegiance != reportsystem.allegiance && system.allegiance && system.allegiance != "None":
+            Você {OneOf("está agora em", "entrou em", "está entrando em")} espaço {reportsystem.allegiance}.
+            {if cmdr.title != "Commander":
+                Bem vindo de volta {F("Honorific")}.
+            }
+        }
+
+        {if reportsystem.visits = 0:
+            Ésta é sua primeira visita a este sistema.
+        |elif reportsystem.visits = 1:
+            Ésta é sua segunda visita a este sistema.
+        |elif reportsystem.visits = 2:
+            {Occasionally(2, "Ésta é sua terceira visita a este sistema.")}
+        |elif reportsystem.visits = 3:
+            {Occasionally(2, "Ésta é sua quarta visita a este sistema.")}
+        |else:
+            {Occasionally(3, "Você visitou este sistema {reportsystem.visits} vezes.")}
+        }
+
+        {if reportsystem.population && reportsystem.population > 0:
+            {if SecondsSince(reportsystem.lastVisitSeconds) > 3600:
+                {F("System report")}
+            }
+        |else:
+            {OneOf("Este sistema não está povoado","Não há presença humana aqui", "Os humanos ainda estão por colonizar este sistema")}.
+        }
+
+        {if reportsystem.distancefromhome:
+            {set ReportDistanceFromHome() to:
+                {return cat(
+                	OneOf("Você está a", "A localização atual fica a", "Você está agora a"), " ",
+	                Humanise(reportsystem.distancefromhome), " anos luz de ",
+	                OneOf("casa", "{P(homesystem.name)}"), "."
+	            )}
+            }
+            {Occasionally(7, ReportDistanceFromHome())}
+        }
+
+        {if reportsystem.comment:
+            Você criou {OneOf("uma anotação", "um comentário", "um registro")} {OneOf("sobre este", "deste")} sistema.  {OneOf("É o que segue", "Está escrito", "Lê-se", "É")} {reportsystem.comment}.
+        }
+    }
+|else:
+    Porta Frótas chegando no sistema {P(event.systemname)} 
+    {if len(event.shortname) > 0:
+        {set reportBody to BodyDetails(event.bodyname, event.systemname)} 
+        próximo 
+        {if len(reportBody.bodytype) > 0: a {reportBody.bodytype} |else: ao corpo}
+        {P(event.shortname)}
+    }.
+}
