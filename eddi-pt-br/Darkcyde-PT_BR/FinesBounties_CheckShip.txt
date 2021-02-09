@@ -55,7 +55,7 @@
 
     {_ Report info}
 
-    {if ship_bounties_count > 0: Cuidado: {vehicle} está procurada!}
+    {if ship_bounties_count > 0: Cuidado: {if vehicle = "Ship":esta nave |else: {vehicle}} está procurada!}
 
     {if ship_fines_count = 1: {set N to:uma}
     |else: {set N to ship_fines_count}
@@ -93,7 +93,7 @@
         {set cur to 0}
         {set length to len(crime_array) - 1}
         {for id, amount in crime_array:
-            {amount} {if amount > 999999: de} créditos na 
+            {amount} {if (cast (amount, "n")) > 999999: de } créditos na 
             {if ShipName(id) != "your ship": {ShipName(id)}
             |else: {ShipCallsign(id)}
             }
