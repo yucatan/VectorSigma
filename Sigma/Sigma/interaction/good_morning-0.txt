@@ -1,1 +1,1 @@
-Good morning Commander {TXT:Name}. {TXT:Ship name} is ready.
+Good morning Commander {TXT:Name}. {TXT:SHIPNAME} is ready.
