@@ -18,7 +18,7 @@
 
     {set multi to 0}
 
-    Você tem {missionsCount} miss{if missionsCount != 1:ões|else:ão}.
+    Você tem {if missionsCount = 1:uma|else:{missionsCount}} miss{if missionsCount != 1:ões|else:ão}.
 
     {if missionsCount = 1:
 
