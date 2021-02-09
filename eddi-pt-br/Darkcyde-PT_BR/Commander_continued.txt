@@ -46,15 +46,13 @@ Bo{GREETING}
 {SetState('missionsroutedistance', missionsdata[3])}
 {SetState('missionsroute', missionsdata[4])}
 
-
 {if missionsCount > 0:
     {SetState('to_system', state.missionsdestination)}
 
-    {if missionsCount > 1:
-		Destino {OneOf("primário", "inicial")}
-		{Occasionally(2,"de missão")} {state.to_system},
-		{Occasionally(2, "{OneOf('foi', 'está')}")} {OneOf("travado", "configurado")}.
-	}
+    Destino 
+    {if missionsCount > 1: {OneOf("primário", "inicial")} }
+    {Occasionally(2,"de missão")} {state.to_system}
+    {Occasionally(2, "{OneOf('foi', 'está')}")} {OneOf("travado", "configurado")}.
 
     {SetState('from_system', state.eddi_context_system_name)}
     {F("Mission Route Get Distance")}
@@ -93,4 +91,3 @@ Bo{GREETING}
 {SetState('eddi_weapons_array', weapons_array)}
 
 {SetState('loading', true)}
-
