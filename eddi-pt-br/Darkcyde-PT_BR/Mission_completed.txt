@@ -14,7 +14,7 @@
 |else:
     {set type to mission.type}
 }
-{set type to cat("missão ",type)}
+{set type to cat("missão de ",type)}
 {set ranktype to token(mission.name,"_",2)}
 
 {_ TESTE DE AJUSTE DE RECOMPENSA _}
