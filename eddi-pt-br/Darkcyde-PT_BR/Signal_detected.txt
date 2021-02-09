@@ -30,8 +30,8 @@
     "Weapons Fire": false,
 ]}
 
-{if status.guifocus = "fss mode" || status.gui_focus = "saa mode" || 
-(spokenSources[event.source] = true && find(system.signalsources, event.source) = -1):
+{if status.gui_focus = "fss mode" || status.gui_focus = "saa mode" || 
+(spokenSources[event.source] = true && event.unique):
     {if event.source && !event.stationsignal:
         {if event.threatlevel > 0:
             Class {event.threatlevel} 
