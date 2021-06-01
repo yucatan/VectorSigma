@@ -1,1 +1,1 @@
-{TXT:Ship name} has lifted off.
+{TXT:Ship name} has [lifted off;departed].

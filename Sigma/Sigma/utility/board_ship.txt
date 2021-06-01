@@ -1,1 +1,1 @@
-Boarding ship now. Welcome back {TXT:Name}
+Boarding ship now. Welcome back [{TXT:Name};commander]

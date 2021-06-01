@@ -1,1 +1,1 @@
-On the Center Panel, which tab is selected? All, Helm, Fighters, SRV, Crew or Help?
+On the Center Panel, which tab is selected? Commander, Fighter, SRV or Crew?
