@@ -1,0 +1,3 @@
+Accident Logs:
+
+A record of settlement incidents which resulted in some degree of physical injury.
