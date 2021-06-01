@@ -1,0 +1,3 @@
+Circuit Switch:
+
+A simple device designed to close an electronic circuit.

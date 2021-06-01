@@ -1,0 +1,3 @@
+Optical Lens:
+
+An optical component designed to converge or diverge light.

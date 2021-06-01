@@ -1,0 +1,3 @@
+Weapon Schematic:
+
+A technical blueprint detailing the design and mechaniism of a personal firearm.

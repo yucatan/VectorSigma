@@ -1,0 +1,3 @@
+Weapon Component:
+
+A component from a personal firearm.

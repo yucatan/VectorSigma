@@ -1,0 +1,3 @@
+Electromagnet:
+
+A magnet in which the magnetic field is produced by an electric current.

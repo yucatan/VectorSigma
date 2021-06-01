@@ -1,0 +1,3 @@
+Ballistics Data:
+
+Projectile weapon research including launch mechanisms, accuracy and impact damage.

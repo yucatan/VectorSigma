@@ -1,0 +1,3 @@
+Extraction Yield Data:
+
+Raw data mineral production quantities from a settlement's mining operation.

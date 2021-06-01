@@ -1,0 +1,3 @@
+Motor:
+
+A machine designed to transform electrical energy into kinetic energy.

@@ -1,0 +1,3 @@
+Medical Records:
+
+A collection of medical data related to a specific group or population.

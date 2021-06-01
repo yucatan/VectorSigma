@@ -1,0 +1,3 @@
+Productions Schedule:
+
+A detailed timetable outlining machine allocations, worker requirements and associated deadlines.

@@ -1,0 +1,3 @@
+Micro Transformer:
+
+A compact transformer designed to transfer electrical energy between two circuits.

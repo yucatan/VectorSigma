@@ -1,0 +1,3 @@
+Radioactivity Data:
+
+Measurements of the output from natural or artificial sources of radiation.

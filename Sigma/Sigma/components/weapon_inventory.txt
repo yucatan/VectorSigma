@@ -1,0 +1,3 @@
+Weapon Inventory:
+
+A comprehensive record of all weaponry and ammunition stored at a facility.

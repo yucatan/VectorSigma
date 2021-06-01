@@ -1,0 +1,3 @@
+Biometric Data:
+
+Personal physical characteristics used to authenticate ID and assign security clearance.
