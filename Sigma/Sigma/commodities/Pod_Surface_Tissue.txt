@@ -1,0 +1,4 @@
+Pod Surface Tissue:
+
+
+A sample of tissue from the surface of a space-based seed pod.

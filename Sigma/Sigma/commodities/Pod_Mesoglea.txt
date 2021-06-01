@@ -1,0 +1,3 @@
+Pod Mesoglea:
+
+A sample of jelly-like tissue from a space-based seed pod.

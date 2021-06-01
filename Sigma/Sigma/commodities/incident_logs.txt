@@ -1,0 +1,3 @@
+Incident Logs:
+
+Notable occurances or unexpected events that occurred at a settlement.

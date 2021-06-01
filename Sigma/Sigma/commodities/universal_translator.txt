@@ -1,0 +1,3 @@
+Universal Translator:
+
+A wearable device capable of instantaneously translating any of the most common human languages.

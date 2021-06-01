@@ -1,0 +1,3 @@
+Chemical Weapon Data:
+
+Information about chemical-based armaments and their effects on both organic and non-organic targets.

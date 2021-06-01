@@ -1,0 +1,3 @@
+Insight:
+
+A wearable device designed to provide the user with real-time information about their immediate environment.

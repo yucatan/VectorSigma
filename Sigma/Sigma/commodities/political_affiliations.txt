@@ -1,0 +1,3 @@
+Political Affiliations:
+
+A faction's alliances and relationships with other organisations based on political ideologies.

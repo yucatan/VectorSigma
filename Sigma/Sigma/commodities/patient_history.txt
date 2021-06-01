@@ -1,0 +1,3 @@
+Patient History:
+
+Personal records of an individual's health including illnesses, surgeries and prescriptions.

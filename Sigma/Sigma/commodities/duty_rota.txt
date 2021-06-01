@@ -1,0 +1,3 @@
+Duty Rota:
+
+Details of the activities and schedules of all personnel at a settlement.

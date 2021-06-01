@@ -1,0 +1,3 @@
+Virus:
+
+A program designed to infect digital networks and cause targeted or systemic damage.

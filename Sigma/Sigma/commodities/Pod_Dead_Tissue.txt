@@ -1,0 +1,3 @@
+Pod Dead Tissue:
+
+A sample of dead tissue from a space-based seed pod.

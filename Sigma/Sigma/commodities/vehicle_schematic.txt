@@ -1,0 +1,3 @@
+Vehicle Schematic:
+
+A technical blueprint detailing the internal and external design of a surface vehicle.

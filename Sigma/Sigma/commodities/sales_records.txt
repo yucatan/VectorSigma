@@ -1,0 +1,3 @@
+Sales Records:
+
+Information of a settlement's gross and profit, stock exports and outstanding invoices.

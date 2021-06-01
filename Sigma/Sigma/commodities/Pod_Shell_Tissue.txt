@@ -1,0 +1,3 @@
+Pod Shell Tissue:
+
+A sample of tissue from the shell of a space-based seed pod.

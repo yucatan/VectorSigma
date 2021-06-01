@@ -1,0 +1,3 @@
+Inertia Canister:
+
+A specialised container for the safe storage of unstable agents.

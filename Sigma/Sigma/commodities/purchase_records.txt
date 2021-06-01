@@ -1,0 +1,3 @@
+Purchase Records:
+
+A list of purchased items and materials including total costs and supplier details.

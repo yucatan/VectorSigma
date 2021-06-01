@@ -1,0 +1,3 @@
+Insight Data Bank:
+
+A device designed to store audio-visual data recorded via Insight.

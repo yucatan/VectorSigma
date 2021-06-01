@@ -1,0 +1,3 @@
+Network Access History:
+
+Access records detailing individual user activity on specific networks.

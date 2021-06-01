@@ -1,0 +1,3 @@
+Spyware:
+
+A program designed to infiltrate digital networks and collect data without detection.

@@ -1,0 +1,3 @@
+Visitor Register:
+
+A list of non-employee personnel logged at a settlement within a certain time period.

@@ -1,0 +1,3 @@
+Degraded Power Regulator:
+
+A non-functional fuel regulator used in power plants.

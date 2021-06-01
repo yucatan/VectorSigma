@@ -1,0 +1,3 @@
+Insight Entertainment Suite:
+
+A selection of augmented-reality games for use with an Insight device.

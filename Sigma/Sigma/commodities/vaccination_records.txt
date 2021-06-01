@@ -1,0 +1,3 @@
+Vaccination Records:
+
+A list of vaccinations issued to each member of a settlement's personnel.

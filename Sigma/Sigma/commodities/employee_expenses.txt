@@ -1,0 +1,3 @@
+Employee Expenses:
+
+Records of business expense claims and charges made to company credit accounts.

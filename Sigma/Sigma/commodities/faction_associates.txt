@@ -1,0 +1,3 @@
+Faction Associates:
+
+Information on a faction's political allies and related beneficial relationships.
