@@ -1,0 +1,11 @@
+[Sit back;OK;Relax] Commander, I [will take the controlls and land;
+will take the controlls and dock;
+will fly and land;
+will fly and dock;
+am taking the controlls and landing;
+am taking the controlls and docking;
+am flying and landing;
+am flying and docking;
+am taking over and docking;
+am taking over and landing;]
+ {TXT:Ship name} for you.

@@ -1,0 +1,1 @@
+[Opening;showing;activating] codex panel;Codex panel [opened;activated]

@@ -1,0 +1,1 @@
+Commander, something is wrong! {TXT:Ship name}'s systems tell it's not docked. You will have to take off manually.

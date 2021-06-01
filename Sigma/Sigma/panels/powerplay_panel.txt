@@ -1,0 +1,1 @@
+[Opening;showing;activating] powerplay panel;Powerplay panel [opened;activated]

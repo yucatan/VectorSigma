@@ -1,0 +1,1 @@
+Commander, I can't [enable;activate] the [fss;spectrum scanner;full spectrum scanner] because one of the maps is [open;loaded].

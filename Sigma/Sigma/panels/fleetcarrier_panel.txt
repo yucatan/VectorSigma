@@ -1,0 +1,1 @@
+[Opening;showing;activating] fleet carrier panel;Fleet carrier panel [opened;activated]

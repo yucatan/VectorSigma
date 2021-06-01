@@ -1,0 +1,1 @@
+We are clear to [dock;land] Commander. You may [take;fly] {TXT:Ship name} to the [dock;pad;landing pad].
