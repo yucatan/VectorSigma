@@ -1,0 +1,7 @@
+No nível 2, as recompensas entregues em um sistema controlado aumentam em 20%, a porcentagem aumenta conforme nível galático.
+
+No nível 3, Zácari Rúdsson oferece a arma Pacificador. É um Canhão de fragmento grande de mira fixa, com alcançe maior e dano reduzido.
+
+O Pacificador possui as mesmas engenharias e efeitos experimentais do Canhão de fragmento.
+
+No nível 5, aumenta em 100% os pagamentos de recompensa em sistemas controlados.

@@ -1,0 +1,8 @@
+No nível 2, módulos de armas em sistemas controlados têm uma redução de 10% no preço de compra, a porcentagem aumenta conforme o nível do poder galático.
+
+No nível 3, Dênton Patreus oferece a arma Acelerador de Plasma Avançado. É um plasma grande de mira fixa com cadência alta entre os disparos.
+
+O Acelerador de Plasma Avançado possui as mesmas engenharias e efeitos experimentais do Acelerador de Plasma.
+
+No nível 5, reduz em 90% os preços de munições em sistemas controlados.
+
