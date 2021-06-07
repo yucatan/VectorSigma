@@ -1,1 +1,1 @@
-﻿Comandante o modo de [análise;descoberta;exploração] já está [ligado;ativado]. Devo desativá-lo?
+﻿Comandante o modo de [análise;descoberta;exploração] já está [ligado;ativado].

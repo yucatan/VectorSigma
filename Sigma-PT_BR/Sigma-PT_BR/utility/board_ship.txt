@@ -1,1 +1,1 @@
-Embarcando na nave agora. Bem vindo de volta à {TXT:Name}
+Embarcando na nave agora. Bem vindo de volta à {TXT:Ship name}
