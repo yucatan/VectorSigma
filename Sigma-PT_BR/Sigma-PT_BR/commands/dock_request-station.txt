@@ -1,1 +1,1 @@
-Controle de voo de {TXT:BODYNAME}, esta é {TXT:Ship ident} {TXT:Ship name} [solicitando;pedindo] permissaum para [pousar;docar]
+Controle de voo de {TXT:BODYNAME}, esta é [{TXT:Ship manufacturer};] [{TXT:Ship model};] {TXT:Ship ident} {TXT:Ship name} [solicitando;pedindo] permissaum para [pousar;docar]
