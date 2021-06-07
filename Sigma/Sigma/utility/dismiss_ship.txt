@@ -1,0 +1,2 @@
+Dismissing [ship;{TXT:Ship name}];
+[Ship;{TXT:Ship name}] being dismissed.
