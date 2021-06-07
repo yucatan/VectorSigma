@@ -1,1 +1,2 @@
-Commander the [analysis;discovery] mode is already [off;disabled]. Would you like me to turn it on?
+[Commander,;] the [analysis;discovery] mode is already [off;disabled].;
+[commander,;] the combat mode is already [on;enabled].

@@ -1,1 +1,1 @@
-Flight control of {TXT:BODYNAME}, this is {TXT:Ship ident} {TXT:Ship name} [asking;requesting] permission to [dock;land]
+Flight control of {TXT:BODYNAME}, this is [{TXT:Ship manufacturer};] [{TXT:Ship model};] {TXT:Ship ident} {TXT:Ship name} [asking;requesting] permission to [dock;land]

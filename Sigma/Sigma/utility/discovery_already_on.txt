@@ -1,1 +1,1 @@
-Commander the [analysis;discovery] mode is already [on;activated]. Should I turn it off?
+Commander the [analysis;discovery] mode is already [on;activated]. 

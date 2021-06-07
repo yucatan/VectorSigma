@@ -1,3 +1,3 @@
-AX Combat Logs:
+A.X. Combat Logs:
 
 Data related to anti-xeno operations and encounters with hostile Thargoid forces.

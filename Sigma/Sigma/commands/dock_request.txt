@@ -1,1 +1,1 @@
-Flight control, this is {TXT:Ship ident} {TXT:Ship name} [requesting;asking] permission to [dock;land]
+Flight control, this is [{TXT:Ship manufacturer};] [{TXT:Ship model};] {TXT:Ship ident} {TXT:Ship name} [requesting;asking] permission to [dock;land]
