@@ -1,0 +1,1 @@
+[Comandante,;] não podemos saltar agora porque [a nave;{TXT:Ship name}] está [coletando combustível;reabastecendo].

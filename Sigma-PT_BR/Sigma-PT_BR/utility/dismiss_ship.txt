@@ -1,0 +1,2 @@
+Dispensando a [nave;{TXT:Ship name}];
+[Nave;{TXT:Ship name}] sendo dispensada.

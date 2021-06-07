@@ -1,0 +1,8 @@
+[Tudo bem;Relaxe;Deixe comigo] Comandante, eu [assumirei os controles e pousarei;
+assumirei o controle e aterrissarei;
+vou assumir os controles e pousar;
+vou assumir os controles e aterrisar;
+vou voar e pousar;
+vou voar e aterrisar;
+estou voando e pousando;
+estou voando e aterrisando;] a {TXT:Ship name} por você.
