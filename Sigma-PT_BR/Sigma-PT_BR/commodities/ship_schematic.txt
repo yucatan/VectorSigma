@@ -1,0 +1,3 @@
+Esquema de Nave:
+
+Um esquema técnico detalhando o projeto interno e externo de uma nave estelar.

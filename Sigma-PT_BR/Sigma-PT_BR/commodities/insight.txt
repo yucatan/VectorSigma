@@ -1,0 +1,3 @@
+Insight:
+
+Um dispositivo pessoal projetado para fornecer ao usuário informações em tempo real sobre os arredores.

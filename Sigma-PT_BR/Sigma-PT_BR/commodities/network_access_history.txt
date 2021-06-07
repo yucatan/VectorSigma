@@ -1,0 +1,3 @@
+Histórico de Acesso à Rede:
+
+Registros de acesso detalhando as atividades individuais dos usuários de redes específicas.

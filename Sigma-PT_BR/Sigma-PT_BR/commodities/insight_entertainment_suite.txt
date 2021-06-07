@@ -1,0 +1,3 @@
+Suíte de Entretenimento Insight:
+
+Um conjunto de jogos de realidade aumentada para uso com um dispositivo Insight.

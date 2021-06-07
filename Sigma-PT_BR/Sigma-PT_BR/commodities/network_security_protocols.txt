@@ -1,0 +1,3 @@
+Protocolos de Segurança de Rede:
+
+Métodos de criptografia listados para os dados de uma rede e canais conectados.

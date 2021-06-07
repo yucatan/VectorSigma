@@ -1,0 +1,3 @@
+Vírus:
+
+Programa projetado para infectar redes digitais e causar danos direcionados ou sistêmicos.

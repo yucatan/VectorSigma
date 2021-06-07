@@ -1,0 +1,3 @@
+Registros Tributários:
+
+Detalhes sobre os pagamentos de impostos e documentos relacionados de uma organização.

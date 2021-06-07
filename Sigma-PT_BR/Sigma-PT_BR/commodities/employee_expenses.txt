@@ -1,0 +1,3 @@
+Despesas com Funcionários:
+
+Registros de despesas e cobranças comerciais feitas nas contas de crédito da empresa.

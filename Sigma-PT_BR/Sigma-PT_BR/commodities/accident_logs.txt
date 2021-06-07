@@ -1,0 +1,3 @@
+Registros de Acidente:
+
+Registros de incidentes do assentamento que resultaram em algum tipo de lesão física.

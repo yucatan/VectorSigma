@@ -1,0 +1,3 @@
+Gravações de Interrogatórios:
+
+Informações obtidas durante uma ou mais sessões de interrogatório de um alvo.

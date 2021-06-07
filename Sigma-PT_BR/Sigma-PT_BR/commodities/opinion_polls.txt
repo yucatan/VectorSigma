@@ -1,0 +1,3 @@
+Pesquisas de Opinião:
+
+Estatísticas e pontos de vista obtidos em pesquisas de uma amostra de uma população.

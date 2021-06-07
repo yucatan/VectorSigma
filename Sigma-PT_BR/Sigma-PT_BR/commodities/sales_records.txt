@@ -1,0 +1,3 @@
+Registros de Vendas:
+
+Informações sobre lucro bruto e líquido, exportações de estoque e faturas pendentes de um assentamento.

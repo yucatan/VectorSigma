@@ -1,0 +1,3 @@
+Registros de Compras:
+
+Lista de itens e materiais adquiridos, incluindo custos totais e dados de fornecedores.
