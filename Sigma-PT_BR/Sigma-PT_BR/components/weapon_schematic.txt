@@ -1,0 +1,3 @@
+Esquema de Arma:
+
+Um esquema técnico detalhando o projeto e mecanismo de uma arma de fogo pessoal.

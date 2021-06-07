@@ -1,0 +1,3 @@
+Microssupercapacitor:
+
+Um dispositivo projetado para armazenar carga elétrica.

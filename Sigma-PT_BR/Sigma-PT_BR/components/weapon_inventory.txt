@@ -1,0 +1,3 @@
+Estoque de Armas:
+
+Registro completo de todos os armamentos e munições armazenados em um local.

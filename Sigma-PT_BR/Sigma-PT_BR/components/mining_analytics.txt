@@ -1,0 +1,3 @@
+Análise de Mineração:
+
+Dados científicos usados para aumentar a segurança e eficiência de uma operação de mineração específica.

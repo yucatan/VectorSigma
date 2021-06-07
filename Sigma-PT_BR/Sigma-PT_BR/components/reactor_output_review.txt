@@ -1,0 +1,3 @@
+Análise de Produção do Reator:
+
+Análises e medições da produção de energia da central de força de um assentamento.

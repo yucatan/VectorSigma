@@ -1,0 +1,3 @@
+Dados Biométricos:
+
+Características físicas pessoais usadas para autenticar identidade e atribuir permissões de segurança.

@@ -1,0 +1,3 @@
+Gás Ionizado:
+
+Uma quantidade de gás ionizado.

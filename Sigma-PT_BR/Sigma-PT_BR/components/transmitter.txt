@@ -1,0 +1,3 @@
+Transmissor:
+
+Um dispositivo eletrônico projetado para produzir ondas eletromagnéticas.

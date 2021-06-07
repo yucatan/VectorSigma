@@ -1,0 +1,3 @@
+Chip de Memória:
+
+Um circuito integrado projetado para armazenar dados de software.

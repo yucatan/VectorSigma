@@ -1,0 +1,3 @@
+Chave de Cirtuito:
+
+Um dispositivo simples projetado para fechar circuitos eletrônicos.
