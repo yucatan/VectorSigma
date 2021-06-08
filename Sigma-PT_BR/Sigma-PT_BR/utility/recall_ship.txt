@@ -1,0 +1,2 @@
+Chamando a [nave;{TXT:Ship name}] de volta;
+[Nave;{TXT:Ship name}] [foi;está sendo] chamada de volta.

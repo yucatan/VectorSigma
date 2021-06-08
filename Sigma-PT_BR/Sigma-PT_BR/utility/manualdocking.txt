@@ -1,0 +1,2 @@
+Estamos liberados para [pousar;aterrisar] Comandante.
+Você pode [levar;voar] a {TXT:Ship name} até a [doca;plataforma;plataforma de pouso].
