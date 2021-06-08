@@ -1,0 +1,2 @@
+[Comandante,;] não podemos abrir a mochila aqui;
+Não podemos checar o conteúdo da mochila aqui[, comandante;].
