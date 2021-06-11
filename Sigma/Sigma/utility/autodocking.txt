@@ -7,5 +7,5 @@ am taking the controlls and docking;
 am flying and landing;
 am flying and docking;
 am taking over and docking;
-am taking over and landing;]
+am taking over and landing]
  {TXT:Ship name} for you.
