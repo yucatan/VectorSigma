@@ -1,1 +1,1 @@
-Deploying second SRV Commander. Have a nice ride
+Deploying second SRV[, Commander;]. Have a nice ride
