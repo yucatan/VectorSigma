@@ -1,0 +1,3 @@
+Building Schematic:
+
+A technical blueprint detailing the architectural design of a building.
