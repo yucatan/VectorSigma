@@ -1,1 +1,1 @@
-No painel central, que aba está selecionada? Comandante, Caça, VRS ou Tripulação?
+No painel central, que aba está selecionada? Todos, Comando, Caças, VRS, Tripulação ou Ajuda?
