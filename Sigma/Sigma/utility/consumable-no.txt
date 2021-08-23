@@ -1,1 +1,1 @@
-[Commander,;] I can't do that [here;in this place].
+[Commander;], I can't do that [here;in this place].
