@@ -1,1 +1,1 @@
-Weapons already holstered. Should I draw them?
+[Weapons;Hardpoints] already [holstered;deactivated].
