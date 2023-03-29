@@ -1,1 +1,1 @@
-[Sit back and relax;OK;Relax] Commander, I [am flying;am taking;will fly;will take] [{TXT:Ship name};the ship] away from the station.
+[Sit back and relax;OK;Relax] Commander, I [am flying;am taking;will fly;will take] [{TXT:Ship name} away from the station.;the shipaway from the station.]
