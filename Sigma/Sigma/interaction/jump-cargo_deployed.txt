@@ -1,1 +1,1 @@
-Commander, we can't do that because the cargo scoop is deployed.
+Commander, we can't do that because the cargo scoop is [deployed;activated].
