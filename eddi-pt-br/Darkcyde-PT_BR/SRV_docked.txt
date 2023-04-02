@@ -1,2 +1,9 @@
-{OneOf("Búgui", "V-R-S")} {OneOf("atracado","em segurança {Occasionally(2,'a bordo')}")}.
+{if state.eddi_context_srv_deployed_id = event.id:
+    {SetState('eddi_context_srv_deployed_id', "")}
+}
 
+{if len(event.srvType) > 0:
+    {event.srvType} embarcado.
+|else: 
+    {OneOf("Búgui", "VRS")} embarcado.
+}
