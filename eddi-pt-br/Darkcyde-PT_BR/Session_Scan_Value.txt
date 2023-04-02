@@ -4,7 +4,7 @@
 {set value to state.eddi_context_session_scan_value}
 
 {if (value = 0 || value = null) && logout != "true":
-    {OneOf("Scan de valor não foi","Nenhum scan valioso foi")}
+    {OneOf("Scan de valôr não foi","Nenhum scan valioso foi")}
     {OneOf("executado", "feito")}
     {OneOf("n", "durante ")}esta sessão.
 
@@ -12,9 +12,9 @@
     {if logout = true: 
         Nesta sessão
     |else:
-        Valor atual
+        Valôr atual
     }
-    de scans o valor de
+    de scans o valôr de
     {OneOf("corpos e estrelas", "exploração")}    
     foi de {state.eddi_context_session_scan_value} créditos.
 }

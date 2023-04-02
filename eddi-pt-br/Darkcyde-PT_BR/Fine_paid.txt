@@ -6,7 +6,7 @@
 {_ Update Fines & Bounties}
 {F("FinesBounties_Delete")}
 
-Multa paga no valor de {Humanise(event.amount)} créditos.
+Multa paga no valôr de {Humanise(event.amount)} créditos.
 
 {if event.brokerpercentage:
   {Pause(1000)}
