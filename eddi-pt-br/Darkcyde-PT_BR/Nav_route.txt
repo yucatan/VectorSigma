@@ -1,0 +1,31 @@
+{_ Set to 0 to disable or set to 1 to enable optional parameters }
+{set reportDestination to 0}
+{set reportDistance to 0}
+{set reportJumps to 0}
+
+{_ Set optional details text from optional parameter values }
+{set details to []}
+{if reportJumps:
+   {set jumpDesc to: {event.jumps} {if event.jumps > 1: jumps |else: jump } }
+   {set details to cat(details, [jumpDesc])}
+}
+{if reportDistance:
+   {set distance to round(event.distance, 1)}
+   {if distance = 1:
+       {set distanceDesc to: {distance} light year}   
+   |else:
+       {set distanceDesc to: {distance} light years}
+   }
+   {set details to cat(details, [distanceDesc])}
+}
+
+{_ Begin speaking }
+{if event.jumps > 0:
+    Destino {OneOf("definido", "ajustado", "travado", "registrado")}
+    {if reportDestination:
+        para {P(event.route[event.jumps].systemname)}{if len(details) > 0:,}
+    }
+    {if len(details) > 0:
+        , {List(details)} {OneOf("até lá", "{if event.jumps > 1 || reportDistance: restando |else: remains }")}
+    }.
+}
