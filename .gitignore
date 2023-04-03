@@ -6,3 +6,7 @@ Sigma/Sigma/Sigma/ENGINEERING.txt
 Sigma/Sigma/Sigma/NAVIGATION.txt
 
 Sigma/Sigma/Sigma/SCIFI.txt
+
+*.sublime-project
+
+*.sublime-workspace
