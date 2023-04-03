@@ -1,6 +1,6 @@
-{if system.allegiance = "Império":
+{if system.allegiance = "Empire":
     {F("Empire honorific")}
-|elif system.allegiance = "Federação":
+|elif system.allegiance = "Federation":
     {if cmdr.federationrating.rank = 0:
         Comandante {Occasionally(3,"{cmdr.name}")}
     |else:
