@@ -86,5 +86,5 @@
 |elif mappedBodies > 0:
 
     {OneOf(
-        "Você mapeou todos {if mappedBodies < totalBodies: {OneOf(\"worthwhile\", \"interesting\")}} corpos estelares de grande interece neste sistema.")}.
+        "Você mapeou todos {if mappedBodies < totalBodies: {OneOf(\"worthwhile\", \"interesting\")}} corpos estelares de grande interêssee neste sistema.")}.
     }
