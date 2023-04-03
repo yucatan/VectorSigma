@@ -1,1 +1,7 @@
-{OneOf("Búgui", "V-R-S")} {OneOf("liberado","lançado","ativado")}.
+{SetState('eddi_context_srv_deployed_id', event.id)}
+
+{if len(event.srvType) > 0:
+    {event.srvType} {OneOf("liberado", "pronto")}.
+|else: 
+    {OneOf("Búgui", "VRS")} {OneOf("liberado", "pronto")}.
+}

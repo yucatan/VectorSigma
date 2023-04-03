@@ -1,10 +1,65 @@
 {_ Context }
 {SetState('eddi_context_last_subject', 'rank')}
 {SetState('eddi_context_last_action', 'promotion')}
-{SetState('eddi_context_rank_name', 'combat')}
+{SetState('eddi_context_rank_name', lower(event.rank_type))}
 {SetState('eddi_context_rank_amount', event.rating)}
 
-Suas {OneOf("habilidades de combate","habilidades em combate")} foram reconhecidas {F("Honorific")}.
-
-Você {OneOf("está agora","chegou")} no posto de {cmdr.combatrating.name}.
-
+{if event.rank_type = "Combat":
+    Você foi reconhecido pelo seu valôr como um piloto de combate, {F("Honorific")}.
+|elif event.rank_type = "CQC":
+    Você foi reconhecido pelo seu valôr como um piloto do C Q C, {F("Honorific")}.
+|elif event.rank_type = "Trade":
+    Você foi reconhecido por sua perspicácia comercial, {F("Honorific")}.
+|elif event.rank_type = "Exploration":
+    Você foi reconhecido pelo seu trabalho como explorador, {F("Honorific")}.
+|elif event.rank_type = "Federation":
+    {set plainHonorific to when(cmdr.gender = 'Female', 'Madam', 'Sir')}
+    Congratulations {OneOf('Commander {CommanderName()}', plainHonorific)}! Você 
+    {OneOf('alcançou o', 'foi promovido ao', 'recebeu o')}
+    posto de {event.rank}
+    {Occasionally(2, OneOf('na marinha Federal', 'por seus serviços para a Federação'))}.
+    {if event.rating = 3:
+        Agora você está qualificado a comprar a Federal Dropship.
+    |elif event.rating = 4:
+        Isto lhe dá acesso ao sistema {P('Sol', 'starsystem')}.
+    |elif event.rating = 5:
+        Agora você está qualificado a comprar a Federal Assault Ship, e tem acesso aos sistemas {P('Vega', 'starsystem')} e {P('Beta Hydri', 'starsystem')}.
+    |elif event.rating = 6:
+        Isto lhe dá acesso ao sistema {P('PLX 695', 'starsystem')}.
+    |elif event.rating = 7:
+        Agora você está qualificado a comprar a Federal Gunship, e tem acesso ao sistema {P('Ross 128', 'starsystem')}.
+    |elif event.rating = 8:
+        Isto lhe dá acesso ao sistema {P('Exbeur', 'starsystem')}.
+    |elif event.rating = 10:
+        Isto lhe dá acesso ao sistema{P('Hors', 'starsystem')}.
+    |elif event.rating = 12:
+        Agora você está qualificado a comprar a Federal Corvette.
+    |elif event.rating = 14:
+        Este é o posto mais alto disponível a um membro da Reserva da Marinha Federal.
+    }   
+|elif event.rank_type = "Empire":
+    Congratulations {F("Empire honorific")},
+    a Marinha Imperial 
+    {OneOf("deu-lhe a promoção", "promoveu-lhe", "avançou você", "nomeou você")} 
+    ao posto de {event.rank}
+    {Occasionally(2, OneOf("dentro da Marinha Imperial", "por seus serviços ao Império"))}.
+    {if event.rating = 1:
+        Agora você pode comprar a Imperial Eagle.
+    |elif event.rating = 3:
+        Agora você pode comprar a Imperial Courier.
+    |elif event.rating = 4:
+        Isto lhe concede a honra de entrar no sistema {P("Achenar", "starsystem")}.
+    |elif event.rating = 7:
+        Agora você pode comprar a Imperial Clipper, e tem a honra de entrar no sistema {P("Summerland", "starsystem")}.
+    |elif event.rating = 10:
+        Isto lhe concede a honra de entrar no sistema {P("Facece", "starsystem")}.
+    |elif event.rating = 12:
+        Agora você pode comprar a Imperial Cutter.
+    |elif event.rating = 14:
+        {OneOf("Este é o mais alto posto", "Esta é a maior honra")} disponível a um membro da Reserva da Marinha Imperial.
+    }
+|elif event.rank_type = "Mercenary":
+    Você foi reconhecido por suas habilidades como um mercenário, {F("Honorific")}.
+|elif event.rank_type = "Exobiologist":
+    Voc~e foi reconhecido por seu trabalho como exobiologista, {F("Honorific")}.
+}

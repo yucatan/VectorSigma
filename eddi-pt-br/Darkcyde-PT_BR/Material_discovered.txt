@@ -11,7 +11,7 @@
 um
 
 {if matis.category = "Manufaturado":
-   manufactured {OneOf("ítem","componente")}
+   {OneOf("ítem","componente")} manufaturado 
 |elif matis.category = "Dados":
    conjunto de dados
 |elif matis.category = "Desconhecido":
@@ -26,4 +26,3 @@ um
 }
 {matis.rarity.name}
 .
-

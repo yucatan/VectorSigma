@@ -1,1 +1,1 @@
-Você se aliou com {P(event.power)}
+Você se aliou a {P(event.power)}

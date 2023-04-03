@@ -1,1 +1,1 @@
-Resfriamento do Porta Frótas completado.
+Resfriamento do Porta Frótas {OneOf("finalizado","completo")}.

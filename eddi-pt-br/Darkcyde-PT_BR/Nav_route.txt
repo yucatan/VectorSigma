@@ -26,6 +26,6 @@
         para {P(event.route[event.jumps].systemname)}{if len(details) > 0:,}
     }
     {if len(details) > 0:
-        , {List(details)} {OneOf("até lá", "{if event.jumps > 1 || reportDistance: restando |else: remains }")}
+        , {List(details)} {OneOf("até lá", "{if event.jumps > 1 || reportDistance: restando |else: restantes }")}
     }.
 }
