@@ -1,0 +1,249 @@
+{_ Preferences _}
+{set reportMats to 1}    {_ Set to 0 to hear about materials below your minimum inventory level _}
+                         {_ Set to 1 to hear about materials below your desired inventory level _}
+                         {_ Set to 2 to hear about all materials irrespective of inventory levels _}
+
+{set reportMatConc to 1} {_ Set to 0 if you only want to hear about great material concentrations _}
+                         {_ Set to 1 if you want to hear about good and great material concentrations _}
+                         {_ Set to 2 if you want to hear about all material concentrations _}
+
+{_ Fetch from context _}
+{if state.eddi_context_system_name:
+    {set reportSystem to SystemDetails(state.eddi_context_system_name)}
+|else:
+    {set reportSystem to SystemDetails(system.systemname)}
+}
+
+{set bodyMaterials to []}
+{set signalMaterials to []}
+{set bodyDescriptions to []}
+{set signalDescriptions to []}
+
+{_ Define various functions to help with this script _}
+{set addBodyMaterial(details, bodyName) to:
+    {set bodyName to:
+        {if details.bodyname != details.bodyshortname: body} {details.bodyshortname}
+    }
+    {if has(bodyMaterials, bodyName):
+        {if find(bodyMaterials[bodyName], details.localizedName) = -1:
+            {set newMats to cat(bodyMaterials[bodyName], [details.localizedName])}      
+            {set bodyMaterials to union(bodyMaterials, [bodyName: newMats])}
+        }
+    |else:
+        {set bodyMaterials to union(bodyMaterials, [bodyName: [details.localizedName]])}
+    }
+}
+
+{set addSignalMaterial(materialName, signalSourceType) to:
+    {if has(signalMaterials, materialName):
+        {if find(signalMaterials[materialName], signalSourceType) = -1:
+            {set locations to cat(signalMaterials[materialName], [signalSourceType])}
+            {set signalMaterials to union(signalMaterials, [materialName:locations])}
+        }
+    |else:
+        {set signalMaterials to union(signalMaterials, [materialName: [signalSourceType]])}
+    }
+}
+
+{set isConcentrated(materialPresence) to:
+    {if (reportMatConc >= 0 && materialPresence.percentage >= materialPresence.definition.greatpctbody)
+      || (reportMatConc >= 1 && materialPresence.percentage >= materialPresence.definition.goodpctbody)
+      || (reportMatConc >= 2):
+        {return 1}
+    }
+    {return 0}
+}
+
+{set isSeleniumSpecialCase(materialPresence, bodyName, reportSystem) to:
+    {_ Special case Selenium, which is bugged to appear in crystalline fragments _}
+    {_ (i.e. with common elements) rather than crystalline shards (i.e. with rare elements) _}
+    {_ when surface prospecting geological sites _}
+    {if materialPresence.name = "Selenium" && isVolcanic(bodyName, reportSystem):
+        {set commonMaterialPercentages to 0}
+        {for m in reportbody.materials:
+            {_ Sum up the percentages of common elements so that we can _}
+            {_ calculate the relative chance of Selenium being present _}
+            {if m.definition.Rarity.invariantName = "common":
+                {set commonMaterialPercentages to commonMaterialPercentages + m.percentage}
+            }
+        }
+        {if reportMatConc >= 0 && materialPresence.percentage > commonMaterialPercentages:
+            {_ More than a 50% chance to drop Selenium from crystalline fragments _}
+            {return 1}    
+        |elif reportMatConc >= 1
+          && materialPresence.percentage > commonMaterialPercentages / 2:
+            {_ More than a 33% chance to drop Selenium from crystalline fragments _}
+            {return 1}    
+        }
+    }
+    {return 0}
+}
+
+{set isNeeded(invMaterial) to:
+    {if (reportMats >= 0 && invMaterial.minimum && invMaterial.amount < invMaterial.minimum)
+      || (reportMats >= 1 && invMaterial.desired && invMaterial.amount < invMaterial.desired)
+      || (reportMats >= 2):
+        {return 1}
+    }
+    {return 0}
+}
+
+{set isVolcanic(bodyName, reportSystem) to:
+    {for reportbody in reportSystem.bodies:
+        {if reportbody.name = bodyName:
+            {return reportBody.volcanism}
+        }
+    }
+}
+
+{set inventory(materialName) to:
+    {for material in materials:
+        {if material.material = materialName:
+            {return material}
+        }
+    }
+}
+
+{set getMaterialPresence(materialName, bodyName, reportSystem) to:
+    {for body in reportSystem.bodies:
+        {for materialPresence in body.materials:
+            {if body.name = bodyName && material.material = materialName: 
+                {return materialPresence}
+            }
+        }
+    }
+}
+
+{_ Get information about populated system signal sources _}
+{if reportSystem.population > 0:
+    {set sigMaterials to []}
+    {set signalsType to ["Encoded Emissions", "High Grade Emissions"]}
+
+    {for sigType in signalsType:
+        {if sigType = "Encoded Emissions":
+            {if reportSystem.Faction.Allegiance.invariantName = "Federation":
+                {set sigMaterials to cat(sigMaterials, ["Proprietary Composites"])}
+            }
+        |elif sigType = "High Grade Emissions":
+            {if reportSystem.Faction.Allegiance.invariantName = "Federation":
+                {set sigMaterials to cat(sigMaterials, ["Core Dynamics Composites"])}
+                {set sigMaterials to cat(sigMaterials, ["Proprietary Composites"])}
+            |elif reportSystem.Faction.Allegiance.invariantName = "Empire":
+                {set sigMaterials to cat(sigMaterials, ["Imperial Shielding"])}
+            }
+            {for faction in reportSystem.factions:
+                {for factionPresence in faction.presences:
+                    {if reportSystem.systemname = factionPresence.systemName && factionPresence.influence >= 25:
+                        {for state in factionPresence.ActiveStates:
+                            {if state.invariantName = "Civil Unrest":
+                                {set sigMaterials to cat(sigMaterials, ["Improvised Components"])}
+                            |elif state.invariantName = "Civil War" || state.invariantName = "War":
+                                {set sigMaterials to cat(sigMaterials, ["Military Grade Alloys", 
+                                                                        "Military Supercapacitors"])}
+                            |elif state.invariantName = "Outbreak":
+                                {set sigMaterials to cat(sigMaterials, ["Pharmaceutical Isolators"])}
+                            |elif state.invariantName = "Boom":
+                                {set sigMaterials to cat(sigMaterials, ["Proto Heat Radiators",
+                                                                        "Proto Light Alloys",
+                                                                        "Proto Radiolic Alloys"])}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    
+        {_ Add material if it is 'needed' and the signal type is not already added for it _}
+        {for invariantMaterial in sigMaterials:
+            {set details to MaterialDetails(invariantMaterial)}
+            {if isNeeded(inventory(details.localizedName)):
+                {if !has(signalMaterials[details.localizedName], sigType):
+                     {addSignalMaterial(details.localizedName, sigType)}
+                }
+            }
+        }
+        {_ Reset sigMaterials array _}
+        {set sigMaterials to []}
+    }
+
+    {_ Reorganise signals array -> 'material':'sources' _}
+    {set signalsOrganised to []}
+    {for mat, sig in signalMaterials:
+        {set sig to List(sig)}
+        {set matList to []}
+        {if has(signalsOrganised, sig):
+            {set matList to cat(signalsOrganised[sig], [mat])}
+            {set signalsOrganised to union(signalsOrganised, [sig:matList])}
+        |else:
+            {set signalsOrganised to union(signalsOrganised, [sig:[mat]])}
+        }
+    }
+    {set signalMaterials to signalsOrganised}
+
+    {_ Sort materials into alphabetical order _}
+    {for signalType, mats in signalMaterials:
+        {set sortMats to []}
+        {for item in sort(mats, cmp(a, b)):
+            {set sortMats to cat(sortMats, [item])}
+        }
+        {set signalDescriptions to cat(signalDescriptions, [cat(List(sortMats),
+                                       " may be found in ", signalType, " signal sources")])}
+    }
+}
+
+{for compartment in ship.compartments:
+    {if compartment.module.invariantName = "Planetary Vehicle Hangar":
+        {set hasSRV to true}
+    }
+}
+
+{if hasSRV:
+    {_ Get information about body surface prospecting materials _}
+    {for material in reportSystem.surfaceelements:
+        {set detail to MaterialDetails(material, reportSystem.systemname)}
+        {if detail.bodyname:
+            {if isNeeded(inventory(detail.localizedName)):
+                {set materialPresence to getMaterialPresence(material.name, detail.bodyname, reportSystem)}
+                {if isConcentrated(materialPresence)
+                  || isSeleniumSpecialCase(materialPresence, detail.bodyname, reportSystem):
+                    {addBodyMaterial(detail)}
+                }
+            }
+        }
+    }
+
+    {for bodyName, mats in bodyMaterials:
+        {_ Sort materials into alphanumerical order _}
+        {set sortMats to []}
+        {for item in sort(mats, cmp(a, b)):
+            {set sortMats to cat(sortMats, [item])}
+        }
+        {set bodyDescriptions to cat(bodyDescriptions, [
+            cat(List(sortMats),
+            when(len(sortMats) > 1, " são "),
+            when(len(mats) > 1, OneOf("mais prevalente", "mais abundante"), "encontrado"),            
+            " em " P(bodyName, 'body')
+            )])}
+    }
+
+    {_ Sort bodies into alphanumerical order _}
+    {declare check(a, b) as:
+        {set body1 to token(a, " em ", 1)}
+        {set body2 to token(b, " em ", 1)}
+        {return cmp(body1, body2)}
+    }
+    {set sortDesc to []}
+    {for item in sort(bodyDescriptions, check):
+        {set sortDesc to cat(sortDesc, [item])}
+    }
+    {set bodyDescriptions to cat(sortDesc)}
+}
+
+{if len(signalMaterials) > 0 && len(bodyMaterials) > 0:
+    {set break to OneOf(". ", ". Adicionalmente, ")}
+}
+
+{set descriptions to cat(List(signalDescriptions), break, List(bodyDescriptions))}
+{if len(descriptions) > 0:
+    {descriptions} neste sistema.
+}

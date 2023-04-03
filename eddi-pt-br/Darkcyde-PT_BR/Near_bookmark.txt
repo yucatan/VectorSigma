@@ -1,0 +1,10 @@
+{if event.near:
+    Chegou em 
+|else:
+    Deixou 
+}
+{if event.poi:
+    {P(event.poi, 'station')}.
+|else:
+    um favorito.
+}

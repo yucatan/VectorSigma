@@ -1,0 +1,33 @@
+{_ Fetch from Context, if a context is set _}
+{if state.eddi_context_system_name:
+    {set systemname to state.eddi_context_system_name}
+|else:
+    {set systemname to system.systemname}
+}
+
+{if !systemname || systemname = "":
+
+    Não tenho certeza sobre qual sistema você está {OneOf("perguntando","se referindo")}.
+
+|else:
+
+    {set reportEngineer to EngineerDetails(systemname)}
+    {if reportEngineer:
+        Este sistema é o lar de {reportEngineer.name}
+        {if len(reportEngineer.majorspecialties) + len(reportEngineer.minorspecialties) > 0 :, que}
+        {if len(reportEngineer.majorspecialties) > 0:
+            é especialista em {OneOf("melhorar", "aprimorar")}
+            {List(reportEngineer.majorspecialties)}.
+        }
+        {if len(reportEngineer.minorspecialties) > 0:
+            {if len(reportEngineer.majorspecialties) > 0: 
+                Também pode 
+                {OneOf("melhorar", "aprimorar")}
+            |else: 
+                {OneOf("melhora", "aprimora")}
+            }
+            {List(reportEngineer.minorspecialties)}
+        }.
+        Você pode encontrar {reportEngineer.name} na estação {P(reportEngineer.stationname, ".")}.
+    }
+}

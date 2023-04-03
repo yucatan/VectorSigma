@@ -1,0 +1,14 @@
+{if carrier.name:
+    {carrier.name} 
+|else:
+    Seu pórta frótas
+}
+foi agendado para descomissionamento em
+{if event.days:
+   {event.days} dias
+}
+{if event.hours:
+   e {event.hours} horas
+}.
+
+Você receberá {Humanise(event.refund)} de créditos em restituição.

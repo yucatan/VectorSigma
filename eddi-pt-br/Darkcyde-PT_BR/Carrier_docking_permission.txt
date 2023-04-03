@@ -1,0 +1,25 @@
+{Occasionally(2, "Ordens transmitidas.")}
+Acesso ao 
+{if carrier && len(carrier.name) > 0: 
+    {carrier.name} 
+|else: 
+    seu pórta frótas
+}
+{set open to OneOf("está liberado", "foi liberado")}
+
+{if event.dockingAccess = "none":
+    restrito. 
+    {Occasionally(2, "Nenhum outro comandante terá permissão para pousar")}
+|elif event.dockingAccess = "squadronfriends":
+    {open} para 
+    {if !event.allowNotorious: law abiding }
+    amigos e membros da esquadra{Occasionally(3, " apenas")}.
+|elif event.dockingAccess = "friends":
+    {open} para 
+    {if !event.allowNotorious: law abiding }
+    amigos{Occasionally(3, " apenas")}.
+|elif event.dockingAccess = "all":
+    {open} para todos
+    {if !event.allowNotorious: law abiding }    
+    comandantes.
+}

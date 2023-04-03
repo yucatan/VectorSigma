@@ -1,0 +1,6 @@
+{Humanise(event.amount)} toneladas de trítio depositadas no
+{if carrier && len(carrier.name) > 0:
+    {carrier.name}.
+|else:
+    seu pórta frótas.
+}

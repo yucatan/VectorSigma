@@ -1,0 +1,3 @@
+{if !event.tosrv && state.eddi_context_srv_deployed_id:
+    Seu {Spacialise(" VRS ")} ainda está ativado, {F('Honorific')}, e será destruído se for abandonado.
+}

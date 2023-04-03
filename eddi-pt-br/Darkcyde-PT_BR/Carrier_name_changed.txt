@@ -1,0 +1,4 @@
+Nova designação aceitada.
+{OneOf("Pórta Frótas {Pause(100)} {event.name} {Pause(100)}", "{event.name}")}
+{OneOf("aguardando", "está pronto para", "espera")}
+{OneOf("suas ordens", "seu comando")}.

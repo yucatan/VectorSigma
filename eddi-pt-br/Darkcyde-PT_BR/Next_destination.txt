@@ -1,0 +1,17 @@
+{OneOf("Destino atual é", "Em rota para")}
+{if event.isBody:
+	{set reportBody to BodyDetails(event.name)}
+    {reportBody.bodytype} {P(reportBody.shortname, 'body')}
+|elif event.isStation:
+    {if event.localizedName: 
+        {event.localizedName} 
+    |else: 
+        {P(event.name, 'station')}
+    }
+|else:
+    {if event.localizedName: 
+        o {event.localizedName} 
+    |else: 
+        um {event.name}
+    }
+}.

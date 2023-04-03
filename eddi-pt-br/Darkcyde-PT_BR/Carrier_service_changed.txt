@@ -1,0 +1,65 @@
+{set GetService() to:
+    {if event.invariantService = "Bartender":
+        {set bar to OneOf("Bar do saguão", "bar")}
+        {return OneOf("O {bar}", "serviço do {bar}")}
+    |elif event.invariantService = "Black Market":
+        {return OneOf("Armazém seguro", "serviços de comércio do Mercado Negro")}
+    |elif event.invariantService = "Commodities":
+        {return OneOf("O mercado", "Serviço de comércio")}
+    |elif event.invariantService = "Exploration":
+        {return OneOf("Serviço de cartografia universal", "Serviço de cartografia estelar")}
+    |elif event.invariantService = "Outfitting":
+        {return "Serviço de equipamentos"}
+    |elif event.invariantService = "Pioneer Supplies":
+        {return OneOf("Pioneer Supplies", "Serviço de equipamentos pessoais")}
+    |elif event.invariantService = "Rearm":
+        {return OneOf("O arsenal", "Serviço de arsenal")}
+    |elif event.invariantService = "Redemption Office":
+        {return "O escritorio de resgate de recompensas"}
+    |elif event.invariantService = "Repair":
+        {return "Serviço de reparos"}
+    |elif event.invariantService = "Shipyard":
+        {return OneOf("O estaleiro", "Serviço de estaleiro")}
+    |elif event.invariantService = "Tritium Depot":
+        {return OneOf("Depósito de trítio", "Serviço de reabastecimento do pórta frótas")}
+    |elif event.invariantService = "Vista Genomics":
+        {return OneOf("Vista Genomics", "serviços de exobiologia")}
+    |else:
+        {return event.service}
+    }
+}
+
+
+{if event.operation = "Replace":
+    {_ This is a carrier crew reassignment }
+    {if event.invariantService = "Captain":
+        {event.crew} 
+        {OneOf("está no comando do", "foi comissionado como o novo oficial da ponte do")}
+        {if carrier && len(carrier.name) > 0:
+            {carrier.name}
+        |else:
+            seu pórta frótas.
+        }
+    |else:
+        {event.crew} foi designado como {GetService()}
+    }     
+|elif len(event.operation) > 0:
+    {set service to GetService()}
+    {service}
+    {if find(service, "services") > -1:
+        {OneOf("foi", "agora á")}
+    |else:
+        {OneOf("foi", "agora está")}
+    }
+    {if event.operation = "Activate":
+        ativado.    
+    |elif event.operation = "Deactivate":
+        desativado.
+    |elif event.operation = "Pause":
+        {OneOf("pausado.", "suspenso.")}
+    |elif event.operation = "Resume":
+        restaurado.
+    |else:
+        {event.operation}
+    }
+}

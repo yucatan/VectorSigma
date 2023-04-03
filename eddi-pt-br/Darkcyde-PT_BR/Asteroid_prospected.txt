@@ -1,0 +1,70 @@
+{set minimumPercent to 10} {_ The minimum percentage surface mineral concentration to report _}
+{set spokenCores to [
+    "Alexandrite": false,
+    "Benitoite": false,
+    "Grandidierite": false,
+    "Low Temperature Diamonds": true,
+    "Monazite": false,
+    "Musgravite": false,
+    "Rhodplumsite": false,
+    "Serendibite": false,
+    "Void Opals": true,
+]}
+{set spokenMinerals to [
+    "Bauxite": false,
+    "Bertrandite": false,
+    "Bromellite": false,
+    "Cobalt": false,
+    "Coltan": false,
+    "Cryolite": false,
+    "Gallite": false,
+    "Gold": false,
+    "Goslarite": false,
+    "Hydrogen Peroxide": false,
+    "Indite": false,
+    "Jadeite": false,
+    "Lepidolite": false,
+    "Lithium Hydroxide": false,
+    "Liquid oxygen": false,
+    "Low Temperature Diamonds": true,
+    "Methane Clathrate": false,
+    "Methanol Monohydrate": false,
+    "Moissanite": false,
+    "Osmium": false,
+    "Painite": true,
+    "Platinum": false,
+    "Palladium": false,
+    "Praseodymium": false,
+    "Pyrophyllite": false,
+    "Rutile": false,
+    "Samarium": false,
+    "Silver": false,
+    "Taaffeite": false,
+    "Thorium": false,
+    "Tritium": true,
+    "Uraninite": false,
+    "Water": false,
+]}
+
+{if len(event.motherlode) > 0 && spokenCores[event.motherlode]:
+   Veio principal detectado: {event.motherlode}.
+}
+
+{set minerals to []}
+{for mineral in event.commodities:
+    {if mineral.percentage > minimumPercent && spokenMinerals[mineral.commodity]:
+        {set mineral_desc to: 
+            {round(mineral.percentage)} porcento de {mineral.commodity}
+        }
+        {set minerals to cat(minerals, [mineral_desc])}
+    }
+}
+{if len(minerals) > 0:
+    Asteróide contém {List(minerals)}
+    {if event.materialcontent = "High":
+        e uma alta concentração de materiais de engenharia
+    }.
+    {if event.remaining < 100:
+        Ele está {100 - event.remaining} percento esgotado.
+    }
+}

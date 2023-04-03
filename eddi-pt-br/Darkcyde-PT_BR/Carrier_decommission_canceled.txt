@@ -1,0 +1,7 @@
+O descomissionamento do
+{if carrier.name:
+    {carrier.name} 
+|else:
+    seu Pórta Frótas
+}
+foi cancelado.
