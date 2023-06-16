@@ -40,7 +40,7 @@
         {if complete_missions > 0:
             {complete_missions} miss{if complete_missions > 1:ões|else:ão} concluída{if complete_missions > 1:s}
         }
-        {Occasionally(3,"located")} nesta estação.
+        {Occasionally(3,"localizada")} nesta estação.
     }
 }
 

@@ -10,16 +10,15 @@
 
 {Pause(500)}
 {if len(event.rewards) = 1:
-   {OneOf("Vale","Tíquet")} recompensa de {Humanise(event.reward)} {if event.reward > 999999: de} créditos 
+   {OneOf("Vale","Tíquet")} recompensa de {Humanise(event.reward)} créditos 
    {OneOf("recebidos da","concedidos pela")} {event.rewards[0].faction}
 |elif len(event.rewards) > 1:
    {len(event.rewards)} {OneOf("vales","tíquets")} recompensas {OneOf("recebidos","concedidos")} n{OneOf("o total","a soma")} 
-   de {Humanise(event.reward)} {if event.reward > 999999: de} créditos 
+   de {Humanise(event.reward)} créditos 
    {set cur to 0}
    {set length to len(event.rewards) - 1}
    {for rewards in event.rewards:
-      {set FACCAO to: {rewards.faction}}
-      {if rewards.faction = "Alliance" || rewards.faction = "Empire" || rewards.faction = "Federation": }
+      {set FACCAO to: {rewards.faction}}   
       {if rewards.faction = "Alliance": {set FACCAO to: Aliança}}
       {if rewards.faction = "Empire": {set FACCAO to: Império}}
       {if rewards.faction = "Federation": {set FACCAO to: Federação}} 

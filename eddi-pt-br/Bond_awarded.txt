@@ -7,12 +7,20 @@
 {_ Update Fines & Bounties}
 {F("FinesBounties_Add")}
 
-{OneOf("Alvo","Inimigo combatente","Adversário","Contendor","Inimigo","Alvo da {event.victimfaction}","piloto da {event.victimfaction}")}
+{if event.victimfaction = "Thargoid": {set VITIMA to "dos Thargoids"}
+|else: {set VITIMA to "da {event.victimfaction}"}
+}
+
+{OneOf("Alvo","Inimigo combatente","Adversário","Contendor","Inimigo","Alvo {VITIMA}","piloto {VITIMA}")}
 {OneOf("destruído","eliminado","destroçado","abatido")},
 
 {OneOf("Aqui estão {event.reward} {if event.reward > 999999: de} créditos","{event.reward} {if event.reward > 999999: de} créditos recebidos","{event.reward} {if event.reward > 999999: de} créditos a mais pra conta","{event.reward} {if event.reward > 999999: de} créditos coletados")}
 
-{Occasionally(3,"da {event.awardingfaction}")}.
+{if event.awardingfaction = "Pilots Federation": {set FACCAO to "da Federação de Pilotos"}
+|else: {set FACCAO to "da {event.awardingfaction}"}
+}
+
+{Occasionally(3,"{FACCAO}")}.
 
 {Pause(250)}
 

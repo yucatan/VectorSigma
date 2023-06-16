@@ -15,7 +15,7 @@
 {set maxjump to fuelremaining/maxfuel}
 {set currentfuel to round(fuelremaining / ship.fueltanktotalcapacity * 100, 0)}
 {set shipsfuel to:
-   {OneOf("Nìveis", "tanques", "reservas")}
+   {OneOf("Níveis", "tanques", "reservas")}
    de combustível {Occasionally(2, "da {ShipName()}" )} 
    {Occasionally(2, "estão")} {Occasionally(2, "agora")}
 }

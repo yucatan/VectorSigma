@@ -105,28 +105,28 @@
                 {while cur < len(stations_here):
 
                     {if stations_depot[cur] > 0:
-                        {stations_depot[cur]} do depósito
+                        {stations_depot[cur]} miss{if last > 1:ões|else:ão} do depósito
                         {if stations_active[cur] && stations_active[cur] > 0 && stations_complete[cur] && stations_complete[cur] > 0: ,
                         |elif (stations_active[cur] && stations_active[cur] > 0) || (stations_complete[cur] && stations_complete[cur] > 0): and}
                         {set last to stations_depot[cur]}
                     }
 
                     {if stations_active[cur] && stations_active[cur] > 0:
-                        {stations_active[cur]} ativas
+                        {stations_active[cur]} miss{if last > 1:ões|else:ão} ativa{if last > 1:s}
                         {if stations_complete[cur] && stations_complete[cur] > 0: e}
                         {set last to stations_active[cur]}
                     }
 
                     {if stations_complete[cur] && stations_complete[cur] > 0:
-                        {stations_complete[cur]} concluídas
+                        {stations_complete[cur]} miss{if last > 1:ões|else:ão} concluída{if last > 1:s}
                         {set last to stations_completed[cur]}
                     }
 
-                    miss{if last > 1:ões|else:ão} em 
+                     na 
                     {set model to StationDetails(stations_here[cur]).model}
                     {set type to token(model, " ", 1)}
                     {if find(model, "Unknown") = -1 && find(model, stations_here[cur]) = -1:
-                        {if type != "": {type} |else: {model} },
+                        {if type != "": {type} |else: {model} }
                     }
                     {stations_here[cur]}
 

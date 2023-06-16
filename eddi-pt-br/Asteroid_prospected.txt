@@ -65,6 +65,6 @@
         e uma alta concentração de materiais de engenharia
     }.
     {if event.remaining < 100:
-        Ele está {100 - event.remaining} percento esgotado.
+        Ele está {100 - event.remaining} porcento esgotado.
     }
 }

@@ -1,14 +1,12 @@
-{_ Context }
-{SetState('eddi_context_last_subject', 'bond')}
-{SetState('eddi_context_last_action', 'redeem')}
-{SetState('eddi_context_bond_amount', event.amount)}
-
+{_ Context }                                                                                                                                                         
+{SetState('eddi_context_last_subject', 'bond')}                                                                                                                      
+{SetState('eddi_context_last_action', 'redeem')}                                                                                                                     
+{SetState('eddi_context_bond_amount', event.amount)}                                                                                                                 
+                                                                                                                                                                     
 {_ Update Fines & Bounties}
 {F("FinesBounties_Delete")}
 
-
-Pagamentos de combate de {Humanise(event.amount)} {if event.amount > 999999: de} créditos 
-foram 
+Pagamentos de combate de {Humanise(event.amount)} {if event.amount > 999999: de} créditos foram
 {OneOf("resgatados", "recebidos")}
 
 {Occasionally(2, "
@@ -19,7 +17,7 @@ foram
       {set cur to 0}
       {set length to len(event.rewards) - 1}
       {while cur < len(event.rewards):
-         {Humanise(event.rewards[cur].amount)} {if event.amount > 999999: de} créditos da
+         {Humanise(event.rewards[cur].amount)} créditos da
          {event.rewards[cur].faction}
          {set cur to cur + 1}
          {if cur = length: e

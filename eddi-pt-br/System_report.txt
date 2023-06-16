@@ -8,9 +8,9 @@
 
     {if reportsystem.population && reportsystem.population > 0:
         um sistema 
-  {if reportsystem.allegiance = "Federation":
+  {if reportsystem.allegiance = "Federação":
             Federal
-        |elif reportsystem.allegiance = "Empire":
+        |elif reportsystem.allegiance = "Império":
             Imperial
         |else:
             Independente
@@ -20,26 +20,10 @@
         |else:
           system
         }, 
-		
-{_ TESTE DE AJUSTE DE POPULAÇÃO _}
-		{set AMOUNT to split(Humanise(reportsystem.population), " ")}
-		{set POSITION to find(AMOUNT, "milhões")}
-		{if POSITION > -1:
-			{set AMOUNT to union(AMOUNT, [POSITION:"milhões de"])}
-			{set POSITION to POSITION - 1}
-			{set NUM to cast(AMOUNT[POSITION], "n")}
-			{if NUM = 1:
-				{set POSITION to POSITION + 1}
-				{set AMOUNT to union(AMOUNT, [POSITION:"milhão de"])}
-			}
-		}
-
-		{set AMOUNT to join(AMOUNT, " ")}
-{_                               _}
-		
-        {OneOf("com", "com uma população de", "lar de", "suportando")} {AMOUNT} {OneOf("pessoas", "habitantes")}
+        
+        {OneOf("com", "com uma população de", "lar de", "suportando")} {Humanise(reportsystem.population)} {if Humanise(reportsystem.population) > 999999:de} {OneOf("pessoas", "habitantes")}
         {if reportsystem.power:
-            , {OneOf("aliado a", "aliado com", "controlado por")} {P(reportsystem.power)}
+            , {OneOf("aliado a", "controlado por")} {P(reportsystem.power)}
         }.
 
         {if reportsystem.faction:
@@ -49,9 +33,9 @@
         {if len(reportsystem.stations) = 0:
           Não há estações presentes
         |else:
-			{set ORBITAL to len(reportsystem.orbitalstations)}
-			{set PLANETARY to len(reportsystem.planetarystations)}
-			
+            {set ORBITAL to len(reportsystem.orbitalstations)}
+            {set PLANETARY to len(reportsystem.planetarystations)}
+            
             {if len(reportsystem.orbitalstations) = 0:
                 {if len(reportsystem.planetarystations) = 1:
                     Há {OneOf("somente","apenas")} uma estação planetária 

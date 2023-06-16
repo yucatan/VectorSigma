@@ -46,9 +46,9 @@
             {body}.
         |elif event.bodytype = "Estação":
             {set model to StationDetails(event.body, event.system).model}
-			{model}
+            {model}
             {if find(model, "Unknown") = -1:
-                {if type != "": {type} |else: {model} },
+                {if type != "": {type} |else: {model} }
             }
             {P(event.body)}.
             {if type = "Starport": {Pause(10000)} }

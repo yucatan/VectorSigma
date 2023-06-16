@@ -5,9 +5,6 @@
 {SetState('eddi_context_system_system', event.system)}
 {SetState('eddi_context_fsd_target', event.target)}
 
-{if reportsystem.visits = 0: enablespeechresponder}
-
-
 {if event.target = 'Hyperspace':
     {_ Rewrite context to represent a jump }
     {SetState('eddi_context_last_subject', 'jump')}
@@ -24,7 +21,7 @@
     {set sys_val to cast(state.eddi_context_system_value, "n")}
     {if sys_val > 0 && sys_val != null:
         {set last to OneOf("anterior", "passado")}
-        {OneOf("Valôr estimado do scan do sistema {last} é de",
+        {OneOf("Valôr estimado do scan do sistema {last} é",
                "scans do sistema {last} valem uma estimativa de",
                "o valôr do scan do sistema {last} está estimado em")}
 
@@ -54,12 +51,14 @@
             Você {OneOf("are leaving", "deixou", "não está mais em")} espaço {lastsystem.allegiance}.
         |elif lastsystem.allegiance && lastsystem.allegiance != reportsystem.allegiance && system.allegiance && system.allegiance != "None":
             
-						
-			{if reportsystem.allegiance = "Federação": {set ALIANCA to:Federal}}
-			{if reportsystem.allegiance = "Império": {set ALIANCA to:Imperial}}
-			{if reportsystem.allegiance = "Aliança": {set ALIANCA to:da Aliança}}
-			
-			Você {OneOf("está agora em", "entrou em", "está entrando em")} espaço {ALIANCA}.
+      
+   {if reportsystem.allegiance = "Império": {set ALIANCA to:Imperial}
+   |elif reportsystem.allegiance = "Federação": {set ALIANCA to:Federal}
+   |elif reportsystem.allegiance = "Aliança": {set ALIANCA to:da Aliança}
+   |else: {set ALIANCA to: independente}
+   }
+      
+   Você {OneOf("está agora em", "entrou em", "está entrando em")} espaço {ALIANCA}.
             {if cmdr.title != "Commander":
                 Bem vindo de volta {F("Honorific")}.
             }
@@ -94,5 +93,3 @@
         }
     }
 }
-
-{disablespeechresponder}

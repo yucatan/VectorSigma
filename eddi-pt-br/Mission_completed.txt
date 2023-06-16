@@ -14,26 +14,9 @@
 |else:
     {set type to mission.type}
 }
+{if type = "passengerevacuation": {set type to "evacuação de passageiros"}}
 {set type to cat("missão de ",type)}
 {set ranktype to token(mission.name,"_",2)}
-
-{_ TESTE DE AJUSTE DE RECOMPENSA _}
-
-{set AMOUNT to split(Humanise(event.reward), " ")}
-{set POSITION to find(AMOUNT, "milhões")}
-{if POSITION > -1:
-    {set AMOUNT to union(AMOUNT, [POSITION:"milhões de"])}
-    {set POSITION to POSITION - 1}
-    {set NUM to cast(AMOUNT[POSITION], "n")}
-    {if NUM = 1:
-        {set POSITION to POSITION + 1}
-        {set AMOUNT to union(AMOUNT, [POSITION:"milhão de"])}
-    }
-}
-
-{set AMOUNT to join(AMOUNT, " ")}
-
-{_                               _}
 
 {if mission.type = "Donation":
     {if mission.typeEDName = "Altruism": {set donate to cat(event.amount, " toneladas de ",event.commodity)}
@@ -42,7 +25,7 @@
     {OneOf("Doou {Occasionally(2, '{donate}')} para {P(event.faction)}",
            "{P(lcase(event.faction))} {Occasionally(2, 'agredecidamente')} recebeu sua doação {Occasionally(2, 'de {donate}')}",
            "{P(lcase(event.faction))} lhe agradece por sua doação {Occasionally(2, 'de {donate}')}")}
-    {F("Mission faction state")}.
+    {Occasionally(2, F("Mission faction state"))}.
     Sua {OneOf("reputação","moral")} {OneOf("melhorou","cresceu")}
 |elif ranktype = "RANKEMP" || ranktype = "RankEmp" || ranktype = "RANKFED" || ranktype = "RankFed":
     Você {OneOf("completou a {type} com sucesso","completou com sucesso a {type}")}
@@ -50,17 +33,17 @@
     Você completou o objetivo da comunidade: {mission.name}. Você {OneOf('recebeu','foi agraciado com')}
     {Humanise(mission.reward)} créditos por {OneOf("sua contribuição","sua participação","ter participado")}
 |else:
-    {if event.reward > 0:
+    {if event.reward > 0:   
         {OneOf(
-         "{type} concluída. Você {OneOf('recebeu','foi agraciado com')} {AMOUNT} créditos",
-         "Você {OneOf('recebeu','foi agraciado com')} {AMOUNT)} créditos por {OneOf('concluir {type} com sucesso','concluir a {type}','ter concluído a {type}')}"
+         "{type} concluída. Você {OneOf('recebeu','foi agraciado com')} {Humanise(event.reward)} {if event.reward > 999999:de} créditos",
+         "Você {OneOf('recebeu','foi agraciado com')} {Humanise(event.reward)} {if event.reward > 999999:de} créditos por {OneOf('concluir {type} com sucesso','concluir a {type}','ter concluído a {type}')}"
       )}
    |else:
       {OneOf("{type} concoluída","Você completou a {type} com sucesso","Você completou a {type}")}
    }
 }
 
-{if mission.type != "Donation": {F("Mission faction state")}}.
+{if mission.type != "Donation": {Occasionally(2, F("Mission faction state"))}}.
 
 {if cargo = "yes" || cargo = "return":
     {Pause(100)}
