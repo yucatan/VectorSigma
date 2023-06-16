@@ -1,0 +1,1 @@
+Terceira lei de Kepler: O quadrado do período orbital de um planeta é proporcional ao cubo do semi-eixo maior de sua órbita.

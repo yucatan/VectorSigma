@@ -1,0 +1,7 @@
+No nível 1, não é necessário pontuação em méritos, recebendo 1000 de créditos semanais, e reposição de 10 materiais do Poder a cada meia hora.
+No nível 2, são necessários 100 méritos para receber 50.000 de créditos semanais, e reposição de 15 materiais do Poder a cada meia hora. 
+No nível 3, são necessários 750 méritos para receber 500.000 de créditos semanais, e reposição de 20 materiais do Poder a cada meia hora.
+No nível 4, são necessários 1.500 méritos para receber 5.000.000 de créditos semanais, e reposição de 25 materiais do Poder a cada meia hora.
+No nível 5, são necessários 10.000 méritos para receber 50.000.000 de créditos semanais, e reposição de 50 materiais do Poder a cada meia hora.
+
+Lembrando que cada poder galático oferece um éstra no nível 2, algum módulo especial em seu nível 3, e um bônus em seu nível 5. Você pode saber as recompensas de cada Poder, basta me pergutar, como exemplo: - O que Aislin Duval oferece?

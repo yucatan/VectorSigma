@@ -1,0 +1,3 @@
+Regulador de Energia:
+
+Um dispositivo complexo projetado para regular a energia gerada pelo reator de um assentamento.

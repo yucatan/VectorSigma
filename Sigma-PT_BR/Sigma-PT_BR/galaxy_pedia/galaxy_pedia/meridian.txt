@@ -1,0 +1,3 @@
+Meridiano:
+
+O meridiano é o grande círculo que passa pelos pólos celestes, o zênite e o nadir da localização de um observador. Conseqüentemente, contém também os pontos norte e sul do horizonte, e é perpendicular ao equador e ao horizonte celestes.

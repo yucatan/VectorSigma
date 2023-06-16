@@ -1,0 +1,2 @@
+Resistores de Rede:
+Componente encontrado em naves: freqüentemente usado por naves militares e de autoridade. Conhecido por ser recuperado de fontes de sinal. Os resistores de rede são uma forma de resistor serial (frequentemente em uma matriz bidimensional ou tridimensional) que são usados para uma variedade de propósitos, incluindo: redução de interferência de rádio, prevenção de oscilação parasita e limitação de corrente de rede.

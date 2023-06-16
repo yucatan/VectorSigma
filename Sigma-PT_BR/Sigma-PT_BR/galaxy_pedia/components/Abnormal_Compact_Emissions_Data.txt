@@ -1,0 +1,2 @@
+Dados de Emissões Compactas Anormais:
+Descoberto em beacons de dados privados recuperados do espaço profundo. Conhecido por ser recuperado de fontes de sinal. Muitos sistemas compactam seus dados de emissões, pois podem preencher rapidamente quantidades enormes de armazenamento. As exceções pré-selecionadas dentro do conjunto de dados geralmente são mantidas em um formato sem perdas e geralmente são de interesse de outras pessoas e organizações.

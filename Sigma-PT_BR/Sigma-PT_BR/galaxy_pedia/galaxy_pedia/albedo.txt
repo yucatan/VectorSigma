@@ -1,0 +1,3 @@
+Albedo:
+
+O albedo é uma medida da quantidade de luz refletida da superfície de um objeto celeste, como um planeta, satélite, cometa ou asteróide. O albedo é a razão entre a luz refletida e a luz incidente e possui valores entre 0, um objeto preto que absorve toda a luz e não reflete nenhum, como um buraco negro, e 1, um objeto branco que reflete toda a luz e não absorve nada.

@@ -1,0 +1,1 @@
+Conversor de energia: usado para modificar e regular a energia proveniente de várias fontes, de modo que ela seja ajustada aos requisitos operacionais ideais de todos os dispositivos conectados.

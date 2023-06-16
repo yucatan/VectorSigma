@@ -1,0 +1,10 @@
+Commander this is the current state of {TXT:Ship name}
+
+Hull at {DEC:Ship health} percent
+Bulkheads at {DEC:Ship bulkheads health} percent
+Power plant at {DEC:Ship power plant health} percent
+Power distributor at {DEC:Ship power distributor health} percent
+Thrusters at {DEC:Ship thrusters health} percent
+FSD at {DEC:Ship frame shift drive health} percent
+Life support at {DEC:Ship life support health} percent
+Sensors at {DEC:Ship sensors health} percent

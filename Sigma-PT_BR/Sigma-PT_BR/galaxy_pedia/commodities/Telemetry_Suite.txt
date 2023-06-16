@@ -1,0 +1,1 @@
+Conjunto de telemetria: eles fornecem acesso a fluxos de informações relacionados a componentes específicos dentro de um sistema.

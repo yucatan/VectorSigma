@@ -1,0 +1,3 @@
+Gráficos de Crescimento de Plantas:
+
+Dados analíticos em formato gráfico para catalogar o desenvolvimento horticultural.

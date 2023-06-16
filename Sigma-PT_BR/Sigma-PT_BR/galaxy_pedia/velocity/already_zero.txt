@@ -1,0 +1,2 @@
+aceleração já está em zero;
+aceleração já é zero

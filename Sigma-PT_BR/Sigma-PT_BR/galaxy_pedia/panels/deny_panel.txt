@@ -1,0 +1,1 @@
+Comandante, não posso [mostrar;abrir] esse painel porque um dos mapas está [aberto;carregado].

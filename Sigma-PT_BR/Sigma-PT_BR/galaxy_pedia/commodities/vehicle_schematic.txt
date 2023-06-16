@@ -1,0 +1,3 @@
+Esquema de Veículo:
+
+Um esquema técnico detalhando o projeto interno e externo de um veículo de superfície.

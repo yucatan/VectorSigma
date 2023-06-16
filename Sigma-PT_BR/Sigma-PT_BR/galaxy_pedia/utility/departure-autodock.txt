@@ -1,0 +1,1 @@
+[Pode deixar;Tudo bem;Relaxe] Comandante, eu [vou levar;vou voar;estou levando;estou voando] a [{TXT:Ship name};nave] para longe da estação.

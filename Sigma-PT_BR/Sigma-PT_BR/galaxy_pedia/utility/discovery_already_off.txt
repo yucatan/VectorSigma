@@ -1,0 +1,2 @@
+﻿[Comandante,;] o modo de [análise;descoberta;exploração] já está [desligado;desativado].;
+[Comandante,;] o modo de combate já está ativado.

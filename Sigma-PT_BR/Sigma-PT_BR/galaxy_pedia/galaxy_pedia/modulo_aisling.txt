@@ -1,0 +1,7 @@
+No nível 2, qualquer mudança de influência aplicada em um sistema controlado é aumentada em 10%, a porcentagem aumenta conforme o nível de poder galático.
+
+No nível 3, Aisling Duval oferece o módulo Gerador de Escudo Prismático. É um gerador de Escudo com maior tamanho e resistência.
+
+O Gerador de Escudo Prismático possui as mesmas engenharias e efeitos experimentais do Gerador de Escudo, e Gerador de Escudo Entrelaçado.
+
+No nível 5, aumenta em 100% a influência para receber recompensas em sistemas controlados.

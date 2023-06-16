@@ -1,0 +1,3 @@
+Rotas de Patrulhamento:
+
+Cronogramas e caminhos definidos para uso em operações de segurança de rotina.

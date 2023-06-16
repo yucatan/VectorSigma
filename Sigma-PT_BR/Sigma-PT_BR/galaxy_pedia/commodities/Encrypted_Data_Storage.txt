@@ -1,0 +1,1 @@
+Depósito de dados criptografados: Às vezes, é mais seguro transportar dados confidenciais fisicamente e também mais rápido, se imensas quantidades precisarem de transferência. Eles geralmente têm pouco valor intrínseco, exceto para a organização que tenta proteger esses itens.

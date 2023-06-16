@@ -1,0 +1,2 @@
+Arquivos de criptografia atípicas:
+Descoberto em beacons de dados privados recuperados do espaço profundo. A natureza dos dados criptografados dificulta a previsão de seu conteúdo, no entanto, certas formas de dados têm estruturas reconhecíveis, mesmo quando criptografadas. Isso pode ser usado para invadir os dados e, como tal, é altamente valorizado em alguns trimestres.

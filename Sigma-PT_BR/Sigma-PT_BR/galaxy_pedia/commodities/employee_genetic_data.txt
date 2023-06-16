@@ -1,0 +1,3 @@
+Dados Genéticos dos Funcionários:
+
+Registros de dados genéticos únicos para funcionários e ex-funcionários de um assentamento.

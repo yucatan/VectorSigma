@@ -1,0 +1,3 @@
+Permissões de Viagem:
+
+Registro de todas as permissões de viagem cedidas aos funcionários de uma empresa ou fábrica.

@@ -1,0 +1,5 @@
+Disco de Airy:
+
+Na óptica, o padrão de Airy e disco de Airy são descrições do melhor ponto focal de luz que uma lente perfeita com uma abertura circular pode fazer, limitada pela difração da luz. O disco de Airy é importante na física, na ótica e na astronomia.
+
+Ambos Disco de Airy e Padrão de Airy foram nomeados por causa de George Biddell Airy.

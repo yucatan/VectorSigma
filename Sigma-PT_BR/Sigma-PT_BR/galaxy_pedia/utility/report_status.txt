@@ -1,0 +1,8 @@
+{TXT:Ship name}'s current status is:
+Hull at {DEC:Ship health},
+Power plant at {DEC:Ship power plant health},
+Thrusters at {DEC:Ship thrusters health},
+Power Distributor at {DEC:Ship power distributor health},
+FSD at {DEC:Ship frame shift drive health},
+Life support at {DEC:Ship life support health},
+Sensors at {DEC:Ship sensors health}

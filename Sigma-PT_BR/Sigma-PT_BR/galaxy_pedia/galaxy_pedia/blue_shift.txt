@@ -1,0 +1,2 @@
+Desvio azul:
+Desvio Azul de Doppler é causado pelo movimento de uma fonte na direção do observador. O termo se aplica a qualquer diminuição no comprimento de onda e aumento na freqüência causada pelo movimento relativo, mesmo fora do espectro visível. Somente objetos se movendo em velocidades quase-relativísticas em direção ao observador são visivelmente mais azuis a olho nu, mas o comprimento de onda de qualquer fóton refletido ou emitido ou outra partícula é encurtado na direção da viagem.

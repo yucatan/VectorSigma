@@ -1,0 +1,3 @@
+Histórico de Paciente:
+
+Registros pessoais sobre a saúde de uma pessoa, incluindo doenças, cirurgias e receituários.

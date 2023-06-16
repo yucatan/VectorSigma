@@ -1,0 +1,3 @@
+Componente de Armas:
+
+Um componente de uma arma de fogo pessoal.

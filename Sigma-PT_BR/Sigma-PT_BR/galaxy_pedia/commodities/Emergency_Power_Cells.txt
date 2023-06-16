@@ -1,0 +1,3 @@
+Baterias de emergência: usadas para fornecer energia quando a fonte de alimentação primária não está disponível. Eles também podem ser usados para aumentar temporariamente a saída de energia.
+
+Estes podem ser encontrados no porto de Chadwick, no sistema Gladutjin.

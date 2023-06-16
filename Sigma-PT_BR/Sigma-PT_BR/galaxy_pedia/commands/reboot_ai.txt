@@ -1,0 +1,1 @@
+Tem certeza Comandante? Isto vai reiniciar meu conhecimento sobre o atual estado da {TXT:Ship name}.

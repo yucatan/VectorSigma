@@ -1,0 +1,2 @@
+Marcando o sinalizador como solicitado;
+Lendo o sinalizador

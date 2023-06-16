@@ -1,0 +1,2 @@
+Atualização de Firmware de Segurança:
+Capturado a partir de redes de ponto de dados de liquidação. Firmware de alto nível para interfaces de hardware seguras tem que usar as atualizações autorizadas do fabricante. Eles podem ser caros e, às vezes, são usadas correções personalizadas. Essas fornecem os componentes necessários para manipular o firmware de maneira não autorizada.

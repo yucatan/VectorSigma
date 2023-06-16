@@ -1,0 +1,3 @@
+Componentes dos destroços do Sentinela:
+
+Esta recuperação consiste em componentes internos de uma Sentinela Guardian. Em seu estado atual, eles são inoperáveis, mas podem ser úteis para pesquisa e desenvolvimento.

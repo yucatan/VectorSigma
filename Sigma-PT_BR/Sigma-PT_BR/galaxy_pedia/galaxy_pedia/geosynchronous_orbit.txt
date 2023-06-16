@@ -1,0 +1,3 @@
+Órbita Geossíncrona:
+
+Uma órbita geossíncrona é uma órbita em torno da terra de um satélite com um período orbital que combine a rotação da terra em seu eixo, que tome um dia sideral (23 horas, 56 minutos, e 4 segundos).

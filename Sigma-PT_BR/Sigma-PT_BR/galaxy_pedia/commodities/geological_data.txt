@@ -1,0 +1,3 @@
+Dados Geológicos:
+
+Informações sobre a composição, estrutura física e distribuição regional de um planeta.

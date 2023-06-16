@@ -1,0 +1,3 @@
+Jansky:
+
+O jansky (símbolo Jy) é uma unidade de densidade de fluxo espectral, ou irradiação espectral, usada especialmente em radioastronomia. A unidade recebeu o nome do pioneiro astrônomo de rádio dos EUA, Karl Guthe Jansky.

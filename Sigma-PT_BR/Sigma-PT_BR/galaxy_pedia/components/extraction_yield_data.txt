@@ -1,0 +1,3 @@
+Dados de Produção Extrativa:
+
+Quantidade de matéria-prima mineral produzida na operação de mineração de um assentamento.

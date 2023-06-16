@@ -1,0 +1,3 @@
+Estoque Químico:
+
+Registro detalhado de materiais químicos ativos e inertes armazenados em um local.

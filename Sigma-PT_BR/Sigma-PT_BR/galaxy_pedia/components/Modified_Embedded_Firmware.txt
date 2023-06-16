@@ -1,0 +1,2 @@
+Firmware Embarcado Modificado:
+Capturado a partir de redes de ponto de dados de assentamentos. Os sistemas embarcados geralmente exigem um firmware específico para sua operação. Há um mercado negro para modificações no firmware base, geralmente para ajuste de desempenho ou outros motivos.

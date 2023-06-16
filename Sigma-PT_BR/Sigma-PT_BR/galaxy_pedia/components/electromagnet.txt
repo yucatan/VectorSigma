@@ -1,0 +1,3 @@
+Eletroímã:
+
+Um ímã cujo campo magnético é produzido por uma corrente elétrica.

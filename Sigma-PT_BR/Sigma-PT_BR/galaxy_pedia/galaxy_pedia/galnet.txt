@@ -1,0 +1,7 @@
+GalNet:
+
+É uma infraestrutura galática que fornece notícias, preços de mercado e um sistema de comunicação de pilotos. Apresenta notícias importantes da galácsia e classifica os poderes no ranking dos Poderes Galáticos.
+
+A Federação dos Pilotos obtém a maior parte de sua riqueza da rede de dados GalNet. Originalmente um sistema de dados de naves, recompensas e gráficos estelares, evoluiu para um agregador interestelar de informações de mercado e notícias galáticas. Por volta de 3300, a Federação Pilotos não era apenas o provedor dominante dessa informação, era também o principal fabricante do hardware e software que servia esses dados. Hoje, os sistemas da Federação de Pilotos são equipados como padrão em praticamente todas as espaçonaves independentes.
+
+Ao longo dos séculos, isso permitiu que a Federação de Pilotos se tornasse uma das superpotências financeiras dominantes da galácsia através de sua rede de dados GalNet.

@@ -1,0 +1,3 @@
+Motores a 50;
+50 porcento;
+Colocando os motores em 50

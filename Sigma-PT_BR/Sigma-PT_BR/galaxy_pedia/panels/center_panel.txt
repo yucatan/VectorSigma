@@ -1,0 +1,2 @@
+Ativando painel central;
+Mostrando o status da nave

@@ -1,0 +1,5 @@
+Magnitude Absoluta:
+
+É uma medida da luminosidade de um objeto celeste, em uma escala de magnitude astronômica logarítmica. A magnitude absoluta de um objeto é definida como sendo igual à magnitude aparente que o objeto teria se fosse vista de uma distância de exatamente 10 parsecs (32,6 anos-luz), sem extinção (ou escurecimento) de sua luz devido à absorção pelas partículas de poeira interestelar. Colocando hipoteticamente todos os objetos a uma distância de referência padrão do observador, suas luminosidades podem ser comparadas diretamente em uma escala de magnitude. Como com todas as magnitudes astronômicas, a magnitude absoluta pode ser especificada para diferentes faixas de comprimento de onda correspondentes às bandas de filtro ou bandas de passagem especificadas.
+
+O Sol tem magnitude absoluta de +4,83.

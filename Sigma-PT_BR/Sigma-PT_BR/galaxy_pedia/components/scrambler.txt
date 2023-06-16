@@ -1,0 +1,3 @@
+Embaralhador:
+
+Um dispositivo projetado para distorcer ondas eletromagnéticas.

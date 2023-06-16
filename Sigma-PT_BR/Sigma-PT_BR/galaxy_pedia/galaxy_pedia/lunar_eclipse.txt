@@ -1,0 +1,3 @@
+Eclipse lunar:
+
+Um eclipse lunar ocorre quando a Lua passa diretamente atrás da Terra em sua umbra (sombra). Isso pode ocorrer somente quando o Sol, a Terra e a Lua estão alinhados exatamente, ou muito próximos, com a Terra no meio.

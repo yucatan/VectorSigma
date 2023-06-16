@@ -1,0 +1,3 @@
+Motor:
+
+Uma máquina projetada para transformar energia elétrica em energia cinética.

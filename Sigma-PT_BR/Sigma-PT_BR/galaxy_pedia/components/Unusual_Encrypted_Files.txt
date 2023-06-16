@@ -1,0 +1,2 @@
+Arquivos Criptografados Incomuns:
+Capturado a partir de redes de ponto de dados de assentamento. Conhecido por ser recuperado de fontes de sinal. Os arquivos de dados são frequentemente criptografados; ocasionalmente, um novo método de criptografia pode ser encontrado, o que é útil em outros lugares.

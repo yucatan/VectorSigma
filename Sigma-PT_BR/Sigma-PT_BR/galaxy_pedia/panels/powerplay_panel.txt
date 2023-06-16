@@ -1,0 +1,2 @@
+[Abrindo;mostrando;ativando] painel do páuer plêi;
+Painel do páuer plêi [aberto;ativado]

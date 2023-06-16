@@ -1,0 +1,3 @@
+Microtransformador:
+
+Um transformador compacto projetado para transferir energia elétrica entre dois circuitos.

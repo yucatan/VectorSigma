@@ -1,0 +1,3 @@
+Neutralizador de PH:
+
+Um composto projetado para neutralizar os níveis de pH de ácidos e bases.

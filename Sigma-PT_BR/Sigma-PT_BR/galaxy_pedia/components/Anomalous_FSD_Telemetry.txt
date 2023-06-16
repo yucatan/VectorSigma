@@ -1,0 +1,2 @@
+Telemetria de FSD Anormal:
+Capturado a partir de acordes de alta energia com um scanner de ativação. Os drives FSD são uma tecnologia relativamente nova e peculiaridades interessantes podem ser descobertas a partir da telemetria de seu software de controle.

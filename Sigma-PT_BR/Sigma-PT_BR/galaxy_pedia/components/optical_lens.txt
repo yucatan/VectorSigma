@@ -1,0 +1,3 @@
+Lente Ótica:
+
+Um componente ótico projetado para convergir ou dispersar a luz.

@@ -1,0 +1,3 @@
+Peças da Arma do Sentinela Guardian:
+
+Estes são componentes de armas de uma Sentinela Guardian. Em seu estado atual, eles são inoperáveis, mas podem ser úteis para pesquisa e desenvolvimento.

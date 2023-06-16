@@ -1,0 +1,3 @@
+Dados de Análise de Espectro:
+
+Conjunto de medições eletromagnéticas detalhadas produzidas com equipamentos espectroscópicos.

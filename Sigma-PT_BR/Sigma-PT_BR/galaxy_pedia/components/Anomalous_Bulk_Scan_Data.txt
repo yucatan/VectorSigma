@@ -1,0 +1,2 @@
+Dados de escaneamento anômalo em massa:
+Coletado durante a digitalização básica. Freqüentemente puxado de naves de transporte. Os arquivos de dados seguem formatos previsíveis, embora em conjuntos de dados maiores os componentes individuais possam ser identificados, que variam da análise do padrão esperado e podem ser muito úteis para as pessoas certas.

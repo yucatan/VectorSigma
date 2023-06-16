@@ -1,0 +1,2 @@
+Exceções de rastro mineradas:
+Capturado a partir de rastros de alta energia com um scanner de rastro. Muitos sistemas automatizados de rastreio de ativação geram um log de exceções quando encontram dados que não correspondem aos perfis pré-programados. A maioria delas é lixo, mas há rumores de que algo mais insidioso foi descoberto.

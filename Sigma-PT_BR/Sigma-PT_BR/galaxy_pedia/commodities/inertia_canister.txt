@@ -1,0 +1,3 @@
+Contêiner Inerte:
+
+Um recipiente especializado para armazenamento seguro de agentes instáveis.

@@ -1,0 +1,3 @@
+Listagem Residencial:
+
+Ocupantes atuais e dados de contatos registrados para uma área residencial específica.

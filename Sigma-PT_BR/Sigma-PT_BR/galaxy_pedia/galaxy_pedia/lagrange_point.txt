@@ -1,0 +1,3 @@
+Ponto Lagrange:
+
+Na mecânica celeste, os pontos Lagrangeanos são posições em uma configuração orbital de dois corpos grandes, onde um pequeno objeto afetado apenas pela gravidade pode manter uma posição estável em relação aos dois corpos grandes. Os pontos de Lagrange marcam as posições em que a força gravitacional combinada das duas grandes massas fornece precisamente a força centrípeta necessária para orbitar com elas.

@@ -1,0 +1,3 @@
+Registro de Visitantes:
+
+Lista de não funcionários registrados em um assentamento durante determinado período.

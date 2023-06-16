@@ -1,0 +1,2 @@
+Painel de comandante [ativado;aberto];
+[Abrindo;mostrando] painel de comandante

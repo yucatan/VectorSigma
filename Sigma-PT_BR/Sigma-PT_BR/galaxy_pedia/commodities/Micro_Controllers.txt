@@ -1,0 +1,1 @@
+Micro controladores: são unidades pequenas para fornecer controle de atuação e processo para dispositivos leves.

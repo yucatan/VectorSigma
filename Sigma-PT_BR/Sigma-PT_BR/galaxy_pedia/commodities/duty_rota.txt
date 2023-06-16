@@ -1,0 +1,3 @@
+Escala de Trabalho:
+
+Detalhes das atividades e cronogramas de todas as equipes de um assentamento.

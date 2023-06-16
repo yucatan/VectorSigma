@@ -1,0 +1,3 @@
+Registros de Vacinação:
+
+Lista de vacinações aplicadas em cada integrante da equipe de um assentamento.

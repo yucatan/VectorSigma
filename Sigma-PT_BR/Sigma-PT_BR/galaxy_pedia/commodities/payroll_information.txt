@@ -1,0 +1,3 @@
+Informações de Folha de Pagamento:
+
+Pagamentos passados e presentes de salários a funcionários e os métodos de transferência financeira.

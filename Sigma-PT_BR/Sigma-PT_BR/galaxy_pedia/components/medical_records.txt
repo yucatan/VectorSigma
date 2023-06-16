@@ -1,0 +1,3 @@
+Registros Médicos:
+
+Conjunto de dados médico relativos a um grupo ou uma população específica.

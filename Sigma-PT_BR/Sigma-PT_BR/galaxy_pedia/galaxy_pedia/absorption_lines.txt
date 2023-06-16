@@ -1,0 +1,5 @@
+Linhas de Absorção:
+
+Uma linha de absorção aparecerá em um espectro se um material absorvente for colocado entre uma fonte e o observador. Este material pode ser as camadas externas de uma estrela, uma nuvem de gás interestelar ou uma nuvem de poeira.
+
+Linhas de absorção são geralmente vistas como linhas escuras, ou linhas de intensidade reduzida, em um espectro contínuo. Isso é visto no espectro de estrelas, onde o gás (principalmente hidrogênio) nas camadas externas da estrela absorve parte da luz do espectro do corpo negro térmico subjacente.

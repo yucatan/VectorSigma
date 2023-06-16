@@ -1,0 +1,3 @@
+Megaparsec:
+
+Um megaparsec é um milhão de parsecs. Um megaparsec é equivalente a 3,26 milhões de anos-luz

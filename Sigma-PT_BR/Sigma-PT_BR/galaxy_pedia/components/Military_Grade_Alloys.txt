@@ -1,0 +1,2 @@
+Ligas de Nível Militar:
+Componente avançado usado por facções em tempos de guerra. Conhecido por ser recuperado de fontes de sinal em sistemas em estado de guerra civil ou guerra. Ligas de nível militar fornecem uma proteção geral melhorada em relação às ligas padrão.

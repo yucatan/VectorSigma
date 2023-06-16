@@ -1,0 +1,3 @@
+Spyware:
+
+Programa projetado para infiltrar-se em redes digitais e recuperar dados sem ser detectado.

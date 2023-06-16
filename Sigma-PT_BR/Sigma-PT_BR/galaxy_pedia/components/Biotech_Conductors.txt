@@ -1,0 +1,2 @@
+Condutores de biotecnologia:
+Usado por facções como recompensa por contratos de missão. Os condutores de biotecnologia permitem que o fluxo de materiais biotecnológicos (geralmente um fluido) passe através do material.

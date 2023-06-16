@@ -1,0 +1,8 @@
+M.D.D.:
+
+O Motor de Distorção de Dobra (M.D.D.) permite que as naves viajem a velocidades incríveis dentro de sistemas estelares (via supervelocidade), bem como entre sistemas estelares (via hiperespaço).
+Em vez de acelerar uma nave através do espaço, o motor de distorção de dobra move o espaço em torno de uma nave para permitir que ela viaje mais rápido que a luz sem usar quantidades extremas de energia ou sofrer distorção de tempo.
+
+Motores de Distorção de Dobra usam um design de motor de Alcubierre modificado para compactar o espaço na frente dos naves em supervelocidade.
+
+Os M.D.D. permitem que os navios entrem no hiperespaço, uma região com mais dimensões do que o espaço normal, em que é possível trajetória extremamente rápida. Os saltos do hiperespaço dependem da mecânica quântica, já que o destino de qualquer salto deve ser conhecido antes que o salto seja feito, e a quantidade de energia necessária para completar o salto é discreta.

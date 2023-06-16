@@ -1,0 +1,3 @@
+Espectro:
+ 
+Espectro refere-se à gama de cores observada quando a luz branca é dispersa através de um prisma.
