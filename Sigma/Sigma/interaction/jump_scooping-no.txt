@@ -1,1 +1,1 @@
-[Commander,;] we can't jump now because [the ship;{TXT:Ship name}] is [fuel scooping;refueling].
+[Commander,;] we can't jump now because {TXT:Ship name} is [fuel scooping;refueling].
