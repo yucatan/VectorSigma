@@ -1,1 +1,1 @@
-Our current version is 4.3. Our first version was written in the year 3303. 
+Our current version is 4.3.2. Our first version was written in the year 3303. 
