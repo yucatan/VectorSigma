@@ -13,8 +13,8 @@ Well, enough of this. Let me get back to working on Sigma-SC.
 
 -------
 
-* defaultProfile-3.23.1-live-9204897.xml = the defaultProfile.xml file (plus the game version number) that must be extracted from "GAME-PATH\LIVE\Data.p4k" (so yep, everytime CIG adds/changes the default keybinds I will have to extract it again.
-* keyboard-map-en.txt = "borrowed" from bindED project (really thanks alterNERDtive
+* defaultProfile-3.24.0-live-9296942.xml = the defaultProfile.xml file (plus the game version number) that must be extracted from "GAME-PATH\LIVE\Data.p4k" (so yep, everytime CIG adds/changes the default keybinds I will have to extract it again.
+* keyboard-map-en.txt = "borrowed" from bindED project (really thanks alterNERDtive)
 * layout_Sigma_exported.xml = my own keybinds, exported/saved from the game
 * SCbinds.sh = The original Shell Script
 * SCbinds-1.1.cs = A copy of the original C# code, just with "version number"

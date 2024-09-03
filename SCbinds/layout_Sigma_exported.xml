@@ -1,21 +1,34 @@
-<ActionMaps version="1" optionsVersion="2" rebindVersion="2" profileName="Kenjiro">
- <CustomisationUIHeader label="Kenjiro" description="" image="">
+<ActionMaps version="1" optionsVersion="2" rebindVersion="2" profileName="Sigma">
+ <CustomisationUIHeader label="Sigma" description="" image="">
   <devices>
    <keyboard instance="1"/>
    <mouse instance="1"/>
    <joystick instance="1"/>
+   <joystick instance="2"/>
   </devices>
   <categories>
    <category label="@ui_CCSeatGeneral"/>
    <category label="@ui_CCSpaceFlight"/>
+   <category label="@ui_CCTurrets"/>
    <category label="@ui_CGLightControllerDesc"/>
    <category label="@ui_CCFPS"/>
    <category label="@ui_CCVehicle"/>
+   <category label="@ui_CGEASpectator"/>
+   <category label="@ui_CGOpticalTracking"/>
    <category label="@ui_CGInteraction"/>
   </categories>
  </CustomisationUIHeader>
+ <deviceoptions name="X52 Professional H.O.T.A.S.  {076206A3-0000-0000-0000-504944564944}">
+  <option input="z" deadzone="0.1485"/>
+ </deviceoptions>
+ <deviceoptions name="vJoy Device  {BEAD1234-0000-0000-0000-504944564944}">
+  <option input="z" deadzone="0.1485"/>
+ </deviceoptions>
  <options type="keyboard" instance="1" Product="Keyboard  {6F1D2B61-D5A0-11CF-BFC7-444553540000}"/>
- <options type="joystick" instance="1" Product="X52 Professional H.O.T.A.S.  {076206A3-0000-0000-0000-504944564944}">
+ <options type="joystick" instance="1" Product="vJoy Device  {BEAD1234-0000-0000-0000-504944564944}">
+  <flight_strafe_longitudinal invert="1"/>
+ </options>
+ <options type="joystick" instance="2" Product="X52 Professional H.O.T.A.S.  {076206A3-0000-0000-0000-504944564944}">
   <flight_strafe_longitudinal invert="1"/>
  </options>
  <modifiers />
@@ -24,13 +37,10 @@
    <rebind input="kb1_b"/>
   </action>
   <action name="v_toggle_missile_mode">
-   <rebind input="kb1_np_9"/>
+   <rebind input="kb1_8"/>
   </action>
   <action name="v_toggle_scan_mode">
    <rebind input="kb1_ "/>
-  </action>
-  <action name="v_atc_loading_area_request">
-   <rebind input="kb1_lalt+n"/>
   </action>
  </actionmap>
  <actionmap name="spaceship_general">
@@ -38,12 +48,12 @@
    <rebind input="kb1_lctrl+c"/>
   </action>
   <action name="v_open_all_doors">
-   <rebind input="kb1_lctrl+v"/>
+   <rebind input="kb1_lctrl+o"/>
   </action>
  </actionmap>
  <actionmap name="spaceship_movement">
   <action name="v_afterburner">
-   <rebind input="js1_button31"/>
+   <rebind input="js2_button31"/>
   </action>
   <action name="v_autoland">
    <rebind input="js1_ "/>
@@ -51,35 +61,38 @@
   <action name="v_master_mode_cycle_long">
    <rebind input="kb1_np_3"/>
   </action>
+  <action name="v_pitch">
+   <rebind input="js2_y"/>
+  </action>
   <action name="v_pitch_mouse">
    <rebind input="mo1_ "/>
   </action>
   <action name="v_roll">
-   <rebind input="js1_x"/>
+   <rebind input="js2_x"/>
   </action>
   <action name="v_speed_range_abs">
-   <rebind input="js1_slider1"/>
+   <rebind input="js2_slider1"/>
   </action>
   <action name="v_strafe_down">
-   <rebind input="js1_button26"/>
+   <rebind input="js2_button26"/>
   </action>
   <action name="v_strafe_left">
-   <rebind input="js1_button27"/>
+   <rebind input="js2_button27"/>
   </action>
   <action name="v_strafe_longitudinal">
-   <rebind input="js1_z"/>
+   <rebind input="js2_z"/>
   </action>
   <action name="v_strafe_right">
-   <rebind input="js1_button25"/>
+   <rebind input="js2_button25"/>
   </action>
   <action name="v_strafe_up">
-   <rebind input="js1_button24"/>
+   <rebind input="js2_button24"/>
   </action>
   <action name="v_toggle_landing_system">
    <rebind input="js1_ "/>
   </action>
   <action name="v_yaw">
-   <rebind input="js1_rotz"/>
+   <rebind input="js2_rotz"/>
   </action>
   <action name="v_yaw_mouse">
    <rebind input="mo1_ "/>
@@ -96,41 +109,18 @@
    <rebind input="kb1_lalt+n"/>
   </action>
  </actionmap>
- <actionmap name="spaceship_targeting">
-  <action name="v_target_remove_all_pins">
-   <rebind input="kb1_np_2"/>
-  </action>
-  <action name="v_target_toggle_lock_index_1">
-   <rebind input="kb1_ "/>
-  </action>
-  <action name="v_target_toggle_lock_index_2">
-   <rebind input="kb1_ "/>
-  </action>
-  <action name="v_target_toggle_lock_index_3">
-   <rebind input="kb1_ "/>
-  </action>
-  <action name="v_target_toggle_pin_index_1">
-   <rebind input="kb1_np_4"/>
-  </action>
-  <action name="v_target_toggle_pin_index_2">
-   <rebind input="kb1_np_8"/>
-  </action>
-  <action name="v_target_toggle_pin_index_3">
-   <rebind input="kb1_np_6"/>
-  </action>
- </actionmap>
  <actionmap name="spaceship_targeting_advanced">
   <action name="v_target_cycle_all_reset">
-   <rebind input="kb1_np_1"/>
-  </action>
-  <action name="v_target_cycle_attacker_fwd">
-   <rebind input="kb1_np_3"/>
-  </action>
-  <action name="v_target_cycle_attacker_reset">
-   <rebind input="kb1_lalt+    "/>
-  </action>
-  <action name="v_target_cycle_in_view_fwd">
    <rebind input="kb1_ "/>
+  </action>
+  <action name="v_target_cycle_hostile_back">
+   <rebind input="kb1_lalt+3"/>
+  </action>
+  <action name="v_target_cycle_subitem_fwd">
+   <rebind input="kb1_mwheel_up"/>
+  </action>
+  <action name="v_target_cycle_subitem_reset">
+   <rebind input="kb1_mwheel_down"/>
   </action>
  </actionmap>
  <actionmap name="spaceship_radar">
@@ -146,55 +136,79 @@
    <rebind input="js1_button35"/>
   </action>
   <action name="v_scanning_trigger_scan">
+   <rebind defaultInput="mouse1" input="kb1_minus"/>
    <rebind input="js1_button15"/>
+  </action>
+ </actionmap>
+ <actionmap name="spaceship_salvage">
+  <action name="v_salvage_toggle_fire_focused">
+   <rebind defaultInput="mouse1" input="kb1_minus"/>
+  </action>
+  <action name="v_salvage_toggle_gimbal_mode">
+   <rebind input="kb1_equals"/>
+  </action>
+ </actionmap>
+ <actionmap name="turret_movement">
+  <action name="turret_pitch">
+   <rebind input="js2_y"/>
+  </action>
+  <action name="turret_yaw">
+   <rebind input="js2_rotz"/>
   </action>
  </actionmap>
  <actionmap name="spaceship_weapons">
   <action name="v_attack_group1">
+   <rebind defaultInput="mouse1" input="kb1_minus"/>
    <rebind input="js1_button15"/>
   </action>
   <action name="v_attack_group2">
+   <rebind defaultInput="mouse2" input="kb1_equals"/>
    <rebind input="js1_button6"/>
   </action>
  </actionmap>
  <actionmap name="spaceship_missiles">
   <action name="v_weapon_cycle_missile_fwd">
-   <rebind input="kb1_ "/>
+   <rebind input="kb1_lalt+8"/>
    <rebind input="js1_button33"/>
   </action>
   <action name="v_weapon_increase_max_missiles">
+   <rebind input="kb1_equals"/>
    <rebind input="js1_button6"/>
   </action>
   <action name="v_weapon_toggle_launch_missile">
-   <rebind input="kb1_ "/>
+   <rebind input="kb1_minus"/>
   </action>
  </actionmap>
  <actionmap name="spaceship_defensive">
   <action name="v_weapon_countermeasure_decoy_launch">
-   <rebind input="kb1_mouse2"/>
+   <rebind input="kb1_lalt+minus"/>
    <rebind input="js1_ "/>
   </action>
   <action name="v_weapon_countermeasure_noise_launch">
+   <rebind input="kb1_lalt+equals"/>
    <rebind input="js1_ "/>
   </action>
  </actionmap>
  <actionmap name="vehicle_capacitor_assignment">
   <action name="v_capacitor_assignment_engine_combined_increase_max">
-   <rebind input="js1_hat1_up"/>
+   <rebind input="js2_hat1_down"/>
   </action>
   <action name="v_capacitor_assignment_reset">
-   <rebind input="js1_hat1_down"/>
+   <rebind input="js2_hat1_up"/>
   </action>
   <action name="v_capacitor_assignment_shield_combined_increase_max">
-   <rebind input="js1_hat1_left"/>
+   <rebind input="js2_hat1_right"/>
   </action>
   <action name="v_capacitor_assignment_weapon_combined_increase_max">
-   <rebind input="js1_hat1_right"/>
+   <rebind input="js2_hat1_left"/>
   </action>
  </actionmap>
  <actionmap name="lights_controller">
   <action name="v_lights">
-   <rebind input="js1_button13"/>
+   <rebind input="js2_button13"/>
+  </action>
+  <action name="v_toggle_cabin_lights">
+   <rebind input="kb1_lctrl+l"/>
   </action>
  </actionmap>
  <actionmap name="player">
@@ -207,26 +221,63 @@
  </actionmap>
  <actionmap name="vehicle_general">
   <action name="v_attack_group1">
-   <rebind input="js1_button15"/>
+   <rebind input="js2_ "/>
   </action>
   <action name="v_attack_group2">
-   <rebind input="js1_button6"/>
+   <rebind input="js1_ "/>
+  </action>
+  <action name="v_close_all_doors">
+   <rebind input="kb1_lctrl+c"/>
+  </action>
+  <action name="v_open_all_doors">
+   <rebind input="kb1_lctrl+o"/>
+  </action>
+  <action name="v_view_pitch">
+   <rebind input="js1_ "/>
   </action>
   <action name="v_view_yaw">
-   <rebind input="js1_rotz"/>
+   <rebind input="js2_ "/>
   </action>
  </actionmap>
  <actionmap name="vehicle_driver">
+  <action name="v_boost">
+   <rebind input="js2_button31"/>
+  </action>
+  <action name="v_brake">
+   <rebind input="js2_button7"/>
+  </action>
   <action name="v_move">
-   <rebind input="js1_z"/>
+   <rebind input="js2_z"/>
+  </action>
+  <action name="v_pitch">
+   <rebind input="js2_y"/>
   </action>
   <action name="v_yaw">
-   <rebind input="js1_rotz"/>
+   <rebind input="js2_rotz"/>
+  </action>
+ </actionmap>
+ <actionmap name="spectator">
+  <action name="spectate_rotatepitch">
+   <rebind input="js1_ "/>
+  </action>
+  <action name="spectate_rotatepitch_mouse">
+   <rebind input="js1_ "/>
+  </action>
+  <action name="spectate_rotateyaw">
+   <rebind input="js1_ "/>
+  </action>
+  <action name="spectate_rotateyaw_mouse">
+   <rebind input="js1_ "/>
   </action>
  </actionmap>
  <actionmap name="player_emotes">
   <action name="emote_salute">
    <rebind input="kb1_np_1"/>
+  </action>
+ </actionmap>
+ <actionmap name="player_input_optical_tracking">
+  <action name="foip_pushtotalk">
+   <rebind input="kb1_mouse5"/>
   </action>
  </actionmap>
  <actionmap name="player_choice">
