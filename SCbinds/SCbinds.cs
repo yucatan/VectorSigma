@@ -16,108 +16,149 @@ public class VAInline
 {
     public void main()
     {
-        // Retrieve the variable from VoiceAttack
-        string customProfilePath = vaProxy.GetText("CUSTOMKEYBINDS");
+        // Retrieve the variable from VoiceAttack (using VA instead of vaProxy)
+        string customProfilePath = VA.GetText("CUSTOMKEYBINDS");
 
-        // Check if the variable is set
         if (string.IsNullOrEmpty(customProfilePath))
         {
-            vaProxy.WriteToLog("The 'CUSTOMKEYBINDS' variable is not set.", "red");
+            VA.WriteToLog("The 'CUSTOMKEYBINDS' variable is not set.", "red");
+            return;
+        }
+
+        if (!File.Exists(customProfilePath))
+        {
+            VA.WriteToLog("Custom keybinds file not found: " + customProfilePath, "red");
             return;
         }
 
         ProcessKeybindings(customProfilePath);
     }
-
-    public void ProcessKeybindings(string customProfilePath)
+    
+        public void ProcessKeybindings(string customProfilePath)
     {
         string keyMapFile = @"Sounds\Sigma-SC\keybinds\keyboard-map-en-us.txt";
-        string defaultProfile = @"Sounds\Sigma-SC\keybinds\defaultProfile.xml";        
-        string defaultOutput = @"Sounds\Sigma-SC\keybinds\default-keybinds.txt";
-        string customOutput = @"Sounds\Sigma-SC\keybinds\custom-keybinds.txt";
+        string defaultProfile = @"Sounds\Sigma-SC\keybinds\defaultProfile.xml";
 
-        // Default Keybinds
-        ProcessDefaultKeybinds(defaultProfile, keyMapFile, defaultOutput);
+        // Load the key map into memory once instead of reading the file hundreds of times
+        Dictionary<string, string> keyMap = LoadKeyMap(keyMapFile);
 
-        // Custom Keybinds
-        ProcessCustomKeybinds(customProfilePath, keyMapFile, customOutput);
+        if (keyMap.Count == 0)
+        {
+            VA.WriteToLog("Key map file missing or empty: " + keyMapFile, "red");
+            return;
+        }
+
+        int defaultCount = 0;
+        int customCount = 0;
+
+        // 1. Process Default Keybinds
+        if (File.Exists(defaultProfile))
+        {
+            defaultCount = ProcessDefaultKeybinds(defaultProfile, keyMap);
+        }
+        else
+        {
+            VA.WriteToLog("Default profile not found: " + defaultProfile, "orange");
+        }
+
+        // 2. Process Custom Keybinds (overwrites defaults where customized)
+        customCount = ProcessCustomKeybinds(customProfilePath, keyMap);
+
+        VA.WriteToLog(string.Format("Loaded {0} default and {1} custom keybinds.", defaultCount, customCount), "green");
     }
-
-    private void ProcessDefaultKeybinds(string defaultProfile, string keyMapFile, string defaultOutput)
+    
+        private Dictionary<string, string> LoadKeyMap(string keyMapFile)
     {
+        Dictionary<string, string> map = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        if (!File.Exists(keyMapFile)) return map;
+
+        using (StreamReader sr = new StreamReader(keyMapFile))
+        {
+            string line;
+            while ((line = sr.ReadLine()) != null)
+            {
+                if (line.StartsWith("key_") && line.Contains(";"))
+                {
+                    string[] parts = line.Split(';');
+                    // Strip "key_" prefix so we can look up directly by SC key name
+                    string scKey = parts[0].Substring(4).Trim();
+                    string vaKey = parts[1].Trim();
+                    if (!map.ContainsKey(scKey))
+                    {
+                        map.Add(scKey, vaKey);
+                    }
+                }
+            }
+        }
+        return map;
+    }
+    
+        private int ProcessDefaultKeybinds(string defaultProfile, Dictionary<string, string> keyMap)
+    {
+        int count = 0;
         using (StreamReader sr = new StreamReader(defaultProfile))
         {
             string line;
-            while ((line = sr.ReadLine())!= null)
+            while ((line = sr.ReadLine()) != null)
             {
                 if (line.Contains("action name=") && line.Contains("keyboard="))
                 {
                     string keyBind = ExtractValue(line, "action name=\"", "\"");
                     string keyValue = ExtractValue(line, "keyboard=\"", "\"");
 
-                    if (!string.IsNullOrWhiteSpace(keyValue))
+                    if (!string.IsNullOrWhiteSpace(keyBind) && !string.IsNullOrWhiteSpace(keyValue))
                     {
-                        string keyCode = GetKeyCode(keyMapFile, keyValue);
-                        VA.SetText(keyBind, keyCode);
+                        string keyCode = FormatKeyCode(keyMap, keyValue);
+                        if (!string.IsNullOrEmpty(keyCode))
+                        {
+                            VA.SetText(keyBind, keyCode);
+                            count++;
+                        }
                     }
                 }
             }
         }
+        return count;
     }
-
-    private void ProcessCustomKeybinds(string customProfile, string keyMapFile, string customOutput)
+    
+        private int ProcessCustomKeybinds(string customProfile, Dictionary<string, string> keyMap)
     {
-        List<string> lines = new List<string>();
+        int count = 0;
+        string currentAction = string.Empty;
 
         using (StreamReader sr = new StreamReader(customProfile))
         {
             string line;
-            while ((line = sr.ReadLine())!= null)
+            while ((line = sr.ReadLine()) != null)
             {
-                if (line.Contains("action name") || line.Contains("rebind input"))
+                // Track the current <action name="..."> block
+                if (line.Contains("action name="))
                 {
-                    line = line.Replace("<", "").Replace("/>", "").Replace(">", "").Replace("  action", "\naction").Replace("\r", "");
-                    lines.Add(line);
+                    currentAction = ExtractValue(line, "action name=\"", "\"");
+                }
+
+                // Pair the <rebind input="kb1_..."> with the active action
+                if (!string.IsNullOrEmpty(currentAction) && line.Contains("rebind input=\"kb1_"))
+                {
+                    string rawInput = ExtractValue(line, "rebind input=\"", "\"");
+                    string keyValue = rawInput.Replace("kb1_", "").Trim();
+
+                    if (!string.IsNullOrWhiteSpace(keyValue))
+                    {
+                        string keyCode = FormatKeyCode(keyMap, keyValue);
+                        if (!string.IsNullOrEmpty(keyCode))
+                        {
+                            VA.SetText(currentAction, keyCode);
+                            count++;
+                        }
+                    }
                 }
             }
         }
-
-        StringBuilder sb = new StringBuilder();
-        foreach (string line in lines)
-        {
-            if (!string.IsNullOrWhiteSpace(line))
-            {
-                sb.Append(line).Append(';');
-            }
-            else
-            {
-                sb.AppendLine();
-            }
-        }
-
-        lines.Clear();
-        foreach (string line in sb.ToString().Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
-        {
-            if (line.Contains("kb"))
-            {
-                lines.Add(line);
-            }
-        }
-
-        foreach (string line in lines)
-        {
-            string keyBind = ExtractValue(line, "action name=\"", "\"");
-            string keyValue = ExtractValue(line, "rebind input=\"", "\"").Replace("kb1_", "");
-
-            if (!string.IsNullOrWhiteSpace(keyValue))
-            {
-                string keyCode = GetKeyCode(keyMapFile, keyValue);
-                VA.SetText(keyBind, keyCode);
-            }
-        }
+        return count;
     }
-
-    private string ExtractValue(string line, string startDelimiter, string endDelimiter)
+    
+        private string ExtractValue(string line, string startDelimiter, string endDelimiter)
     {
         int startIndex = line.IndexOf(startDelimiter);
         if (startIndex >= 0)
@@ -132,54 +173,44 @@ public class VAInline
         return string.Empty;
     }
 
-    private string GetKeyCode(string keyMapFile, string keyValue)
+    private string FormatKeyCode(Dictionary<string, string> keyMap, string keyValue)
     {
-        string keyCode = string.Empty;
+        // Ignore mouse and HMD inputs
+        if (keyValue.Contains("mouse") || keyValue.Contains("mwheel") || keyValue.Contains("HMD_"))
+        {
+            return string.Empty;
+        }
 
         if (keyValue.Contains("+"))
         {
             string[] parts = keyValue.Split('+');
-            string keyCode1 = GetKeyCodeFromMap(keyMapFile, parts[0]);
-            string keyCode2 = GetKeyCodeFromMap(keyMapFile, parts[1]);
-            if (keyCode2 == "")
-            {
-                keyCode = keyCode1;
-            }
-            else
-            {
-                keyCode = $"[{keyCode1}]+[{keyCode2}]";
-            }            
+            string keyCode1 = LookupKey(keyMap, parts[0]);
+            string keyCode2 = LookupKey(keyMap, parts[1]);
+
+            if (string.IsNullOrEmpty(keyCode1) && string.IsNullOrEmpty(keyCode2))
+                return string.Empty;
+            if (string.IsNullOrEmpty(keyCode2))
+                return "[" + keyCode1 + "]";
+            if (string.IsNullOrEmpty(keyCode1))
+                return "[" + keyCode2 + "]";
+
+            // VoiceAttack expects [MOD][KEY] without a '+' sign between brackets
+            return "[" + keyCode1 + "][" + keyCode2 + "]";
         }
         else
         {
-            keyCode = $"[{GetKeyCodeFromMap(keyMapFile, keyValue)}]";
+            string singleKey = LookupKey(keyMap, keyValue);
+            return string.IsNullOrEmpty(singleKey) ? string.Empty : "[" + singleKey + "]";
         }
-
-        return keyCode;
     }
- 
     
-    private string GetKeyCodeFromMap(string keyMapFile, string key)
+        private string LookupKey(Dictionary<string, string> keyMap, string scKey)
     {
-        string keyCode = string.Empty;
-
-        using (StreamReader sr = new StreamReader(keyMapFile))
+        string result;
+        if (keyMap.TryGetValue(scKey.Trim(), out result))
         {
-            string line;
-            while ((line = sr.ReadLine()) != null)
-            {
-                if (key.Contains($"mouse1") || key.Contains($"mouse1") || key.Contains($"mouse2") || key.Contains($"mouse3") || key.Contains($"mwheel_up") || key.Contains($"mwheel_down") || key.Contains($"HMD_Pitch") || key.Contains($"HMD_Yaw") || key.Contains($"HMD_Roll"))
-                {
-                    keyCode = "";
-                }
-                else if (line.Contains($"key_{key};"))
-                {
-                    keyCode = line.Split(';')[1]; // Accessing the second element directly
-                    break;
-                }
-            }
+            return result;
         }
-
-        return keyCode;
+        return string.Empty;
     }
 }
